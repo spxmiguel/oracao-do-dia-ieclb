@@ -76,7 +76,7 @@ async function generateAiPrayer(period) {
     const prompt = `Você é um pastor/pastora da tradição luterana no Brasil. Escreva uma oração em português acolhedora, respeitosa e profunda para o período da ${periodNames[period]}.
 A oração deve refletir a teologia luterana da graça (Sola Gratia), com foco em amor, confiança em Deus, comunidade e acolhimento. Ela deve ter cerca de 130 a 160 palavras. Escreva em formato de texto corrido sem títulos ou marcadores especiais, apenas o texto da oração de forma simples para ser lido em voz alta pela assistente Alexa. Termine com Amém.`;
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
     
     try {
         const response = await axios.post(url, {

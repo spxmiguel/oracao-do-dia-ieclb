@@ -7,108 +7,126 @@
 }
 
 :root {
-    --transition-speed: 0.5s;
+    --transition-speed: 0.6s;
     --card-transition: 0.3s;
     --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
     --font-prayer: 'Lora', Georgia, serif;
 }
 
-/* 1. PERIOD THEMES (DEFAULT: DARK-ISH STYLES FOR BEST GLASSMORPHISM AESTHETIC) */
+/* 1. PERIOD THEMES (MUTED MONASTIC/EDITORIAL COLORS) */
 
-/* MADRUGADA: Deep indigo & starry sky */
+/* MADRUGADA: Deep charcoal-blue, warm ivory accent */
 body.period-madrugada {
-    --bg-fallback: #08090d;
-    --bg-gradient-start: hsla(235, 50%, 8%, 0.85);
-    --bg-gradient-end: hsla(265, 45%, 14%, 0.85);
-    --card-bg: hsla(235, 45%, 12%, 0.65);
-    --card-border: hsla(235, 40%, 35%, 0.25);
-    --text-primary: hsl(220, 25%, 95%);
-    --text-secondary: hsl(235, 20%, 75%);
-    --accent-color: hsl(260, 85%, 75%);
-    --accent-hover: hsl(260, 95%, 82%);
-    --glow-1: hsla(260, 80%, 45%, 0.3);
-    --glow-2: hsla(220, 80%, 35%, 0.2);
-    --shadow-color: rgba(5, 7, 20, 0.4);
-    --btn-secondary-bg: hsla(235, 30%, 20%, 0.4);
+    --bg-fallback: #0a0b0e;
+    --bg-gradient-start: hsla(220, 20%, 8%, 0.88);
+    --bg-gradient-end: hsla(240, 15%, 5%, 0.92);
+    --card-bg: hsla(220, 18%, 10%, 0.75);
+    --card-border: hsla(220, 15%, 25%, 0.2);
+    --card-inner-border: hsla(40, 30%, 75%, 0.06);
+    --text-primary: hsl(210, 15%, 90%);
+    --text-secondary: hsl(220, 10%, 70%);
+    --accent-color: hsl(40, 30%, 75%); /* Champagne gold */
+    --accent-hover: hsl(40, 40%, 82%);
+    --glow-1: hsla(230, 20%, 30%, 0.12);
+    --glow-2: hsla(40, 20%, 60%, 0.05);
+    --shadow-color: rgba(3, 4, 8, 0.5);
+    --btn-secondary-bg: hsla(220, 12%, 18%, 0.4);
 }
 
-/* MANHÃ: Warm morning sunrise */
+/* MANHÃ: Warm sepia/terracotta dust, warm wheat accent */
 body.period-manha {
-    --bg-fallback: #130a08;
-    --bg-gradient-start: hsla(22, 50%, 10%, 0.82);
-    --bg-gradient-end: hsla(345, 45%, 16%, 0.82);
-    --card-bg: hsla(22, 45%, 13%, 0.65);
-    --card-border: hsla(22, 40%, 35%, 0.25);
-    --text-primary: hsl(22, 25%, 96%);
-    --text-secondary: hsl(22, 15%, 75%);
-    --accent-color: hsl(34, 90%, 70%);
-    --accent-hover: hsl(34, 100%, 76%);
-    --glow-1: hsla(34, 85%, 45%, 0.35);
-    --glow-2: hsla(345, 80%, 35%, 0.2);
-    --shadow-color: rgba(20, 10, 5, 0.4);
-    --btn-secondary-bg: hsla(22, 30%, 20%, 0.4);
+    --bg-fallback: #120f0d;
+    --bg-gradient-start: hsla(20, 20%, 10%, 0.85);
+    --bg-gradient-end: hsla(10, 15%, 7%, 0.9);
+    --card-bg: hsla(20, 15%, 11%, 0.75);
+    --card-border: hsla(20, 15%, 25%, 0.2);
+    --card-inner-border: hsla(35, 45%, 72%, 0.06);
+    --text-primary: hsl(30, 15%, 90%);
+    --text-secondary: hsl(20, 10%, 70%);
+    --accent-color: hsl(35, 45%, 72%); /* Warm wheat */
+    --accent-hover: hsl(35, 55%, 80%);
+    --glow-1: hsla(30, 35%, 45%, 0.1);
+    --glow-2: hsla(45, 30%, 65%, 0.06);
+    --shadow-color: rgba(10, 8, 6, 0.5);
+    --btn-secondary-bg: hsla(20, 12%, 18%, 0.4);
 }
 
-/* TARDE: Warm golden daylight & soft blue */
+/* TARDE: Soft slate & olive daylight, amber gold accent */
 body.period-tarde {
-    --bg-fallback: #090e12;
-    --bg-gradient-start: hsla(205, 50%, 10%, 0.85);
-    --bg-gradient-end: hsla(190, 45%, 15%, 0.85);
-    --card-bg: hsla(205, 45%, 13%, 0.65);
-    --card-border: hsla(205, 40%, 30%, 0.25);
-    --text-primary: hsl(205, 20%, 95%);
-    --text-secondary: hsl(205, 15%, 75%);
-    --accent-color: hsl(180, 85%, 65%);
-    --accent-hover: hsl(180, 95%, 72%);
-    --glow-1: hsla(200, 80%, 45%, 0.3);
-    --glow-2: hsla(180, 80%, 35%, 0.2);
-    --shadow-color: rgba(5, 15, 20, 0.4);
-    --btn-secondary-bg: hsla(205, 30%, 20%, 0.4);
+    --bg-fallback: #0b0d0e;
+    --bg-gradient-start: hsla(120, 6%, 9%, 0.88);
+    --bg-gradient-end: hsla(200, 8%, 6%, 0.92);
+    --card-bg: hsla(120, 6%, 11%, 0.75);
+    --card-border: hsla(120, 8%, 25%, 0.2);
+    --card-inner-border: hsla(42, 35%, 70%, 0.06);
+    --text-primary: hsl(120, 5%, 88%);
+    --text-secondary: hsl(120, 5%, 70%);
+    --accent-color: hsl(42, 35%, 70%); /* Muted gold */
+    --accent-hover: hsl(42, 45%, 78%);
+    --glow-1: hsla(200, 15%, 45%, 0.1);
+    --glow-2: hsla(42, 25%, 60%, 0.06);
+    --shadow-color: rgba(4, 5, 6, 0.5);
+    --btn-secondary-bg: hsla(120, 5%, 18%, 0.4);
 }
 
-/* NOITE: Purple twilight */
+/* NOITE: Warm twilight bronze, soft copper accent */
 body.period-noite {
-    --bg-fallback: #0b070f;
-    --bg-gradient-start: hsla(275, 50%, 8%, 0.85);
-    --bg-gradient-end: hsla(300, 40%, 12%, 0.85);
-    --card-bg: hsla(275, 45%, 12%, 0.65);
-    --card-border: hsla(275, 40%, 30%, 0.25);
-    --text-primary: hsl(275, 20%, 94%);
-    --text-secondary: hsl(275, 15%, 75%);
-    --accent-color: hsl(290, 80%, 75%);
-    --accent-hover: hsl(290, 90%, 82%);
-    --glow-1: hsla(280, 80%, 45%, 0.3);
-    --glow-2: hsla(300, 80%, 35%, 0.2);
-    --shadow-color: rgba(15, 5, 20, 0.4);
-    --btn-secondary-bg: hsla(275, 30%, 20%, 0.4);
+    --bg-fallback: #0e0c0d;
+    --bg-gradient-start: hsla(15, 12%, 8%, 0.9);
+    --bg-gradient-end: hsla(345, 10%, 6%, 0.93);
+    --card-bg: hsla(15, 10%, 10%, 0.75);
+    --card-border: hsla(15, 10%, 25%, 0.2);
+    --card-inner-border: hsla(38, 40%, 70%, 0.06);
+    --text-primary: hsl(15, 10%, 88%);
+    --text-secondary: hsl(15, 5%, 70%);
+    --accent-color: hsl(38, 40%, 70%); /* Soft copper gold */
+    --accent-hover: hsl(38, 50%, 78%);
+    --glow-1: hsla(15, 20%, 40%, 0.08);
+    --glow-2: hsla(340, 15%, 35%, 0.06);
+    --shadow-color: rgba(8, 6, 7, 0.5);
+    --btn-secondary-bg: hsla(15, 8%, 18%, 0.4);
 }
 
-/* 2. MANUAL LIGHT THEME OVERRIDE */
+/* 2. MANUAL LIGHT THEME OVERRIDE (Warm Book Paper Sepia) */
 body.theme-light {
-    --bg-fallback: #eae0d5;
-    --bg-gradient-start: hsla(30, 20%, 95%, 0.85);
-    --bg-gradient-end: hsla(30, 15%, 88%, 0.85);
-    --card-bg: hsla(0, 0%, 100%, 0.88);
-    --card-border: hsla(30, 25%, 50%, 0.2);
-    --text-primary: hsl(30, 30%, 15%);
-    --text-secondary: hsl(30, 15%, 42%);
-    --accent-color: hsl(30, 80%, 38%);
-    --accent-hover: hsl(30, 90%, 32%);
-    --glow-1: hsla(30, 60%, 75%, 0.25);
-    --glow-2: hsla(15, 60%, 80%, 0.2);
-    --shadow-color: rgba(80, 60, 40, 0.12);
-    --btn-secondary-bg: hsla(30, 15%, 85%, 0.6);
+    --bg-fallback: #f4ece1;
+    --bg-gradient-start: hsla(35, 30%, 95%, 0.88);
+    --bg-gradient-end: hsla(35, 20%, 90%, 0.92);
+    --card-bg: hsla(35, 40%, 97%, 0.9);
+    --card-border: hsla(35, 20%, 60%, 0.25);
+    --card-inner-border: hsla(35, 30%, 40%, 0.08);
+    --text-primary: hsl(35, 35%, 15%);
+    --text-secondary: hsl(35, 20%, 38%);
+    --accent-color: hsl(35, 45%, 32%); /* Earthy brown-bronze */
+    --accent-hover: hsl(35, 50%, 25%);
+    --glow-1: hsla(35, 30%, 80%, 0.15);
+    --glow-2: hsla(20, 30%, 85%, 0.1);
+    --shadow-color: rgba(60, 45, 30, 0.08);
+    --btn-secondary-bg: hsla(35, 25%, 88%, 0.6);
 }
 
 /* 3. LANDING PAGE OVERRIDES */
 body.state-landing {
-    --bg-fallback: #16120f;
-    --bg-gradient-start: rgba(45, 38, 32, 0.45);
-    --bg-gradient-end: rgba(22, 18, 15, 0.7);
+    --bg-fallback: #0f0d0c;
+    --bg-gradient-start: rgba(28, 24, 22, 0.65);
+    --bg-gradient-end: rgba(12, 10, 9, 0.85);
 }
 
 html {
-    background-color: #12100e;
+    background-color: #0f0d0c;
+}
+
+/* Global Paper Texture Overlay */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 99;
 }
 
 /* Base Body Styles */
@@ -145,32 +163,32 @@ body {
 .glow-orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.75;
+    filter: blur(140px);
+    opacity: 0.85;
     transition: background var(--transition-speed) ease;
 }
 
 .orb-1 {
-    width: 350px;
-    height: 350px;
-    top: 10%;
-    left: -50px;
+    width: 450px;
+    height: 450px;
+    top: 5%;
+    left: -100px;
     background: var(--glow-1);
-    animation: float 25s ease-in-out infinite alternate;
+    animation: float 35s ease-in-out infinite alternate;
 }
 
 .orb-2 {
-    width: 400px;
-    height: 400px;
-    bottom: 10%;
-    right: -100px;
+    width: 500px;
+    height: 500px;
+    bottom: 5%;
+    right: -150px;
     background: var(--glow-2);
-    animation: float 30s ease-in-out infinite alternate-reverse;
+    animation: float 45s ease-in-out infinite alternate-reverse;
 }
 
 @keyframes float {
     0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(60px, 40px) scale(1.1); }
+    100% { transform: translate(40px, 30px) scale(1.05); }
 }
 
 .particles-container {
@@ -186,26 +204,26 @@ body {
 
 .particle {
     position: absolute;
-    background: white;
+    background: rgba(220, 180, 120, 0.25);
+    box-shadow: 0 0 3px rgba(220, 180, 120, 0.15);
     border-radius: 50%;
-    opacity: 0.3;
-    animation: rise 15s linear infinite;
+    animation: float-dust 25s linear infinite;
     pointer-events: none;
 }
 
-@keyframes rise {
+@keyframes float-dust {
     0% {
-        transform: translateY(100vh) translateX(0) scale(0.8);
+        transform: translate(-10vw, -10vh) scale(0.6);
         opacity: 0;
     }
-    10% {
-        opacity: 0.4;
+    15% {
+        opacity: 0.5;
     }
-    90% {
-        opacity: 0.4;
+    85% {
+        opacity: 0.5;
     }
     100% {
-        transform: translateY(-10vh) translateX(100px) scale(1.2);
+        transform: translate(90vw, 90vh) scale(1.2);
         opacity: 0;
     }
 }
@@ -305,97 +323,87 @@ body:not(.theme-light) .icon-moon { display: none; }
     gap: 1.25rem;
 }
 
-/* Prayer Card (Glassmorphism) */
+/* Prayer Card (Tactile Digital Sanctuary) */
 .prayer-card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: 24px;
-    padding: 2.25rem;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 12px 40px var(--shadow-color);
+    border-radius: 12px;
+    padding: 3.5rem 3rem;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 16px 48px var(--shadow-color);
     transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease, transform var(--card-transition) ease, box-shadow 0.4s ease;
     position: relative;
     overflow: hidden;
 }
 
+/* Card Noise Texture Overlay */
 .prayer-card::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
-    opacity: 0.8;
+    bottom: 0;
+    border-radius: inherit;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.045'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Inset Decorative Frame (Bookbinder style) */
+.prayer-card::after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    border: 1px solid var(--card-inner-border, rgba(255, 255, 255, 0.05));
+    border-radius: 8px;
+    pointer-events: none;
+    z-index: 2;
 }
 
 .prayer-card:hover {
     transform: translateY(-2px);
 }
 
-/* AI Active Glowing Card Border */
-.prayer-card.ai-active {
-    box-shadow: 0 12px 40px var(--shadow-color), 0 0 15px rgba(255, 255, 255, 0.05), 0 0 25px var(--accent-color) !important;
-    border-color: var(--accent-color);
-}
-
-.prayer-card.ai-active::before {
-    background: linear-gradient(90deg, var(--accent-color), var(--glow-1), var(--accent-color));
-    height: 5px;
-    animation: border-flow 4s linear infinite;
-    background-size: 200% auto;
-}
-
-@keyframes border-flow {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 200% 50%; }
-}
-
 .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.25rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 3;
 }
 
 .period-badge {
     display: inline-block;
-    padding: 0.35rem 0.85rem;
-    border-radius: 50px;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    background: var(--btn-secondary-bg);
-    border: 1px solid var(--card-border);
-    color: var(--accent-color);
-    transition: all var(--transition-speed) ease;
+    letter-spacing: 0.22em;
+    color: var(--text-secondary);
+    opacity: 0.85;
+    transition: color var(--transition-speed) ease;
 }
 
 .ai-active-indicator {
     display: inline-block;
-    padding: 0.35rem 0.85rem;
-    border-radius: 50px;
-    font-size: 0.75rem;
-    font-weight: 700;
+    font-size: 0.68rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    background: linear-gradient(135deg, var(--accent-color), var(--glow-1));
-    color: var(--bg-gradient-start);
-    box-shadow: 0 0 10px var(--glow-1);
-    animation: glow-pulse 2s infinite alternate;
-}
-
-@keyframes glow-pulse {
-    0% { opacity: 0.9; box-shadow: 0 0 6px var(--glow-1); }
-    100% { opacity: 1; box-shadow: 0 0 14px var(--glow-1); }
+    letter-spacing: 0.18em;
+    color: var(--accent-color);
+    opacity: 0.85;
+    transition: color var(--transition-speed) ease;
 }
 
 /* Animation class when changing prayer text */
 .fade-out {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(6px);
 }
 .fade-in {
     opacity: 1;
@@ -404,10 +412,17 @@ body:not(.theme-light) .icon-moon { display: none; }
 }
 
 .prayer-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1.25;
-    margin-bottom: 1.25rem;
+    font-family: var(--font-prayer);
+    font-size: 2.1rem;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: var(--accent-color);
+    margin-bottom: 2.25rem;
+    text-align: center;
+    position: relative;
+    z-index: 3;
     transition: opacity 0.3s ease;
     text-shadow: 0 1px 2px var(--shadow-color);
 }
@@ -416,31 +431,72 @@ body:not(.theme-light) .icon-moon { display: none; }
     min-height: 160px;
     display: flex;
     align-items: center;
+    position: relative;
+    z-index: 3;
 }
 
 .prayer-text {
     font-family: var(--font-prayer);
-    font-size: 1.22rem;
-    line-height: 1.75;
-    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.9;
+    font-style: normal;
+    color: var(--text-primary);
     opacity: 0.9;
     white-space: pre-line;
+    text-wrap: pretty;
     transition: opacity 0.3s ease;
 }
 
-.card-footer {
-    margin-top: 2rem;
+/* Elegant Drop Cap for the first letter */
+.prayer-text::first-letter {
+    font-family: var(--font-prayer);
+    font-size: 3.2rem;
+    float: left;
+    line-height: 0.85;
+    margin-top: 0.18rem;
+    margin-right: 0.45rem;
+    font-weight: 400;
+    color: var(--accent-color);
+    font-style: italic;
+}
+
+.card-divider {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, var(--card-border), transparent);
+    margin: 2.5rem 0 2rem 0;
+    position: relative;
+    z-index: 3;
     display: flex;
-    justify-content: flex-end;
-    border-top: 1px solid var(--card-border);
-    padding-top: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-divider::after {
+    content: "✦";
+    position: absolute;
+    background: var(--card-bg);
+    padding: 0 12px;
+    font-size: 0.75rem;
+    color: var(--card-border);
+    font-family: var(--font-prayer);
+    z-index: 4;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 3;
 }
 
 .prayer-reference {
-    font-size: 0.8rem;
-    font-weight: 500;
+    font-family: var(--font-prayer);
+    font-size: 0.85rem;
+    font-style: italic;
     letter-spacing: 0.02em;
-    opacity: 0.6;
+    opacity: 0.65;
+    color: var(--text-secondary);
     transition: color var(--transition-speed) ease;
 }
 
@@ -509,60 +565,72 @@ body:not(.theme-light) .icon-moon { display: none; }
     display: flex;
     gap: 1rem;
     width: 100%;
+    margin-top: 0.5rem;
 }
 
 .btn {
     flex: 1;
-    padding: 1.1rem 1.5rem;
-    border-radius: 16px;
-    font-size: 0.95rem;
-    font-weight: 600;
+    padding: 0.85rem 1.6rem;
+    border-radius: 12px;
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.6rem;
     cursor: pointer;
-    border: none;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 20px var(--shadow-color);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     outline: none;
+    box-shadow: 0 4px 12px var(--shadow-color);
 }
 
 .btn-primary {
-    background: var(--accent-color);
-    color: var(--bg-gradient-start);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .btn-primary:hover {
-    background: var(--accent-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 24px var(--glow-1);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-hover);
+    color: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px var(--shadow-color);
 }
 
 .btn-primary:active {
-    transform: translateY(0);
+    transform: translateY(1px);
 }
 
 .btn-secondary {
-    background: var(--btn-secondary-bg);
+    background: rgba(255, 255, 255, 0.01);
     border: 1px solid var(--card-border);
     color: var(--text-primary);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    opacity: 0.85;
 }
 
 .btn-secondary:hover {
-    background: var(--card-border);
-    border-color: var(--accent-color);
-    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: var(--text-primary);
+    opacity: 1;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px var(--shadow-color);
 }
 
 .btn-secondary:active {
-    transform: translateY(0);
+    transform: translateY(1px);
 }
 
 .btn:focus-visible {
-    outline: 2px solid var(--accent-color);
+    outline: 1.5px solid var(--accent-color);
     outline-offset: 3px;
 }
 
@@ -986,12 +1054,12 @@ input[type="range"]::-webkit-slider-thumb:hover {
         gap: 1rem;
     }
     .landing-title {
-        font-size: 1.65rem;
-        letter-spacing: 0.18em;
+        font-size: 1.85rem;
+        letter-spacing: 0.2em;
     }
     .btn-generate-landing {
         padding: 0.9rem 2.2rem;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
 }
 
@@ -1013,22 +1081,42 @@ input[type="range"]::-webkit-slider-thumb:hover {
     pointer-events: auto;
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s;
 }
 
 .landing-header {
     margin-top: 10vh;
 }
 
+.landing-emblem {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.landing-emblem svg {
+    width: 48px;
+    height: 48px;
+    color: var(--accent-color);
+    opacity: 0.75;
+    filter: drop-shadow(0 2px 8px var(--shadow-color));
+    animation: pulse-slow 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-slow {
+    0% { opacity: 0.45; transform: scale(0.97); }
+    100% { opacity: 0.8; transform: scale(1.03); }
+}
+
 .landing-title {
     font-family: var(--font-prayer);
-    font-size: 2.25rem;
+    font-size: 2.5rem;
     font-weight: 300;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.28em;
     color: rgba(255, 255, 255, 0.95);
     text-align: center;
     text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
 }
 
 .landing-body {
@@ -1038,30 +1126,31 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 .btn-generate-landing {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
     padding: 1.1rem 3.5rem;
-    font-size: 1rem;
+    font-size: 0.88rem;
     font-weight: 500;
-    letter-spacing: 0.18em;
-    border-radius: 50px;
+    letter-spacing: 0.22em;
+    border-radius: 12px;
     cursor: pointer;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .btn-generate-landing:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.45);
-    transform: scale(1.05);
-    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.35);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-hover);
+    color: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
 }
 
 .btn-generate-landing:active {
-    transform: scale(0.97);
+    transform: translateY(1px);
 }
 
 .landing-footer {
@@ -1070,26 +1159,27 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 .landing-tagline {
     font-family: var(--font-ui);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 400;
-    letter-spacing: 0.22em;
-    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 0.28em;
+    color: rgba(255, 255, 255, 0.4);
     text-align: center;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: opacity 0.8s ease;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
 }
 
 /* Page States Logic styling */
 body.state-landing .app-container {
     opacity: 0;
     pointer-events: none;
-    transform: translateY(40px);
+    transform: translateY(60px) scale(0.96);
 }
 
 body.state-app .app-container {
     opacity: 1;
     pointer-events: auto;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 body.state-app .landing-screen {
@@ -1100,15 +1190,25 @@ body.state-app .landing-screen {
 
 /* Specific transitioning states for landing elements sliding away */
 body.state-transitioning .landing-title {
-    transform: translateY(-50px);
+    transform: translateY(-80px);
     opacity: 0;
 }
 
 body.state-transitioning .btn-generate-landing {
-    transform: translateY(100px) scale(0.95);
+    transform: translateY(180px) scale(0.9);
     opacity: 0;
 }
 
 body.state-transitioning .landing-tagline {
+    transform: translateY(40px);
     opacity: 0;
+}
+
+.logo-icon-svg {
+    width: 24px;
+    height: 24px;
+    color: var(--accent-color);
+    transition: transform 0.3s ease, color 0.5s ease;
+    display: inline-block;
+    vertical-align: middle;
 }

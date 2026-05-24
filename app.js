@@ -168,16 +168,16 @@ function createParticles() {
     if (!container) return;
     container.innerHTML = '';
     
-    const count = 18;
+    const count = 22;
     for (let i = 0; i < count; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
         
-        const size = Math.random() * 4 + 2;
-        const left = Math.random() * 100;
-        const duration = Math.random() * 12 + 10;
-        const delay = Math.random() * 15;
-        const opacity = Math.random() * 0.25 + 0.1;
+        const size = Math.random() * 2.5 + 1; // Muito pequenas (1px a 3.5px)
+        const left = Math.random() * 120 - 20; // Espalha horizontalmente
+        const duration = Math.random() * 25 + 20; // Super lentas (20s a 45s)
+        const delay = Math.random() * 25; // Distribui a entrada
+        const opacity = Math.random() * 0.35 + 0.15;
         
         particle.style.width = `${size}px`;
         particle.style.height = `${size}px`;
@@ -229,7 +229,7 @@ function updateTheme() {
 
 // 7. INTEGRAÇÃO GEMINI API (CLIENT-SIDE COM CHAVE DO USUÁRIO)
 async function testApiKey(key) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -307,7 +307,7 @@ IMPORTANTE: Responda estritamente no formato JSON estruturado, sem blocos de có
 "title" (string, o título da oração)
 "text" (string, o texto da oração, usando quebras de linha com '\\n' para separar os parágrafos).`;
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`;
     
     try {
         const response = await fetch(url, {
@@ -755,11 +755,16 @@ function init() {
             // Inicia o carregamento/geração da oração em paralelo
             loadNewPrayer(true);
             
-            // Transição de telas após 800ms
+            // Transição de telas com sobreposição (inicia exibição do app aos 300ms)
             setTimeout(() => {
-                document.body.classList.remove('state-landing', 'state-transitioning');
+                document.body.classList.remove('state-landing');
                 document.body.classList.add('state-app');
-            }, 800);
+            }, 300);
+            
+            // Conclui a transição aos 1100ms quando as animações do CSS finalizarem
+            setTimeout(() => {
+                document.body.classList.remove('state-transitioning');
+            }, 1100);
         });
     }
 
