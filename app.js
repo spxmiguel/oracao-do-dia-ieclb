@@ -8,89 +8,89 @@ const prayersDatabase = {
     madrugada: [
         {
             title: "Silêncio e Proteção",
-            text: "Amado Deus, no silêncio profundo desta madrugada, entrego em Tuas mãos as minhas inquietações.\nQue a Tua presença conforte o meu coração e que eu encontre o repouso necessário em Tua graça.\nGuarda a minha vida e a das pessoas que amo sob a Tua proteção compassiva.\nAmém."
+            text: "Amado Deus, na quietude e no silêncio desta madrugada, quando o mundo ao redor parece pausar, eu me coloco diante de Ti.\nTrago em meu coração as minhas inquietações, as incertezas sobre o futuro e o peso do cansaço acumulado. Que a Tua presença reconfortante seja o meu abrigo nestas horas escuras.\nEntrego sob a Tua guarda a minha vida, a minha família e todas as pessoas que se sentem sós ou desamparadas nesta noite.\nConcede-me um repouso tranquilo, na certeza de que a Tua graça me sustenta e de que o Teu amor não conhece limites. Que eu possa descansar sob a promessa do Teu cuidado fiel.\nAmém."
         },
         {
             title: "Entrega e Confiança",
-            text: "Senhor Deus, quando a noite é longa e as preocupações tentam tirar a paz, recordo-me da Tua promessa de amor incondicional.\nQue a Tua paz, que ultrapassa todo entendimento, guarde a minha mente e acalme minha respiração.\nDescanso na certeza de que cuidas de mim em cada segundo.\nAmém."
+            text: "Senhor da Vida, quando o sono se afasta e os pensamentos se agitam no silêncio do quarto, lembro-me do Teu convite para entregar a Ti todos os fardos.\nTu nos conheces por inteiro, sabes de nossas fraquezas e de nossas esperanças. Derrama sobre mim a Tua paz, aquela que ultrapassa toda a nossa capacidade humana de compreender.\nGuarda a minha mente das ansiedades que tentam se instalar e concede-me a serenidade necessária para repousar.\nConfio na Tua promessa de misericórdia, sabendo que cada novo dia é um presente do Teu amor que nos liberta e nos renova.\nAmém."
         },
         {
             title: "Luz na Quietude",
-            text: "Deus da Vida, na quietude destas horas, agradeço porque a Tua misericórdia nunca dorme.\nQue a Tua luz espiritual dissipe qualquer sombra de medo ou incerteza no meu coração.\nPrepara-me com paciência e esperança para o novo dia que virá, sob a Tua sábia condução.\nAmém."
+            text: "Deus de amor e compaixão, que caminhas conosco tanto no brilho do dia quanto nas sombras da noite.\nAgradeço-Te porque a Tua vigilância amorosa não falha e porque nunca estamos sós. Que a Tua luz interior dissipe qualquer angústia ou dúvida que tente perturbar o meu descanso nesta madrugada.\nFortalece o meu espírito para que eu possa olhar para o amanhã com esperança renovada, sabendo que a Tua Palavra é lâmpada para os meus pés.\nQue o Teu Santo Espírito me envolva em paz e prepare o meu corpo para servir com alegria.\nAmém."
         },
         {
             title: "Oração pelo Próximo no Silêncio",
-            text: "Pai celeste, neste silêncio da noite, coloco diante de Ti as pessoas que sofrem nos hospitais, as que passam por angústias na alma ou que não encontram repouso.\nQue o Teu Santo Espírito traga consolo, alívio e o abraço do Teu amor acolhedor.\nAmém."
+            text: "Pai de misericórdia, nesta hora em que o silêncio convida à reflexão, lembro-me daqueles que não conseguem dormir por causa da dor física, da preocupação financeira ou do sofrimento da alma.\nIntercedo pelos doentes nos hospitais, pelos que trabalham no turno da noite cuidando de vidas e pelos que não têm um teto para se abrigar.\nQue o Teu Espírito Consolador sopre paz e alívio sobre cada coração aflito. Que sintam que não estão sozinhos e que a Tua Igreja seja sempre um farol de acolhimento e solidariedade para com os necessitados.\nAmém."
         },
         {
             title: "Sossego para a Alma",
-            text: "Senhor, ajuda-me a desacelerar os meus pensamentos.\nQue eu possa sentir o Teu amparo na brisa desta madrugada.\nQue meu corpo e minha alma descansem seguros sob a Tua promessa de perdão, renovação e paz eterna.\nAmém."
+            text: "Amado Deus, neste momento de silêncio, peço que acalmes os batimentos do meu coração e acalmes a minha mente.\nAfasta de mim as cobranças e o peso do que deixei de fazer hoje. Ensina-me a aceitar que sou frágil, mas que a Tua graça me basta e me perdoa plenamente.\nQue eu possa fechar os olhos em paz, entregando o controle de tudo em Tuas mãos. Que a Tua fidelidade seja o meu travesseiro e que eu acorde restaurado para testemunhar o Teu amor e a Tua bondade na comunhão com meus irmãos e irmãs.\nAmém."
         }
     ],
     manha: [
         {
             title: "Gratidão pelo Novo Dia",
-            text: "Deus de Amor, obrigado pelo dom da vida e por esta manhã que se inicia.\nAgradeço pela oportunidade de recomeçar sob a Tua bendita graça.\nGuia os meus passos, ilumina as minhas decisões e dá-me um coração generoso para acolher e servir o próximo hoje.\nAmém."
+            text: "Senhor Deus, criador do céu e da terra, agradeço-Te de todo o coração por esta manhã e pelo sopro de vida que me concedes.\nCada novo amanhecer é um testemunho vivo do Teu amor e da Tua graça que se renovam sobre nós. Ao iniciar esta jornada, peço que guies os meus passos e ilumines a minha mente nas decisões que precisarei tomar.\nQue eu não viva este dia focado apenas em mim, mas que meus olhos estejam atentos às necessidades do meu próximo. Dá-me sabedoria para escutar, coragem para agir com justiça e paciência para acolher a todos com amor.\nAmém."
         },
         {
-            title: "Caminho de Esperança e Fé",
-            text: "Senhor, iniciamos mais uma jornada com a Tua Palavra a iluminar nossa estrada.\nQue a nossa fé em Cristo nos impulsione a praticar a empatia, a justiça e o amor fraternal por onde passarmos.\nDá-nos sabedoria nas palavras e bondade nas ações.\nAmém."
+            title: "Caminho de Fé e Ação",
+            text: "Deus da Vida, que em Jesus Cristo nos deste o maior exemplo de serviço e compaixão.\nLembro-me, nesta manhã, de que a foi cristã nos chama a ser pessoas ativas no mundo, espalhando sementes de paz, amor e reconciliação. Abençoa o meu trabalho, as minhas tarefas domésticas e as minhas relações.\nQue as minhas palavras transmitam esperança e que as minhas ações reflitam a Tua bondade. Dá-me discernimento para não me calar diante da injustiça e um espírito pronto para estender a mão aos que mais precisam no dia de hoje.\nAmém."
         },
         {
             title: "Serviço e Comunhão",
-            text: "Pai celeste, lembrando o ensinamento da fé luterana, reconhecemos que somos livres em Cristo para servir uns aos outros com alegria.\nAbençoa o meu trabalho, os meus estudos e as minhas conversas de hoje.\nQue eu seja um canal de paz e reconciliação.\nAmém."
+            text: "Pai Celeste, inspirados pela fé da Reforma, recordamos que fomos libertados em Cristo para ser servos e servas uns dos outros em amor.\nQue esta verdade guie o meu dia. Livra-me do egoísmo e da pressa que nos impedem de ver o irmão e a irmã no caminho.\nQue eu possa exercer a minha vocação diária com dedicação, alegria e honestidade, contribuindo para o bem-estar da minha família e da comunidade. Abençoa a nossa Igreja e todos os que trabalham pela promoção da dignidade humana.\nAmém."
         },
         {
             title: "Fortaleza Diária",
-            text: "Deus eterno, diante dos desafios desta nova manhã, peço a Tua fortaleza.\nQue a pressa do cotidiano não me afaste de Ti nem do amor ao próximo.\nAjuda-me a lembrar que a Tua graça me basta e que ando em segurança sob o Teu olhar.\nAmém."
+            text: "Deus forte e consolador, o dia se apresenta cheio de desafios e tarefas que muitas vezes nos fazem sentir pequenos e sobrecarregados.\nPeço que me dês a Tua força e o Teu ânimo nesta manhã. Recorda-me, nos momentos de cansaço ou dúvida, de que a Tua graça me é oferecida gratuitamente e de que não preciso carregar o mundo nos ombros.\nQue eu caminhe seguro na certeza de que Tu estás comigo, orientando a minha vida e protegendo os meus passos de todo o mal.\nAmém."
         },
         {
             title: "Cuidado com a Criação",
-            text: "Criador de todas as coisas, agradeço pelas maravilhas da natureza que despertam com o sol.\nDá-me consciência para cuidar da nossa casa comum e respeito pela vida de cada ser humano.\nQue o meu dia seja um reflexo do Teu infinito amor.\nAmém."
+            text: "Deus Criador, cuja sabedoria se revela no canto das aves, no calor do sol que nasce e na diversidade da vida que desperta nesta manhã.\nAgradeço pela beleza do mundo e peço que despertes em mim uma responsabilidade profunda pelo cuidado com a criação. Ajuda-me a fazer escolhas conscientes que preservem a natureza e promovam a justiça climática e social.\nQue o meu modo de viver hoje honre o Teu projeto de vida abundante para todas as criaturas e traga paz aos que compartilham a caminhada comigo.\nAmém."
         }
     ],
     tarde: [
         {
             title: "Sossego no Meio da Jornada",
-            text: "Amado Deus, no meio das tarefas desta tarde, faço uma pausa para respirar e me reconectar Contigo.\nRenova as minhas forças físicas e espirituais.\nQue a Tua paz acalme a ansiedade e me conceda sabedoria para concluir este dia com integridade.\nAmém."
+            text: "Deus compassivo, no meio da correria e das tarefas desta tarde, faço uma pausa necessária para silenciar e buscar a Tua presença.\nRenova as minhas forças físicas que começam a diminuir e traz clareza para a minha mente. Que a pressa das horas não me roube a capacidade de ser gentil e compreensivo.\nColoco sob o Teu cuidado o restante da minha jornada de trabalho ou estudo. Que a Tua paz, que acalma as tempestades da alma, esteja comigo, lembrando-me de que o valor da minha vida está no Teu amor e não apenas na minha produtividade.\nAmém."
         },
         {
             title: "Paciência e Acolhimento",
-            text: "Senhor, quando o cansaço do dia começa a surgir, peço que me dês paciência e mansidão.\nAjuda-me a enxergar as pessoas ao meu redor com empatia e respeito, compartilhando palavras de ânimo e gestos de carinho.\nAmém."
+            text: "Amado Deus, quando a tarde avança e as pressões diárias se acumulam, muitas vezes nos falta paciência e serenidade para lidar com as diferenças.\nPeço que derrames sobre mim um espírito de mansidão e tolerância. Ajuda-me a ouvir antes de falar e a estender a mão aos que estão desanimados ou cansados ao meu redor.\nQue os meus relacionamentos de hoje sejam pautados pelo respeito e pela compaixão, sendo eu um canal de consolo e compreensão para os que convivem comigo no cotidiano.\nAmém."
         },
         {
-            title: "Compromisso com o Bem",
-            text: "Deus da vida, abençoa as mãos que trabalham, as mentes que criam e as pessoas que cuidam.\nQue em cada pequena tarefa desta tarde eu possa honrar-Te através do meu compromisso com a verdade, com a justiça e com a honestidade.\nAmém."
+            title: "Fidelidade e Testemunho",
+            text: "Senhor, que em nossas tarefas cotidianas possamos dar testemunho do Teu amor.\nAbençoa cada trabalhador e trabalhadora que nesta tarde se dedica com esforço ao sustento de suas famílias. Que haja dignidade no trabalho e justiça na remuneração de todos.\nDá-nos honestidade nas nossas relações comerciais e pessoais. Que em cada pequena ação, por mais simples que seja, possamos construir um mundo mais justo e solidário, de acordo com o Teu Reino.\nAmém."
         },
         {
-            title: "Presença Constante",
-            text: "Pai celeste, às vezes o dia parece pesado e as demandas nos sufocam.\nLembra-me de que não ando só.\nQue a Tua Palavra seja o meu refúgio e o Teu Espírito Santo seja o meu guia constante ao longo desta tarde.\nEm Ti eu confio.\nAmém."
+            title: "Presença e Fortalecimento",
+            text: "Deus de amor, às vezes o cansaço do meio do dia nos faz questionar os nossos caminhos e nos sentimos sozinhos nas nossas lutas.\nAbre os meus olhos nesta tarde para perceber os sinais da Tua presença amorosa ao meu redor: no sorriso de um colega, no vento que sopra ou na Tua Palavra que me fortalece.\nRenova a minha fé e dá-me a certeza de que a Tua mão segura a minha, sustentando-me em cada dificuldade e me conduzindo à paz.\nAmém."
         },
         {
-            title: "Justiça, Diálogo e Paz",
-            text: "Deus da compaixão, inspire-nos a buscar caminhos de diálogo e justiça social nesta tarde.\nLivra-nos da indiferença e abre nossos olhos para apoiar os mais fracos e necessitados da nossa comunidade.\nAmém."
+            title: "Justiça, Diálogo e Ecumenismo",
+            text: "Senhor Deus, Tu que nos chamas a viver em unidade e a buscar a paz.\nNesta tarde, peço que nos ajudes a derrubar os muros do preconceito e da divisão. Que possamos dialogar com respeito e amor com pessoas de diferentes crenças e opiniões, aprendendo uns com os outros.\nDá-nos coragem para defender os direitos dos marginalizados e dos que sofrem injustiça em nossa sociedade. Que a nossa vida seja um testemunho ativo de paz e fraternidade.\nAmém."
         }
     ],
     noite: [
         {
-            title: "Gratidão ao Anoitecer",
-            text: "Amado Deus, a noite chegou e com ela a oportunidade de descansar.\nAgradeço por tudo o que vivi hoje: pelas alegrias partilhadas e pelas forças que encontrei nas dificuldades.\nEntrego a Ti as minhas preocupações e repouso sob a Tua guarda fiel.\nAmém."
+            title: "Gratidão e Entrega ao Descanso",
+            text: "Deus bondoso, o dia chega ao fim e a escuridão da noite nos convida ao descanso e ao recolhimento.\nAgradeço-Te de coração por todas as bênçãos recebidas hoje, pelas tarefas concluídas, pelos encontros sinceros e pelo alimento na mesa.\nEntrego a Ti também os planos que não se realizaram e as tarefas que ficaram pendentes, confiando que o amanhã pertence a Ti. Peço que a Tua proteção envolva o meu lar e as pessoas que amo, proporcionando-nos um sono tranquilo, seguro e revigorante.\nDescanso em Tua graça.\nAmém."
         },
         {
-            title: "Reconciliação e Descanso",
-            text: "Senhor Deus, ao final deste dia, peço perdão pelas falhas cometidas, pelas palavras apressadas ou omissões.\nConforta o meu coração com a Tua graça reconciliadora.\nQue eu durma em paz com Deus, com o próximo e comigo mesmo.\nAmém."
+            title: "Reconciliação e Misericórdia",
+            text: "Senhor Deus, ao olhar para trás e refletir sobre este dia que passou, reconheço as minhas falhas, as palavras impacientes que proferi e as vezes em que deixei de fazer o bem.\nPeço Teu perdão e a Tua misericórdia. Liberta o meu coração de ressentimentos e ajuda-me a perdoar também a quem me ofendeu.\nQue eu possa deitar a cabeça no travesseiro com a alma leve, sabendo que em Cristo a Tua graça sempre nos oferece um novo começo e uma nova chance de amar e servir.\nAmém."
         },
         {
-            title: "Proteção do Lar",
-            text: "Pai e Mãe celeste, abençoa e protege este lar e todas as pessoas que nele habitam.\nQue a Tua paz cubra o nosso repouso e guarde os nossos sonhos.\nConcede uma noite tranquila e revigorante a todas as famílias.\nAmém."
+            title: "Proteção e Paz no Lar",
+            text: "Pai e Mãe Celeste, que cuidas com infinito carinho de todas as famílias.\nNesta noite, peço que a Tua paz reine em meu lar. Afasta de nós as desavenças, os medos e as preocupações que impedem o sono. Abençoa as crianças, os jovens e os idosos.\nProtege a nossa casa e os nossos vizinhos de todo o perigo. Que o Teu Espírito Santo guarde os nossos pensamentos e nos dê sonhos tranquilos, para que amanhã possamos acordar com as energias renovadas e dispostos a servir-Te com alegria.\nAmém."
         },
         {
-            title: "Confiança no Amanhã",
-            text: "Deus da esperança, enquanto a escuridão da noite nos convida ao sono, confio que o amanhã trará novas oportunidades de testemunhar o Teu amor.\nGuarda-nos sob Tuas asas e concede-nos o descanso que refaz as forças.\nAmém."
+            title: "Confiança e Entrega nas Mãos de Deus",
+            text: "Deus da Esperança, enquanto a noite cobre o mundo, eu coloco a minha vida inteiramente sob o Teu cuidado.\nTu és o meu refúgio e a minha fortaleza, o Deus em quem confio em qualquer circunstância. Que o meu sono seja um ato de fé e entrega total a Ti.\nSei que estás no controle de todas as coisas e que o amanhã trará novas oportunidades de crescimento e serviço. Guarda-me sob a Tua sombra protetora e renova as minhas forças físicas e espirituais para o novo dia.\nAmém."
         },
         {
-            title: "Luz e Consolo nas Horas de Sono",
-            text: "Senhor, que a Tua luz continue a brilhar em nossos corações mesmo durante o repouso.\nProtege os enfermos, consola os que choram e dá esperança aos que sofrem neste anoitecer.\nDescansamos sob o Teu infinito e terno amor.\nAmém."
+            title: "Luz e Consolo para o Mundo",
+            text: "Deus de consolação, ao findar deste dia, lembro-me em minhas orações de todas as pessoas que enfrentam noites de angústia e solidão.\nConforta os que choram a perda de entes queridos, os enfermos nos leitos de dor e aqueles que sofrem sob o peso da ansiedade ou da depression.\nQue a Tua luz resplandeça nas trevas de suas vidas e traga a paz que tanto necessitam. Que a Tua Igreja seja uma presença ativa de amparo e carinho para com todos os que sofrem neste anoitecer.\nAmém."
         }
     ]
 };
