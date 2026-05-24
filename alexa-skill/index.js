@@ -192,7 +192,7 @@ const HelpIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'Você pode me pedir uma oração dizendo: Alexa, peça para Oração do Dia rezar uma oração. Ou peça uma: nova oração. O que gostaria de fazer?';
+        const speakOutput = 'Você pode me pedir uma oração dizendo: Alexa, peça para minha oração do dia rezar uma oração. Ou peça uma: nova oração. O que gostaria de fazer?';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)

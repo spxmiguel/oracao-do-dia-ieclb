@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "oração do dia",
+      "invocationName": "minha oração do dia",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
