@@ -105,6 +105,7 @@ let devTriggerClicks = 0;  // Clicks para revelar painel dev
 
 // CONFIGURAÇÕES DO USUÁRIO & CHAVE EMBUTIDA (Opção 1)
 const EMBEDDED_KEY_B64 = 'QUl6YVN5RDBjOXJhek1lOGFlR09vUkRuV3hqMzhpeGdVZEZqYTdz'; 
+const KEY_MASK = '••••••••••••••••••••';
 
 let geminiApiKey = localStorage.getItem('oracao-gemini-key') || 
                    (EMBEDDED_KEY_B64 ? atob(EMBEDDED_KEY_B64) : '');
@@ -237,8 +238,14 @@ async function testApiKey(key) {
                 contents: [{ parts: [{ text: "Diga apenas 'OK'" }] }]
             })
         });
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Erro ao testar a API Key no Google:", response.status, errorText);
+            showToast(`⚠️ Erro na chave: HTTP ${response.status}. Verifique o console (F12) para detalhes.`);
+        }
         return response.ok;
     } catch (e) {
+        console.error("Erro de rede ao testar chave:", e);
         return false;
     }
 }
@@ -257,6 +264,17 @@ function updateApiStatusBadge() {
         apiStatusBadge.textContent = "IA Inativa (Usando banco local)";
         apiStatusBadge.className = "status-badge status-offline";
         btnTestApi.classList.add('hidden');
+    }
+}
+
+function populateApiKeyInput() {
+    const userKey = localStorage.getItem('oracao-gemini-key') || '';
+    if (userKey) {
+        inputApiKey.value = KEY_MASK;
+        inputApiKey.placeholder = 'Chave pessoal ativa';
+    } else {
+        inputApiKey.value = '';
+        inputApiKey.placeholder = 'Chave padrão do sistema ativa';
     }
 }
 
@@ -307,7 +325,11 @@ IMPORTANTE: Responda estritamente no formato JSON estruturado, sem blocos de có
             throw new Error("LIMIT_EXCEEDED");
         }
         
-        if (!response.ok) throw new Error("Falha no status de resposta HTTP.");
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Erro na API do Gemini:", response.status, errorText);
+            throw new Error(`HTTP ${response.status}: ${errorText}`);
+        }
         
         const data = await response.json();
         const jsonText = data.candidates[0].content.parts[0].text;
@@ -710,8 +732,8 @@ function init() {
     selectAudioEngine.value = audioEngine;
     toggleAudioEngineUI(audioEngine);
     
-    // NUNCA mostre a chave embutida do sistema no input de texto público
-    inputApiKey.value = localStorage.getItem('oracao-gemini-key') || ''; 
+    // NUNCA mostre a chave embutida do sistema no input de texto público, use máscara
+    populateApiKeyInput(); 
     selectMood.value = selectedMood;
     inputVoiceRate.value = voiceRate;
     valVoiceRate.textContent = voiceRate + 'x';
@@ -794,8 +816,8 @@ function init() {
     
     // Modais & Configurações listeners
     btnSettingsToggle.addEventListener('click', () => {
-        // Mostra apenas chave pessoal se existir, escondendo a chave Base64 do sistema
-        inputApiKey.value = localStorage.getItem('oracao-gemini-key') || '';
+        // Mostra apenas chave pessoal mascarada se existir, escondendo a chave real
+        populateApiKeyInput();
         selectMood.value = selectedMood;
         selectAudioEngine.value = audioEngine;
         inputVoiceRate.value = voiceRate;
@@ -829,6 +851,12 @@ function init() {
             btnToggleKeyVisibility.textContent = 'Mostrar';
         }
     });
+
+    inputApiKey.addEventListener('focus', () => {
+        if (inputApiKey.value === KEY_MASK) {
+            inputApiKey.value = '';
+        }
+    });
     
     selectAudioEngine.addEventListener('change', () => {
         toggleAudioEngineUI(selectAudioEngine.value);
@@ -844,10 +872,17 @@ function init() {
     // Save Configs Button
     btnSaveSettings.addEventListener('click', () => {
         const enteredKey = inputApiKey.value.trim();
-        localStorage.setItem('oracao-gemini-key', enteredKey);
-        
-        // Recalcula chave da API (dá preferência para chave manual do usuário)
-        geminiApiKey = enteredKey || (EMBEDDED_KEY_B64 ? atob(EMBEDDED_KEY_B64) : '');
+        if (enteredKey !== KEY_MASK) {
+            if (enteredKey === '') {
+                localStorage.removeItem('oracao-gemini-key');
+            } else {
+                localStorage.setItem('oracao-gemini-key', enteredKey);
+            }
+            
+            // Recalcula chave da API (dá preferência para chave manual do usuário)
+            const savedKey = localStorage.getItem('oracao-gemini-key');
+            geminiApiKey = savedKey || (EMBEDDED_KEY_B64 ? atob(EMBEDDED_KEY_B64) : '');
+        }
         
         selectedMood = selectMood.value;
         audioEngine = selectAudioEngine.value;
@@ -870,7 +905,10 @@ function init() {
     
     // Test API Connection Button
     btnTestApi.addEventListener('click', async () => {
-        const testKey = inputApiKey.value.trim();
+        let testKey = inputApiKey.value.trim();
+        if (testKey === KEY_MASK) {
+            testKey = localStorage.getItem('oracao-gemini-key') || '';
+        }
         if (!testKey) return;
         
         apiStatusBadge.textContent = "Verificando...";
