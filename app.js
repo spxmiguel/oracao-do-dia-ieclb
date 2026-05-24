@@ -3,97 +3,226 @@
  * Roda 100% no lado do cliente, sem backend ou dependências externas.
  */
 
-// 1. BANCO DE ORAÇÕES LOCAL (Inspiradas na teologia e tradição luterana)
-const prayersDatabase = {
-    madrugada: [
-        {
-            title: "Silêncio e Proteção",
-            text: "Amado Deus, na quietude e no silêncio desta madrugada, quando o mundo ao redor parece pausar, eu me coloco diante de Ti.\nTrago em meu coração as minhas inquietações, as incertezas sobre o futuro e o peso do cansaço acumulado. Que a Tua presença reconfortante seja o meu abrigo nestas horas escuras.\nEntrego sob a Tua guarda a minha vida, a minha família e todas as pessoas que se sentem sós ou desamparadas nesta noite.\nConcede-me um repouso tranquilo, na certeza de que a Tua graça me sustenta e de que o Teu amor não conhece limites. Que eu possa descansar sob a promessa do Teu cuidado fiel.\nAmém."
-        },
-        {
-            title: "Entrega e Confiança",
-            text: "Senhor da Vida, quando o sono se afasta e os pensamentos se agitam no silêncio do quarto, lembro-me do Teu convite para entregar a Ti todos os fardos.\nTu nos conheces por inteiro, sabes de nossas fraquezas e de nossas esperanças. Derrama sobre mim a Tua paz, aquela que ultrapassa toda a nossa capacidade humana de compreender.\nGuarda a minha mente das ansiedades que tentam se instalar e concede-me a serenidade necessária para repousar.\nConfio na Tua promessa de misericórdia, sabendo que cada novo dia é um presente do Teu amor que nos liberta e nos renova.\nAmém."
-        },
-        {
-            title: "Luz na Quietude",
-            text: "Deus de amor e compaixão, que caminhas conosco tanto no brilho do dia quanto nas sombras da noite.\nAgradeço-Te porque a Tua vigilância amorosa não falha e porque nunca estamos sós. Que a Tua luz interior dissipe qualquer angústia ou dúvida que tente perturbar o meu descanso nesta madrugada.\nFortalece o meu espírito para que eu possa olhar para o amanhã com esperança renovada, sabendo que a Tua Palavra é lâmpada para os meus pés.\nQue o Teu Santo Espírito me envolva em paz e prepare o meu corpo para servir com alegria.\nAmém."
-        },
-        {
-            title: "Oração pelo Próximo no Silêncio",
-            text: "Pai de misericórdia, nesta hora em que o silêncio convida à reflexão, lembro-me daqueles que não conseguem dormir por causa da dor física, da preocupação financeira ou do sofrimento da alma.\nIntercedo pelos doentes nos hospitais, pelos que trabalham no turno da noite cuidando de vidas e pelos que não têm um teto para se abrigar.\nQue o Teu Espírito Consolador sopre paz e alívio sobre cada coração aflito. Que sintam que não estão sozinhos e que a Tua Igreja seja sempre um farol de acolhimento e solidariedade para com os necessitados.\nAmém."
-        },
-        {
-            title: "Sossego para a Alma",
-            text: "Amado Deus, neste momento de silêncio, peço que acalmes os batimentos do meu coração e acalmes a minha mente.\nAfasta de mim as cobranças e o peso do que deixei de fazer hoje. Ensina-me a aceitar que sou frágil, mas que a Tua graça me basta e me perdoa plenamente.\nQue eu possa fechar os olhos em paz, entregando o controle de tudo em Tuas mãos. Que a Tua fidelidade seja o meu travesseiro e que eu acorde restaurado para testemunhar o Teu amor e a Tua bondade na comunhão com meus irmãos e irmãs.\nAmém."
-        }
-    ],
-    manha: [
-        {
-            title: "Gratidão pelo Novo Dia",
-            text: "Senhor Deus, criador do céu e da terra, agradeço-Te de todo o coração por esta manhã e pelo sopro de vida que me concedes.\nCada novo amanhecer é um testemunho vivo do Teu amor e da Tua graça que se renovam sobre nós. Ao iniciar esta jornada, peço que guies os meus passos e ilumines a minha mente nas decisões que precisarei tomar.\nQue eu não viva este dia focado apenas em mim, mas que meus olhos estejam atentos às necessidades do meu próximo. Dá-me sabedoria para escutar, coragem para agir com justiça e paciência para acolher a todos com amor.\nAmém."
-        },
-        {
-            title: "Caminho de Fé e Ação",
-            text: "Deus da Vida, que em Jesus Cristo nos deste o maior exemplo de serviço e compaixão.\nLembro-me, nesta manhã, de que a fé cristã nos chama a ser pessoas ativas no mundo, espalhando sementes de paz, amor e reconciliação. Abençoa o meu trabalho, as minhas tarefas domésticas e as minhas relações.\nQue as minhas palavras transmitam esperança e que as minhas ações reflitam a Tua bondade. Dá-me discernimento para não me calar diante da injustiça e um espírito pronto para estender a mão aos que mais precisam no dia de hoje.\nAmém."
-        },
-        {
-            title: "Serviço e Comunhão",
-            text: "Pai Celeste, inspirados pela fé da Reforma, recordamos que fomos libertados em Cristo para ser servos e servas uns dos outros em amor.\nQue esta verdade guie o meu dia. Livra-me do egoísmo e da pressa que nos impedem de ver o irmão e a irmã no caminho.\nQue eu possa exercer a minha vocação diária com dedicação, alegria e honestidade, contribuindo para o bem-estar da minha família e da comunidade. Abençoa a nossa Igreja e todos os que trabalham pela promoção da dignidade humana.\nAmém."
-        },
-        {
-            title: "Fortaleza Diária",
-            text: "Deus forte e consolador, o dia se apresenta cheio de desafios e tarefas que muitas vezes nos fazem sentir pequenos e sobrecarregados.\nPeço que me dês a Tua força e o Teu ânimo nesta manhã. Recorda-me, nos momentos de cansaço ou dúvida, de que a Tua graça me é oferecida gratuitamente e de que não preciso carregar o mundo nos ombros.\nQue eu caminhe seguro na certeza de que Tu estás comigo, orientando a minha vida e protegendo os meus passos de todo o mal.\nAmém."
-        },
-        {
-            title: "Cuidado com a Criação",
-            text: "Deus Criador, cuja sabedoria se revela no canto das aves, no calor do sol que nasce e na diversidade da vida que desperta nesta manhã.\nAgradeço pela beleza do mundo e peço que despertes em mim uma responsabilidade profunda pelo cuidado com a criação. Ajuda-me a fazer escolhas conscientes que preservem a natureza e promovam a justiça climática e social.\nQue o meu modo de viver hoje honre o Teu projeto de vida abundante para todas as criaturas e traga paz aos que compartilham a caminhada comigo.\nAmém."
-        }
-    ],
-    tarde: [
-        {
-            title: "Sossego no Meio da Jornada",
-            text: "Deus compassivo, no meio da correria e das tarefas desta tarde, faço uma pausa necessária para silenciar e buscar a Tua presença.\nRenova as minhas forças físicas que começam a diminuir e traz clareza para a minha mente. Que a pressa das horas não me roube a capacidade de ser gentil e compreensivo.\nColoco sob o Teu cuidado o restante da minha jornada de trabalho ou estudo. Que a Tua paz, que acalma as tempestades da alma, esteja comigo, lembrando-me de que o valor da minha vida está no Teu amor e não apenas na minha produtividade.\nAmém."
-        },
-        {
-            title: "Paciência e Acolhimento",
-            text: "Amado Deus, quando a tarde avança e as pressões diárias se acumulam, muitas vezes nos falta paciência e serenidade para lidar com as diferenças.\nPeço que derrames sobre mim um espírito de mansidão e tolerância. Ajuda-me a ouvir antes de falar e a estender a mão aos que estão desanimados ou cansados ao meu redor.\nQue os meus relacionamentos de hoje sejam pautados pelo respeito e pela compaixão, sendo eu um canal de consolo e compreensão para os que convivem comigo no cotidiano.\nAmém."
-        },
-        {
-            title: "Fidelidade e Testemunho",
-            text: "Senhor, que em nossas tarefas cotidianas possamos dar testemunho do Teu amor.\nAbençoa cada trabalhador e trabalhadora que nesta tarde se dedica com esforço ao sustento de suas famílias. Que haja dignidade no trabalho e justiça na remuneração de todos.\nDá-nos honestidade nas nossas relações comerciais e pessoais. Que em cada pequena ação, por mais simples que seja, possamos construir um mundo mais justo e solidário, de acordo com o Teu Reino.\nAmém."
-        },
-        {
-            title: "Presença e Fortalecimento",
-            text: "Deus de amor, às vezes o cansaço do meio do dia nos faz questionar os nossos caminhos e nos sentimos sozinhos nas nossas lutas.\nAbre os meus olhos nesta tarde para perceber os sinais da Tua presença amorosa ao meu redor: no sorriso de um colega, no vento que sopra ou na Tua Palavra que me fortalece.\nRenova a minha fé e dá-me a certeza de que a Tua mão segura a minha, sustentando-me em cada dificuldade e me conduzindo à paz.\nAmém."
-        },
-        {
-            title: "Justiça, Diálogo e Ecumenismo",
-            text: "Senhor Deus, Tu que nos chamas a viver em unidade e a buscar a paz.\nNesta tarde, peço que nos ajudes a derrubar os muros do preconceito e da divisão. Que possamos dialogar com respeito e amor com pessoas de diferentes crenças e opiniões, aprendendo uns com os outros.\nDá-nos coragem para defender os direitos dos marginalizados e dos que sofrem injustiça em nossa sociedade. Que a nossa vida seja um testemunho ativo de paz e fraternidade.\nAmém."
-        }
-    ],
-    noite: [
-        {
-            title: "Gratidão e Entrega ao Descanso",
-            text: "Deus bondoso, o dia chega ao fim e a escuridão da noite nos convida ao descanso e ao recolhimento.\nAgradeço-Te de coração por todas as bênçãos recebidas hoje, pelas tarefas concluídas, pelos encontros sinceros e pelo alimento na mesa.\nEntrego a Ti também os planos que não se realizaram e as tarefas que ficaram pendentes, confiando que o amanhã pertence a Ti. Peço que a Tua proteção envolva o meu lar e as pessoas que amo, proporcionando-nos um sono tranquilo, seguro e revigorante.\nDescanso em Tua graça.\nAmém."
-        },
-        {
-            title: "Reconciliação e Misericórdia",
-            text: "Senhor Deus, ao olhar para trás e refletir sobre este dia que passou, reconheço as minhas falhas, as palavras impacientes que proferi e as vezes em que deixei de fazer o bem.\nPeço Teu perdão e a Tua misericórdia. Liberta o meu coração de ressentimentos e ajuda-me a perdoar também a quem me ofendeu.\nQue eu possa deitar a cabeça no travesseiro com a alma leve, sabendo que in Cristo a Tua graça sempre nos oferece um novo começo e uma nova chance de amar e servir.\nAmém."
-        },
-        {
-            title: "Proteção e Paz no Lar",
-            text: "Pai e Mãe Celeste, que cuidas com infinito carinho de todas as famílias.\nNesta noite, peço que a Tua paz reine em meu lar. Afasta de nós as desavenças, os medos e as preocupações que impedem o sono. Abençoa as crianças, os jovens e os idosos.\nProtege a nossa casa e os nossos vizinhos de todo o perigo. Que o Teu Espírito Santo guarde os nossos pensamentos e nos dê sonhos tranquilos, para que amanhã possamos acordar com as energias renovadas e dispostos a servir-Te com alegria.\nAmém."
-        },
-        {
-            title: "Confiança e Entrega nas Mãos de Deus",
-            text: "Deus da Esperança, enquanto a noite cobre o mundo, eu coloco a minha vida inteiramente sob o Teu cuidado.\nTu és o meu refúgio e a minha fortaleza, o Deus em quem confio em qualquer circunstância. Que o meu sono seja um ato de fé e entrega total a Ti.\nSei que estás no controle de todas as coisas e que o amanhã trará novas oportunidades de crescimento e serviço. Guarda-me sob a Tua sombra protetora e renova as minhas forças físicas e espirituais para o novo dia.\nAmém."
-        },
-        {
-            title: "Luz e Consolo para o Mundo",
-            text: "Deus de consolação, ao findar deste dia, lembro-me em minhas orações de todas as pessoas que enfrentam noites de angústia e solidão.\nConforta os que choram a perda de entes queridos, os enfermos nos leitos de dor e aqueles que sofrem sob o peso da ansiedade ou da depressão.\nQue a Tua luz resplandeça nas trevas de suas vidas e traga a paz que tanto necessitam. Que a Tua Igreja seja uma presença ativa de amparo e carinho para com todos os que sofrem neste anoitecer.\nAmém."
-        }
-    ]
+// 1. BANCO DE ORAÇÕES COMBINATÓRIO LOCAL (Garante frescor e mais de 7.000 orações únicas por período)
+const combinatorialDatabase = {
+    madrugada: {
+        titles: [
+            "Silêncio e Proteção",
+            "Entrega e Confiança",
+            "Luz na Quietude",
+            "Sossego para a Alma",
+            "Refúgio na Escuridão",
+            "Paz sob as Estrelas"
+        ],
+        invocations: [
+            "Amado Deus, na quietude e no silêncio desta madrugada, quando o mundo parece pausar, eu me coloco diante de Ti.",
+            "Senhor da Vida, nesta hora silenciosa em que o sono se afasta, elevo meu coração e meus pensamentos ao Teu encontro.",
+            "Deus de amor e compaixão, que velas por nós na escuridão da noite assim como nos guias sob a luz do dia, eu Te busco agora.",
+            "Pai de misericórdia, no recolhimento deste momento, encontro paz para respirar e me entregar à Tua santa presença.",
+            "Eterno Deus, cuja presença é consolo para as almas inquietas, ouve a minha prece sussurrada no silêncio do meu quarto.",
+            "Deus compassivo, na calma desta madrugada, afasto as distrações do mundo para descansar sob a Tua soberana graça."
+        ],
+        thanksgivings: [
+            "Agradeço-Te porque a Tua fidelidade nunca dorme e porque o Teu amor constante afasta toda a minha solidão.",
+            "Louvo-Te por seres o meu abrigo seguro e por envolveres a minha vida em um abraço de paz e acolhimento.",
+            "Sou grato por Teu cuidado invisível, que me sustenta e me protege mesmo nos momentos em que me sinto frágil.",
+            "Te bendigo pela dádiva da fé, que ilumina as horas mais escuras e me assegura que nunca estou desamparado.",
+            "Agradeço pelo ar que respiro, pela certeza do Teu perdão gratuito e pela promessa de que a Tua misericórdia se renova.",
+            "Celebro a Tua bondade eterna, que acalma as tempestades da mente e traz sossego ao meu ser cansado."
+        ],
+        reflections: [
+            "Trago a Ti as minhas preocupações com o futuro e o cansaço que pesa em meu corpo, sabendo que me conheces por inteiro.",
+            "Coloco sob a Tua guarda os meus medos ocultos, as dúvidas que tiram o meu sono e as angústias da minha alma.",
+            "Ensina-me a aceitar as minhas limitações humanas e a descansar na certeza de que a Tua maravilhosa graça me basta.",
+            "Ajuda-me a silenciar as vozes das cobranças diárias e a render o controle de todas as coisas em Tuas mãos fiéis.",
+            "Que a Tua Palavra seja a lâmpada que guia os meus pés e a âncora que estabiliza o meu espírito na incerteza.",
+            "Derrama sobre mim aquela paz profunda que excede todo o entendimento humano e que guarda os nossos corações."
+        ],
+        intercessions: [
+            "Intercedo pelos que sofrem nos hospitais, pelos que trabalham na calada da noite e por quem não tem um teto para repousar.",
+            "Lembro-me dos doentes, dos solitários e dos que choram no silêncio. Que o Teu Espírito sopre alívio sobre eles.",
+            "Guarda a minha família, abençoa os meus amigos e que a nossa comunidade de fé seja sempre um canal de auxílio mútuo.",
+            "Protege os que enfrentam a dor física ou a depressão nestas horas tardias. Que sintam que não estão sozinhos.",
+            "Abençoa os profissionais de saúde e segurança que vigiam por nós. Que a Tua mão protetora os guarde de todo mal.",
+            "Leva consolo aos corações aflitos que perderam a esperança, mostrando a eles a luz de um novo amanhecer."
+        ],
+        closings: [
+            "Concede-me um repouso tranquilo sob a Tua guarda fiel, para que eu acorde restaurado para servir. Amém.",
+            "Fecho os olhos em paz, confiando na Tua promessa de amor eterno e salvação gratuita. Amém.",
+            "Que o Teu Santo Espírito me envolva em paz e prepare o meu corpo para viver com alegria. Amém.",
+            "Descanso em Ti, sabendo que o meu amanhã está seguro sob a Tua bondosa providência. Amém.",
+            "Guarda a minha mente e dá-me sonhos serenos na certeza do Teu cuidado inabalável. Amém.",
+            "Em nome de Jesus Cristo, meu Redentor, entrego a minha vida e a minha noite em Tuas mãos. Amém."
+        ]
+    },
+    manha: {
+        titles: [
+            "Gratidão pelo Amanhecer",
+            "Caminho de Fé e Ação",
+            "Serviço e Comunhão",
+            "Fortaleza Diária",
+            "Renovação e Esperança",
+            "Despertar na Graça"
+        ],
+        invocations: [
+            "Senhor Deus, Criador do céu e da terra, agradeço-Te por esta manhã e pelo sopro de vida que me concedes hoje.",
+            "Deus da Vida, ao iniciar esta jornada, coloco-me diante de Ti pedindo que ilumines a minha mente e os meus passos.",
+            "Pai Celeste, inspirado pela fé de que a Tua graça nos liberta, desperto para viver este dia sob a Tua orientação.",
+            "Eterno Deus, cuja misericórdia brilha como a luz do sol nascente, eu Te busco com esperança e alegria nesta manhã.",
+            "Amado Pai, no frescor deste novo amanhecer, elevo minha voz em oração para consagrar a Ti cada uma das minhas horas.",
+            "Senhor, que em Jesus Cristo nos revelaste o Teu amor paternal, acolhe minha prece de gratidão ao abrir os olhos hoje."
+        ],
+        thanksgivings: [
+            "Cada novo dia é um testemunho do Teu amor constante e da Tua compaixão que nunca falha conosco.",
+            "Agradeço pelas oportunidades de aprendizado, pelas relações de afeto e pela dádiva de poder recomeçar na Tua graça.",
+            "Louvo-Te pelo alimento na mesa, pela saúde em meu corpo e pelo privilégio de fazer parte da Tua criação.",
+            "Te bendigo porque a fé nos liberta da culpa e do medo, oferecendo-nos diariamente um caminho de paz e esperança.",
+            "Obrigado pelo teto que me abriga, pela beleza da natureza que desperta e pela Tua Palavra que me guia.",
+            "Sou profundamente grato pela Tua paz que me sustenta e pela certeza de que caminhas lado a lado comigo."
+        ],
+        reflections: [
+            "Dá-me sabedoria para as decisões deste dia, paciência para com os outros e coragem para agir de acordo com a Tua vontade.",
+            "Ajuda-me a exercer a minha vocação diária com honestidade, dedicação e alegria, servindo com amor no meu cotidiano.",
+            "Livra-me do egoísmo, da pressa que me cega para a necessidade alheia e do desânimo diante das dificuldades.",
+            "Que as minhas palavras tragam esperança, que as minhas ações reflitam a Tua justiça e que eu viva com humildade.",
+            "Dá-me discernimento para não me calar diante da injustiça e um espírito pronto para perdoar e reconciliar.",
+            "Fortalece a minha fé para que eu não me sobrecarregue com ansiedades, lembrando que a Tua graça me basta."
+        ],
+        intercessions: [
+            "Abençoa o meu trabalho, os meus estudos e as relações com meus familiares, colegas e amigos no dia de hoje.",
+            "Olha por aqueles que começam o dia preocupados com o desemprego, com a escassez ou com a falta de saúde.",
+            "Pedimos que abençoes a nossa comunidade, a nossa Igreja e todos os que trabalham pela dignidade e justiça social.",
+            "Dá força aos necessitados, ampara os que se sentem sós e faz de nós instrumentos ativos do Teu acolhimento.",
+            "Guarda os enfermos, protege as crianças e que a paz de Cristo reine em todos os lares e sociedades.",
+            "Lembramos dos governantes: dá-lhes sabedoria para promover a justiça social, o cuidado com a criação e a paz."
+        ],
+        closings: [
+            "Caminho seguro na certeza de que Tu guias os meus passos e sustentas a minha vida. Amém.",
+            "Que o meu dia seja um testemunho vivo do Teu amor na comunhão com meus irmãos e irmãs. Amém.",
+            "Entrego este dia em Tuas mãos, pronto para servir sob a bênção do Teu Santo Espírito. Amém.",
+            "Que a Tua Palavra seja a minha direção e o Teu amor o meu escudo nas tarefas de hoje. Amém.",
+            "Concede-me ânimo e alegria para realizar o meu dever com amor e fidelidade a Ti. Amém.",
+            "Em nome de Cristo Jesus, nosso Senhor e Salvador, sob a Tua eterna e santa guarda. Amém."
+        ]
+    },
+    tarde: {
+        titles: [
+            "Sossego na Jornada",
+            "Paciência e Acolhimento",
+            "Fidelidade no Trabalho",
+            "Presença no Cotidiano",
+            "Justiça e Diálogo",
+            "Força no Cansaço"
+        ],
+        invocations: [
+            "Deus compassivo, no meio da correria e das tarefas desta tarde, faço uma pausa para buscar a Tua presença calma.",
+            "Senhor Deus, na metade desta jornada diária, recorro a Ti para reencontrar o meu equilíbrio e a minha paz.",
+            "Pai de amor, que nos dás vigor para o trabalho, elevo a Ti o meu coração neste momento de descanso da tarde.",
+            "Deus da graça, que nos chamas a ser sal e luz no mundo, renova as minhas energias físicas e mentais agora.",
+            "Amado Deus, na transição destas horas de trabalho, busco o Teu silêncio interior para acalmar os meus pensamentos.",
+            "Senhor, que caminhas conosco em todos os afazeres da vida, ouve a minha oração no meio desta tarde."
+        ],
+        thanksgivings: [
+            "Agradeço-Te pelas tarefas concluídas até aqui e pelo sustento que nos dás através do nosso esforço diário.",
+            "Louvo-Te porque mesmo no meio da agitação, a Tua presença silenciosa e acolhedora nos traz paz.",
+            "Obrigado pelas pessoas que compartilham esta jornada comigo e pelos momentos de cooperação e solidariedade.",
+            "Sou grato por Tua providência fiel, que nunca nos deixa faltar o pão e nos dá ânimo para continuar.",
+            "Bendigo-Te pela oportunidade de servir ao próximo através do meu trabalho, dos estudos ou dos afazeres domésticos.",
+            "Agradeço porque a Tua graça me sustenta gratuitamente e alivia o peso das minhas obrigações."
+        ],
+        reflections: [
+            "Renova as minhas forças físicas que começam a diminuir e traz clareza para a minha mente nas próximas decisões.",
+            "Dá-me paciência para lidar com as diferenças, mansidão nas palavras e generosidade no atendimento ao outro.",
+            "Ajuda-me a não focar apenas na produtividade, mas a valorizar as pessoas e a respeitar o tempo de cada uma.",
+            "Que a pressa das horas não me impeça de ser gentil e de estender a mão a quem está sobrecarregado ao meu lado.",
+            "Ensina-me a ser honesto nas minhas relações de trabalho e a agir com integridade in todas as circunstâncias.",
+            "Dá-nos discernimento para dialogar com respeito e amor, derrubando os muros do preconceito e da intolerância."
+        ],
+        intercessions: [
+            "Abençoa todos os trabalhadores que se dedicam com honestidade, garantindo o sustento digno de suas famílias.",
+            "Lembro-me dos que buscam trabalho nesta tarde e dos que sofrem com condições laborais injustas ou indignas.",
+            "Intercedo pelos marginalizados da nossa sociedade e pelos que lutam pela justiça climática, social e econômica.",
+            "Protege os idosos, conforta os que sentem dores físicas e dá paciência aos cuidadores de enfermos neste momento.",
+            "Abençoa as escolas, as universidades e os locais de trabalho para que sejam espaços de crescimento e paz.",
+            "Pedimos pela união das famílias e pela superação de qualquer conflito ou desentendimento em nossos ambientes."
+        ],
+        closings: [
+            "Que a Tua paz, que ultrapassa a nossa compreensão, guarde a minha mente no restante deste dia. Amém.",
+            "Sigo em frente com foi, sabendo que a Tua mão segura a minha e me fortalece. Amém.",
+            "Que eu possa testemunhar o Teu amor em cada pequena ação e palavra nesta tarde. Amém.",
+            "Concluo as minhas tarefas com gratidão, descansando na Tua promessa de salvação e graça. Amém.",
+            "Abençoa as horas que restam desta jornada e faz-me um canal de paz na vida de alguém. Amém.",
+            "Em nome de Cristo Jesus, cuja graça nos reconcilia e nos envia a servir com amor. Amém."
+        ]
+    },
+    noite: {
+        titles: [
+            "Gratidão e Descanso",
+            "Misericórdia e Perdão",
+            "Proteção para o Lar",
+            "Confiança e Entrega",
+            "Consolo para o Mundo",
+            "Quietude na Graça"
+        ],
+        invocations: [
+            "Deus bondoso, o dia chega ao fim e a escuridão da noite nos convida ao descanso, ao recolhimento e à paz.",
+            "Senhor Deus, ao findar deste dia, coloco-me sob a Tua sombra protetora para refletir e descansar em Ti.",
+            "Pai Celeste, que velas pelo Teu povo sem cessar, venho a Ti nesta noite entregar as minhas fadigas e preces.",
+            "Deus de amor e consolação, que nos concedes a noite para o repouso do corpo e da alma, escuta a minha voz.",
+            "Amado Pai, no silêncio do meu lar, desligo-me das inquietações do mundo para repousar sob o Teu cuidado.",
+            "Senhor, cuja misericórdia nos sustenta tanto na luz do dia quanto no repouso noturno, acolhe a minha entrega."
+        ],
+        thanksgivings: [
+            "Agradeço pelas bênçãos recebidas hoje, pelas tarefas concluídas e pelos encontros sinceros com as pessoas.",
+            "Louvo-Te porque a Tua graça nos perdoa e nos oferece diariamente um recomeço livre de culpa e condenação.",
+            "Obrigado pelo alimento na mesa, pela paz em meu lar e pela certeza de que o Teu amor nunca me abandona.",
+            "Bendigo-Te por teres guardado os meus passos e por teres sido o meu refúgio seguro em meio às tensões.",
+            "Agradeço pela Tua Palavra que me conforta e pela comunhão com irmãos e irmãs que fortalece a minha fé.",
+            "Sou grato por Tua presença que traz sossego ao meu coração e afasta os medos que tentam me perturbar."
+        ],
+        reflections: [
+            "Reconheço as minhas falhas deste dia: as palavras impacientes que proferi e as oportunidades de fazer o bem que perdi.",
+            "Peço Teu perdão misericordioso e ajuda para liberar o meu coração de qualquer ressentimento ou mágoa.",
+            "Entrego a Ti as tarefas pendentes, os planos que não se realizaram e a ansiedade sobre o dia de amanhã.",
+            "Ensina-me a aceitar que o controle de tudo pertence a Ti e que posso deitar a cabeça em paz no meu travesseiro.",
+            "Que a Tua paz reine em meu lar, afastando os medos, os pesadelos e as preocupações que perturbam o sono.",
+            "Concede-me a serenidade para perdoar a quem me ofendeu, dormindo com a alma leve sob a Tua graça."
+        ],
+        intercessions: [
+            "Protege a minha família, os meus vizinhos e todos os que se preparam para dormir nesta noite em nossa cidade.",
+            "Intercedo pelos que sofrem no leito de dor, pelos solitários e pelos que não conseguem dormir devido à ansiedade.",
+            "Guarda os trabalhadores noturnos, protege os desabrigados e que a Tua Igreja seja uma presença ativa de amparo.",
+            "Olha pelos que sofrem a dor do luto, conforta as almas angustiadas e dá-lhes a esperança da ressurreição.",
+            "Pedimos que a paz se estabeleça nas nações em guerra e que as famílias separadas encontrem amparo e união.",
+            "Abençoa as crianças e os idosos nesta noite. Que todos desfrutem de segurança e sono revigorante."
+        ],
+        closings: [
+            "Concede-me um sono tranquilo e seguro, para acordar amanhã renovado e pronto para servir com alegria. Amém.",
+            "Descanso em Tua graça, confiando que o amanhã trará novas oportunidades de testemunhar o Teu amor. Amém.",
+            "Que o Teu Santo Espírito guarde os meus pensamentos e me dê sonhos serenos sob a Tua proteção. Amém.",
+            "Entrego o meu espírito em Tuas mãos, na certeza de que a Tua misericórdia incalculável me basta. Amém.",
+            "Durmo em paz sob o Teu olhar amoroso e protetor, sabendo que me sustentas com fidelidade. Amém.",
+            "Em nome de Cristo Jesus, meu Salvador e Senhor, na esperança de um novo dia abençoado por Ti. Amém."
+        ]
+    }
 };
+
+// Algoritmo Combinatório para gerar orações teológicas locais
+function generateLocalCombinatorialPrayer(period) {
+    const database = combinatorialDatabase[period];
+    if (!database) return null;
+    
+    const part1 = database.invocations[Math.floor(Math.random() * database.invocations.length)];
+    const part2 = database.thanksgivings[Math.floor(Math.random() * database.thanksgivings.length)];
+    const part3 = database.reflections[Math.floor(Math.random() * database.reflections.length)];
+    const part4 = database.intercessions[Math.floor(Math.random() * database.intercessions.length)];
+    const part5 = database.closings[Math.floor(Math.random() * database.closings.length)];
+    
+    const title = database.titles[Math.floor(Math.random() * database.titles.length)];
+    const text = `${part1} ${part2}\n\n${part3} ${part4}\n\n${part5}`;
+    
+    return { title, text };
+}
 
 // 2. ESTADOS DA APLICAÇÃO
 let currentHour = 'auto'; // 'auto' ou número 0-23
@@ -138,6 +267,8 @@ const btnNewPrayer = document.getElementById('btn-new-prayer');
 const btnNewText = document.getElementById('btn-new-text');
 const btnSpeakPrayer = document.getElementById('btn-speak-prayer');
 const btnSpeakText = document.getElementById('btn-speak-text');
+const btnAiPrayer = document.getElementById('btn-ai-prayer');
+const btnAiText = document.getElementById('btn-ai-text');
 const ttsContainer = document.getElementById('tts-container');
 
 // Panels & Modals
@@ -413,23 +544,29 @@ function displayPrayer(prayer, animate = true) {
     }
 }
 
-async function loadNewPrayer(animate = true) {
+async function loadNewPrayer(animate = true, forceAi = false) {
     stopSpeaking();
     
-    if (geminiApiKey) {
+    if (animate) {
+        prayerTitleEl.classList.add('fade-out');
+        prayerTextEl.classList.add('fade-out');
+    }
+    
+    // Geração por IA só ocorre se for explicitamente forçada (forceAi = true) e a chave existir
+    if (forceAi && geminiApiKey) {
         aiActiveIndicator.classList.remove('hidden');
-        btnNewText.textContent = "Gerando por IA...";
-        btnNewPrayer.disabled = true;
         
-        if (animate) {
-            prayerTitleEl.classList.add('fade-out');
-            prayerTextEl.classList.add('fade-out');
+        if (btnAiText && btnAiPrayer) {
+            btnAiText.textContent = "Gerando...";
+            btnAiPrayer.disabled = true;
         }
         
         const aiPrayer = await generateAiPrayer(currentPeriod, selectedMood);
         
-        btnNewText.textContent = "Nova Oração";
-        btnNewPrayer.disabled = false;
+        if (btnAiText && btnAiPrayer) {
+            btnAiText.textContent = "Orar com IA";
+            btnAiPrayer.disabled = false;
+        }
         
         if (aiPrayer && !aiPrayer.error) {
             prayerCard.classList.add('ai-active');
@@ -438,30 +575,27 @@ async function loadNewPrayer(animate = true) {
         } else {
             // Caso falhe por cota ou conexão
             if (aiPrayer && aiPrayer.error === "LIMIT_EXCEEDED") {
-                showToast("✨ Limite de cota da IA atingido. Carregando devocional especial local!");
+                showToast("✨ Limite de cota da IA atingido. Carregando devocional local!");
             } else {
                 showToast("⚠️ Conexão de IA indisponível. Carregando oração local.");
             }
         }
     }
     
-    // Fallback/Local Database
+    // Carregamento local (Instantâneo e Combinatório)
     aiActiveIndicator.classList.add('hidden');
     prayerCard.classList.remove('ai-active');
     
-    const prayers = prayersDatabase[currentPeriod];
-    let randomIndex;
-    
-    if (prayers.length > 1) {
-        do {
-            randomIndex = Math.floor(Math.random() * prayers.length);
-        } while (randomIndex === lastPrayerIndex);
+    const localPrayer = generateLocalCombinatorialPrayer(currentPeriod);
+    if (localPrayer) {
+        displayPrayer(localPrayer, animate);
     } else {
-        randomIndex = 0;
+        // Fallback básico caso algo dê errado
+        displayPrayer({
+            title: "Paz e Graça",
+            text: "Que a paz de Deus esteja com você neste momento de oração."
+        }, animate);
     }
-    
-    lastPrayerIndex = randomIndex;
-    displayPrayer(prayers[randomIndex], animate);
 }
 
 function syncPeriod(animate = true) {
@@ -472,7 +606,7 @@ function syncPeriod(animate = true) {
         currentPeriod = newPeriod;
         lastPrayerIndex = -1;
         updateTheme();
-        loadNewPrayer(animate);
+        loadNewPrayer(animate, false);
     }
 }
 
@@ -752,8 +886,8 @@ function init() {
         btnGenerateLanding.addEventListener('click', () => {
             document.body.classList.add('state-transitioning');
             
-            // Inicia o carregamento/geração da oração em paralelo
-            loadNewPrayer(true);
+            // Inicia o carregamento/geração da oração em paralelo (local por padrão)
+            loadNewPrayer(true, false);
             
             // Transição de telas com sobreposição (inicia exibição do app aos 300ms)
             setTimeout(() => {
@@ -774,8 +908,14 @@ function init() {
             icon.classList.add('spin-animation');
             setTimeout(() => icon.classList.remove('spin-animation'), 600);
         }
-        loadNewPrayer(true);
+        loadNewPrayer(true, false);
     });
+
+    if (btnAiPrayer) {
+        btnAiPrayer.addEventListener('click', () => {
+            loadNewPrayer(true, true);
+        });
+    }
     
     btnSpeakPrayer.addEventListener('click', () => {
         if (isSpeaking) stopSpeaking();
@@ -815,7 +955,7 @@ function init() {
             currentPeriod = newPeriod;
             lastPrayerIndex = -1;
             updateTheme();
-            loadNewPrayer(true);
+            loadNewPrayer(true, false);
         });
     });
     
@@ -905,7 +1045,7 @@ function init() {
         stopSpeaking();
         
         showToast("💾 Configurações salvas.");
-        loadNewPrayer(true);
+        loadNewPrayer(true, false);
     });
     
     // Test API Connection Button

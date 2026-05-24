@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
     
     <!-- CSS Link -->
-    <link rel="stylesheet" href="style.css?v=2.5">
+    <link rel="stylesheet" href="style.css?v=2.6">
     
     <!-- Favicon (Emoji 🙏) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🙏</text></svg>">
@@ -113,17 +113,21 @@
             <!-- Main Control Buttons -->
             <div class="controls-area">
                 <button id="btn-speak-prayer" class="btn btn-secondary" aria-label="Ouvir a oração em voz alta">
-                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
                         <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
                     </svg>
-                    <span id="btn-speak-text">Ouvir Oração</span>
+                    <span id="btn-speak-text">Ouvir</span>
                 </button>
-                <button id="btn-new-prayer" class="btn btn-primary" aria-label="Gerar outra oração do mesmo período">
-                    <svg class="btn-icon icon-refresh" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <button id="btn-new-prayer" class="btn btn-secondary" aria-label="Gerar outra oração do mesmo período do banco local">
+                    <svg class="btn-icon icon-refresh" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
                     </svg>
                     <span id="btn-new-text">Nova Oração</span>
+                </button>
+                <button id="btn-ai-prayer" class="btn btn-primary" aria-label="Gerar oração personalizada com Inteligência Artificial">
+                    <span class="btn-icon" style="font-size: 1rem; line-height: 1;">✨</span>
+                    <span id="btn-ai-text">Orar com IA</span>
                 </button>
             </div>
             
@@ -227,6 +231,6 @@
     </div>
 
     <!-- JS Link -->
-    <script src="app.js?v=2.5"></script>
+    <script src="app.js?v=2.6"></script>
 </body>
 </html>
