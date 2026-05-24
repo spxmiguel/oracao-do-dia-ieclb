@@ -1,5 +1,5 @@
 /**
- * Oração do Dia IECLB - Lógica da Aplicação (Versão 2.0 com IA & Alexa)
+ * Oração do Dia IECLB - Lógica da Aplicação (Versão 2.1 com IA & Alexa)
  * Roda 100% no lado do cliente, sem backend ou dependências externas.
  */
 
@@ -64,7 +64,7 @@ const prayersDatabase = {
         },
         {
             title: "Presença e Fortalecimento",
-            text: "Deus de amor, às vezes o cansaço do meio do dia nos faz questionar os nossos caminhos e nos sentimos sozinhos nas nossas lutas.\nAbre os meus olhos nesta tarde para perceber os sinais da Tua presença amorosa ao meu redor: no sorriso de um colega, no vento que sobra ou na Tua Palavra que me fortalece.\nRenova a minha foi e dá-me a certeza de que a Tua mão segura a minha, sustentando-me em cada dificuldade e me conduzindo à paz.\nAmém."
+            text: "Deus de amor, às vezes o cansaço do meio do dia nos faz questionar os nossos caminhos e nos sentimos sozinhos nas nossas lutas.\nAbre os meus olhos nesta tarde para perceber os sinais da Tua presença amorosa ao meu redor: no sorriso de um colega, no vento que sopra ou na Tua Palavra que me fortalece.\nRenova a minha fé e dá-me a certeza de que a Tua mão segura a minha, sustentando-me em cada dificuldade e me conduzindo à paz.\nAmém."
         },
         {
             title: "Justiça, Diálogo e Ecumenismo",
@@ -78,7 +78,7 @@ const prayersDatabase = {
         },
         {
             title: "Reconciliação e Misericórdia",
-            text: "Senhor Deus, ao olhar para trás e refletir sobre este dia que passou, reconheço as minhas falhas, as palavras impacientes que proferi e as vezes em que deixei de fazer o bem.\nPeço Teu perdão e a Tua misericórdia. Liberta o meu coração de ressentimentos e ajuda-me a perdoar também a quem me ofendeu.\nQue eu possa deitar a cabeça no travesseiro com a alma leve, sabendo que em Cristo a Tua graça sempre nos oferece um novo começo e uma nova chance de amar e servir.\nAmém."
+            text: "Senhor Deus, ao olhar para trás e refletir sobre este dia que passou, reconheço as minhas falhas, as palavras impacientes que proferi e as vezes em que deixei de fazer o bem.\nPeço Teu perdão e a Tua misericórdia. Liberta o meu coração de ressentimentos e ajuda-me a perdoar também a quem me ofendeu.\nQue eu possa deitar a cabeça no travesseiro com a alma leve, sabendo que in Cristo a Tua graça sempre nos oferece um novo começo e uma nova chance de amar e servir.\nAmém."
         },
         {
             title: "Proteção e Paz no Lar",
@@ -86,7 +86,7 @@ const prayersDatabase = {
         },
         {
             title: "Confiança e Entrega nas Mãos de Deus",
-            text: "Deus da Esperança, enquanto a noite cobre o mundo, eu coloco a minha vida inteiramente sob o Teu cuidado.\nTu és o meu refúgio e a minha fortaleza, o Deus em quem confio em qualquer circunstância. Que o meu sono seja um ato de foi e entrega total a Ti.\nSei que estás no controle de todas as coisas e que o amanhã trará novas oportunidades de crescimento e serviço. Guarda-me sob a Tua sombra protetora e renova as minhas forças físicas e espirituais para o novo dia.\nAmém."
+            text: "Deus da Esperança, enquanto a noite cobre o mundo, eu coloco a minha vida inteiramente sob o Teu cuidado.\nTu és o meu refúgio e a minha fortaleza, o Deus em quem confio em qualquer circunstância. Que o meu sono seja um ato de fé e entrega total a Ti.\nSei que estás no controle de todas as coisas e que o amanhã trará novas oportunidades de crescimento e serviço. Guarda-me sob a Tua sombra protetora e renova as minhas forças físicas e espirituais para o novo dia.\nAmém."
         },
         {
             title: "Luz e Consolo para o Mundo",
@@ -104,13 +104,12 @@ let themeMode = 'auto';    // 'auto' (usa o período) ou 'light' (modo claro sep
 let devTriggerClicks = 0;  // Clicks para revelar painel dev
 
 // CONFIGURAÇÕES DO USUÁRIO & CHAVE EMBUTIDA (Opção 1)
-// Se você quiser embutir sua chave restrita por domínio para que todos os visitantes usem a IA:
-// 1. Codifique sua chave em Base64 (ex: em base64encode.org) e insira abaixo:
 const EMBEDDED_KEY_B64 = 'QUl6YVN5RDBjOXJhek1lOGFlR09vUkRuV3hqMzhpeGdVZEZqYTdz'; 
 
 let geminiApiKey = localStorage.getItem('oracao-gemini-key') || 
                    (EMBEDDED_KEY_B64 ? atob(EMBEDDED_KEY_B64) : '');
 let selectedMood = localStorage.getItem('oracao-selected-mood') || 'default';
+let audioEngine = localStorage.getItem('oracao-audio-engine') || 'native'; // 'native' ou 'google'
 let voiceRate = parseFloat(localStorage.getItem('oracao-voice-rate')) || 0.9;
 let voicePitch = parseFloat(localStorage.getItem('oracao-voice-pitch')) || 1.0;
 let selectedVoiceName = localStorage.getItem('oracao-voice-name') || '';
@@ -150,6 +149,9 @@ const btnSaveSettings = document.getElementById('btn-save-settings');
 // Modal Form Inputs
 const inputApiKey = document.getElementById('input-api-key');
 const selectMood = document.getElementById('select-mood');
+const selectAudioEngine = document.getElementById('select-audio-engine');
+const voiceSelectContainer = document.getElementById('voice-select-container');
+const voiceParamsRow = document.querySelector('.modal-body .input-row');
 const apiStatusBadge = document.getElementById('api-status-badge');
 const btnTestApi = document.getElementById('btn-test-api');
 const selectVoice = document.getElementById('select-voice');
@@ -165,15 +167,14 @@ function createParticles() {
     if (!container) return;
     container.innerHTML = '';
     
-    // Cria 18 partículas no plano de fundo para dar textura visual
     const count = 18;
     for (let i = 0; i < count; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
         
-        const size = Math.random() * 4 + 2; // 2px a 6px
+        const size = Math.random() * 4 + 2;
         const left = Math.random() * 100;
-        const duration = Math.random() * 12 + 10; // 10s a 22s
+        const duration = Math.random() * 12 + 10;
         const delay = Math.random() * 15;
         const opacity = Math.random() * 0.25 + 0.1;
         
@@ -242,16 +243,21 @@ async function testApiKey(key) {
     }
 }
 
-function updateApiStatusBadge(key) {
-    if (!key) {
+function updateApiStatusBadge() {
+    const userKey = localStorage.getItem('oracao-gemini-key') || '';
+    if (userKey) {
+        apiStatusBadge.textContent = "Chave Pessoal Ativa ✨";
+        apiStatusBadge.className = "status-badge status-online";
+        btnTestApi.classList.remove('hidden');
+    } else if (EMBEDDED_KEY_B64) {
+        apiStatusBadge.textContent = "IA do Sistema Ativa ✨";
+        apiStatusBadge.className = "status-badge status-online";
+        btnTestApi.classList.add('hidden'); // Oculta botão de teste para a chave do sistema
+    } else {
         apiStatusBadge.textContent = "IA Inativa (Usando banco local)";
         apiStatusBadge.className = "status-badge status-offline";
         btnTestApi.classList.add('hidden');
-        return;
     }
-    apiStatusBadge.textContent = "Chave Configurada";
-    apiStatusBadge.className = "status-badge status-testing";
-    btnTestApi.classList.remove('hidden');
 }
 
 async function generateAiPrayer(period, mood) {
@@ -297,6 +303,10 @@ IMPORTANTE: Responda estritamente no formato JSON estruturado, sem blocos de có
             })
         });
         
+        if (response.status === 429) {
+            throw new Error("LIMIT_EXCEEDED");
+        }
+        
         if (!response.ok) throw new Error("Falha no status de resposta HTTP.");
         
         const data = await response.json();
@@ -309,6 +319,9 @@ IMPORTANTE: Responda estritamente no formato JSON estruturado, sem blocos de có
         throw new Error("Dados de oração incompletos.");
     } catch (e) {
         console.error("Erro ao chamar Gemini API:", e);
+        if (e.message === "LIMIT_EXCEEDED") {
+            return { error: "LIMIT_EXCEEDED" };
+        }
         return null;
     }
 }
@@ -345,7 +358,7 @@ function showToast(message) {
         toast.style.transform = 'translateX(-50%) translateY(20px)';
         toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 300);
-    }, 4000);
+    }, 4500);
 }
 
 // 8. RENDERIZAÇÃO DA ORAÇÃO
@@ -381,7 +394,6 @@ function displayPrayer(prayer, animate = true) {
 async function loadNewPrayer(animate = true) {
     stopSpeaking();
     
-    // Se tiver chave de API do Gemini, tenta gerar por IA
     if (geminiApiKey) {
         aiActiveIndicator.classList.remove('hidden');
         btnNewText.textContent = "Gerando por IA...";
@@ -397,13 +409,17 @@ async function loadNewPrayer(animate = true) {
         btnNewText.textContent = "Nova Oração";
         btnNewPrayer.disabled = false;
         
-        if (aiPrayer) {
+        if (aiPrayer && !aiPrayer.error) {
             prayerCard.classList.add('ai-active');
             displayPrayer(aiPrayer, animate);
             return;
         } else {
-            // Se falhar, usa orações locais sem quebrar
-            showToast("⚠️ Conexão falhou. Carregando oração local.");
+            // Caso falhe por cota ou conexão
+            if (aiPrayer && aiPrayer.error === "LIMIT_EXCEEDED") {
+                showToast("✨ Limite de cota da IA atingido. Carregando devocional especial local!");
+            } else {
+                showToast("⚠️ Conexão de IA indisponível. Carregando oração local.");
+            }
         }
     }
     
@@ -445,7 +461,6 @@ function populateVoiceList() {
     
     selectVoice.innerHTML = '<option value="default">Voz padrão do navegador</option>';
     
-    // Filtra vozes em português
     const ptVoices = voices.filter(v => v.lang.toLowerCase().includes('pt'));
     ptVoices.forEach(v => {
         const option = document.createElement('option');
@@ -470,7 +485,6 @@ let currentAudioIndex = 0;
 let googleAudioPlayer = new Audio();
 
 function splitTextIntoChunks(text, maxLen) {
-    // Divide o texto por pontos, exclamações, interrogações ou quebras de linha
     const sentences = text.match(/[^.!?\n]+[.!?\n]+|[^.!?\n]+$/g) || [text];
     const chunks = [];
     let currentChunk = "";
@@ -479,7 +493,6 @@ function splitTextIntoChunks(text, maxLen) {
         sentence = sentence.trim();
         if (!sentence) continue;
         
-        // Se a frase inteira for maior que o limite, quebra por palavras
         if ((currentChunk + " " + sentence).length > maxLen) {
             if (currentChunk) {
                 chunks.push(currentChunk.trim());
@@ -512,22 +525,27 @@ function startSpeaking() {
     
     const textToSpeak = `${currentPrayer.title}. ${currentPrayer.text}`;
     
-    // Tenta usar o motor do Google Translate TTS (muito mais natural e humanizado)
-    try {
-        const chunks = splitTextIntoChunks(textToSpeak, 180);
-        audioQueue = chunks.map(chunk => 
-            `https://translate.google.com/translate_tts?ie=UTF-8&tl=pt-BR&client=tw-ob&q=${encodeURIComponent(chunk)}`
-        );
-        
-        currentAudioIndex = 0;
-        isSpeaking = true;
-        btnSpeakText.textContent = "Parar Oração";
-        ttsContainer.classList.remove('hidden');
-        btnSpeakPrayer.classList.add('active');
-        
-        playNextGoogleChunk();
-    } catch (err) {
-        console.warn("Falha no Google TTS, usando Web Speech API nativa...", err);
+    if (audioEngine === 'google') {
+        // Tenta usar o motor do Google Translate TTS (voz neural)
+        try {
+            const chunks = splitTextIntoChunks(textToSpeak, 180);
+            audioQueue = chunks.map(chunk => 
+                `https://translate.google.com/translate_tts?ie=UTF-8&tl=pt-BR&client=tw-ob&q=${encodeURIComponent(chunk)}`
+            );
+            
+            currentAudioIndex = 0;
+            isSpeaking = true;
+            btnSpeakText.textContent = "Parar Oração";
+            ttsContainer.classList.remove('hidden');
+            btnSpeakPrayer.classList.add('active');
+            
+            playNextGoogleChunk();
+        } catch (err) {
+            console.warn("Falha no Google TTS, usando Web Speech API nativa...", err);
+            startNativeSpeaking(textToSpeak);
+        }
+    } else {
+        // Usa o player de áudio nativo (Voz do Sistema)
         startNativeSpeaking(textToSpeak);
     }
 }
@@ -629,31 +647,44 @@ function resetTTSUI() {
 
 // 10. INICIALIZAÇÃO E LISTENERS
 function init() {
-    // 10.1 Partículas & Vozes
     createParticles();
     if ('speechSynthesis' in window) {
         populateVoiceList();
     }
     
-    // 10.2 Carrega tema manual ou auto
     const savedTheme = localStorage.getItem('oracao-theme-mode');
     themeMode = savedTheme === 'light' ? 'light' : 'auto';
     
-    // 10.3 Carrega configurações no form modal
-    inputApiKey.value = geminiApiKey;
+    // Auxiliar para exibir/ocultar opções da voz nativa
+    function toggleAudioEngineUI(engine) {
+        if (engine === 'google') {
+            voiceSelectContainer.classList.add('hidden');
+            voiceParamsRow.classList.add('hidden');
+        } else {
+            voiceSelectContainer.classList.remove('hidden');
+            voiceParamsRow.classList.remove('hidden');
+        }
+    }
+    
+    // Carrega configurações no form modal
+    selectAudioEngine.value = audioEngine;
+    toggleAudioEngineUI(audioEngine);
+    
+    // NUNCA mostre a chave embutida do sistema no input de texto público
+    inputApiKey.value = localStorage.getItem('oracao-gemini-key') || ''; 
     selectMood.value = selectedMood;
     inputVoiceRate.value = voiceRate;
     valVoiceRate.textContent = voiceRate + 'x';
     inputVoicePitch.value = voicePitch;
     valVoicePitch.textContent = voicePitch.toFixed(1);
     
-    updateApiStatusBadge(geminiApiKey);
+    updateApiStatusBadge();
     
-    // 10.4 Sincronização inicial
+    // Sincronização inicial
     syncPeriod(false);
     updateTheme();
     
-    // 10.5 Event Listeners - Controles Principais
+    // Event Listeners - Controles Principais
     btnNewPrayer.addEventListener('click', () => {
         const icon = btnNewPrayer.querySelector('.icon-refresh');
         if (icon) {
@@ -674,7 +705,7 @@ function init() {
         updateTheme();
     });
     
-    // 10.6 Dev Mode panel (Taps ⛪ 5 times)
+    // Dev Mode panel (Taps ⛪ 5 times)
     logoDevTrigger.addEventListener('click', () => {
         devTriggerClicks++;
         if (devTriggerClicks >= 5) {
@@ -705,16 +736,20 @@ function init() {
         });
     });
     
-    // 10.7 Modais & Configurações listeners
+    // Modais & Configurações listeners
     btnSettingsToggle.addEventListener('click', () => {
-        inputApiKey.value = geminiApiKey;
+        // Mostra apenas chave pessoal se existir, escondendo a chave Base64 do sistema
+        inputApiKey.value = localStorage.getItem('oracao-gemini-key') || '';
         selectMood.value = selectedMood;
+        selectAudioEngine.value = audioEngine;
         inputVoiceRate.value = voiceRate;
         valVoiceRate.textContent = voiceRate + 'x';
         inputVoicePitch.value = voicePitch;
         valVoicePitch.textContent = voicePitch.toFixed(1);
-        updateApiStatusBadge(geminiApiKey);
+        
+        updateApiStatusBadge();
         populateVoiceList();
+        toggleAudioEngineUI(audioEngine);
         
         settingsModal.classList.remove('hidden');
     });
@@ -723,7 +758,6 @@ function init() {
         settingsModal.classList.add('hidden');
     });
     
-    // Close modal clicking outside
     settingsModal.addEventListener('click', (e) => {
         if (e.target === settingsModal) {
             settingsModal.classList.add('hidden');
@@ -740,7 +774,10 @@ function init() {
         }
     });
     
-    // Real-time rates ranges values updates
+    selectAudioEngine.addEventListener('change', () => {
+        toggleAudioEngineUI(selectAudioEngine.value);
+    });
+    
     inputVoiceRate.addEventListener('input', () => {
         valVoiceRate.textContent = inputVoiceRate.value + 'x';
     });
@@ -750,14 +787,20 @@ function init() {
     
     // Save Configs Button
     btnSaveSettings.addEventListener('click', () => {
-        geminiApiKey = inputApiKey.value.trim();
+        const enteredKey = inputApiKey.value.trim();
+        localStorage.setItem('oracao-gemini-key', enteredKey);
+        
+        // Recalcula chave da API (dá preferência para chave manual do usuário)
+        geminiApiKey = enteredKey || (EMBEDDED_KEY_B64 ? atob(EMBEDDED_KEY_B64) : '');
+        
         selectedMood = selectMood.value;
+        audioEngine = selectAudioEngine.value;
         voiceRate = parseFloat(inputVoiceRate.value);
         voicePitch = parseFloat(inputVoicePitch.value);
         selectedVoiceName = selectVoice.value;
         
-        localStorage.setItem('oracao-gemini-key', geminiApiKey);
         localStorage.setItem('oracao-selected-mood', selectedMood);
+        localStorage.setItem('oracao-audio-engine', audioEngine);
         localStorage.setItem('oracao-voice-rate', voiceRate);
         localStorage.setItem('oracao-voice-pitch', voicePitch);
         localStorage.setItem('oracao-voice-name', selectedVoiceName);
@@ -792,7 +835,6 @@ function init() {
         }
     });
     
-    // Periodically verify auto-sync every 5 min
     setInterval(() => {
         if (currentHour === 'auto') {
             syncPeriod(true);

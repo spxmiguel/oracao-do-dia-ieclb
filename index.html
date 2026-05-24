@@ -171,7 +171,14 @@
                 <section class="settings-section">
                     <h3>🔊 Configurações da Voz</h3>
                     <div class="input-group">
-                        <label for="select-voice">Voz de Leitura:</label>
+                        <label for="select-audio-engine">Mecanismo de Voz:</label>
+                        <select id="select-audio-engine">
+                            <option value="native">🎙️ Voz do Sistema (Siri, Google, etc. - Mais fluida)</option>
+                            <option value="google">🌐 Google Tradutor (Online - Voz neural)</option>
+                        </select>
+                    </div>
+                    <div class="input-group" id="voice-select-container">
+                        <label for="select-voice">Voz de Leitura (para Voz do Sistema):</label>
                         <select id="select-voice">
                             <option value="default">Voz padrão do navegador</option>
                         </select>
