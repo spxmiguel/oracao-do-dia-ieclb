@@ -461,12 +461,28 @@ function populateVoiceList() {
     
     selectVoice.innerHTML = '<option value="default">Voz padrão do navegador</option>';
     
-    const ptVoices = voices.filter(v => v.lang.toLowerCase().includes('pt'));
+    const ptVoices = voices.filter(v => v.lang.toLowerCase().replace('_', '-').includes('pt'));
+    const ptBRVoices = ptVoices.filter(v => v.lang.toLowerCase().replace('_', '-').includes('pt-br'));
+    
+    // Se não houver voz selecionada no localStorage, vamos tentar pré-selecionar a melhor voz pt-BR encontrada
+    let autoSelectedVoice = selectedVoiceName;
+    if (!autoSelectedVoice && ptBRVoices.length > 0) {
+        let bestVoice = ptBRVoices.find(v => v.name.toLowerCase().includes('natural') || v.name.toLowerCase().includes('online'));
+        if (!bestVoice) bestVoice = ptBRVoices.find(v => v.name.toLowerCase().includes('google'));
+        if (!bestVoice) bestVoice = ptBRVoices.find(v => v.name.toLowerCase().includes('siri') || v.name.toLowerCase().includes('premium'));
+        if (!bestVoice) bestVoice = ptBRVoices.find(v => !v.name.toLowerCase().includes('desktop'));
+        if (!bestVoice) bestVoice = ptBRVoices[0];
+        
+        if (bestVoice) {
+            autoSelectedVoice = bestVoice.name;
+        }
+    }
+    
     ptVoices.forEach(v => {
         const option = document.createElement('option');
         option.value = v.name;
         option.textContent = `${v.name} (${v.lang})`;
-        if (v.name === selectedVoiceName) {
+        if (v.name === autoSelectedVoice) {
             option.selected = true;
         }
         selectVoice.appendChild(option);
@@ -483,6 +499,11 @@ if ('speechSynthesis' in window) {
 let audioQueue = [];
 let currentAudioIndex = 0;
 let googleAudioPlayer = new Audio();
+try {
+    googleAudioPlayer.referrerPolicy = "no-referrer";
+} catch (e) {
+    console.warn("Navegador não suporta referrerPolicy em Audio element", e);
+}
 
 function splitTextIntoChunks(text, maxLen) {
     const sentences = text.match(/[^.!?\n]+[.!?\n]+|[^.!?\n]+$/g) || [text];
@@ -593,12 +614,30 @@ function startNativeSpeaking(text) {
     speechUtterance.rate = voiceRate;
     speechUtterance.pitch = voicePitch;
     
-    if (voices.length > 0 && selectedVoiceName) {
-        const customVoice = voices.find(v => v.name === selectedVoiceName);
-        if (customVoice) speechUtterance.voice = customVoice;
-    } else {
-        const defaultPt = voices.find(v => v.lang.includes('pt-BR') || v.lang.includes('pt_BR'));
-        if (defaultPt) speechUtterance.voice = defaultPt;
+    if (voices.length > 0) {
+        // Se o usuário selecionou uma voz específica na UI, usa ela
+        const uiVoiceName = selectVoice.value;
+        if (uiVoiceName && uiVoiceName !== 'default') {
+            const customVoice = voices.find(v => v.name === uiVoiceName);
+            if (customVoice) speechUtterance.voice = customVoice;
+        } else {
+            // Priorização inteligente de voz padrão em pt-BR de alta qualidade
+            const ptVoices = voices.filter(v => v.lang.toLowerCase().replace('_', '-').includes('pt'));
+            const ptBRVoices = ptVoices.filter(v => v.lang.toLowerCase().replace('_', '-').includes('pt-br'));
+            
+            let chosenVoice = null;
+            if (ptBRVoices.length > 0) {
+                chosenVoice = ptBRVoices.find(v => v.name.toLowerCase().includes('natural') || v.name.toLowerCase().includes('online'));
+                if (!chosenVoice) chosenVoice = ptBRVoices.find(v => v.name.toLowerCase().includes('google'));
+                if (!chosenVoice) chosenVoice = ptBRVoices.find(v => v.name.toLowerCase().includes('siri') || v.name.toLowerCase().includes('premium'));
+                if (!chosenVoice) chosenVoice = ptBRVoices.find(v => !v.name.toLowerCase().includes('desktop'));
+                if (!chosenVoice) chosenVoice = ptBRVoices[0];
+            } else if (ptVoices.length > 0) {
+                chosenVoice = ptVoices[0];
+            }
+            
+            if (chosenVoice) speechUtterance.voice = chosenVoice;
+        }
     }
     
     speechUtterance.onstart = () => {
@@ -612,7 +651,8 @@ function startNativeSpeaking(text) {
         resetTTSUI();
     };
     
-    speechUtterance.onerror = () => {
+    speechUtterance.onerror = (e) => {
+        console.error("Erro na síntese de voz nativa:", e);
         resetTTSUI();
     };
     

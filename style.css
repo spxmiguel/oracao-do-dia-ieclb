@@ -17,8 +17,8 @@
 
 /* MADRUGADA: Deep indigo & starry sky */
 body.period-madrugada {
-    --bg-gradient-start: hsl(235, 50%, 8%);
-    --bg-gradient-end: hsl(265, 45%, 14%);
+    --bg-gradient-start: hsla(235, 50%, 8%, 0.85);
+    --bg-gradient-end: hsla(265, 45%, 14%, 0.85);
     --card-bg: hsla(235, 45%, 12%, 0.65);
     --card-border: hsla(235, 40%, 35%, 0.25);
     --text-primary: hsl(220, 25%, 95%);
@@ -33,8 +33,8 @@ body.period-madrugada {
 
 /* MANHÃ: Warm morning sunrise */
 body.period-manha {
-    --bg-gradient-start: hsl(22, 50%, 10%);
-    --bg-gradient-end: hsl(345, 45%, 16%);
+    --bg-gradient-start: hsla(22, 50%, 10%, 0.82);
+    --bg-gradient-end: hsla(345, 45%, 16%, 0.82);
     --card-bg: hsla(22, 45%, 13%, 0.65);
     --card-border: hsla(22, 40%, 35%, 0.25);
     --text-primary: hsl(22, 25%, 96%);
@@ -49,8 +49,8 @@ body.period-manha {
 
 /* TARDE: Warm golden daylight & soft blue */
 body.period-tarde {
-    --bg-gradient-start: hsl(205, 50%, 10%);
-    --bg-gradient-end: hsl(190, 45%, 15%);
+    --bg-gradient-start: hsla(205, 50%, 10%, 0.85);
+    --bg-gradient-end: hsla(190, 45%, 15%, 0.85);
     --card-bg: hsla(205, 45%, 13%, 0.65);
     --card-border: hsla(205, 40%, 30%, 0.25);
     --text-primary: hsl(205, 20%, 95%);
@@ -65,8 +65,8 @@ body.period-tarde {
 
 /* NOITE: Purple twilight */
 body.period-noite {
-    --bg-gradient-start: hsl(275, 50%, 8%);
-    --bg-gradient-end: hsl(300, 40%, 12%);
+    --bg-gradient-start: hsla(275, 50%, 8%, 0.85);
+    --bg-gradient-end: hsla(300, 40%, 12%, 0.85);
     --card-bg: hsla(275, 45%, 12%, 0.65);
     --card-border: hsla(275, 40%, 30%, 0.25);
     --text-primary: hsl(275, 20%, 94%);
@@ -81,8 +81,8 @@ body.period-noite {
 
 /* 2. MANUAL LIGHT THEME OVERRIDE */
 body.theme-light {
-    --bg-gradient-start: hsl(30, 20%, 95%);
-    --bg-gradient-end: hsl(30, 15%, 88%);
+    --bg-gradient-start: hsla(30, 20%, 95%, 0.85);
+    --bg-gradient-end: hsla(30, 15%, 88%, 0.85);
     --card-bg: hsla(0, 0%, 100%, 0.88);
     --card-border: hsla(30, 25%, 50%, 0.2);
     --text-primary: hsl(30, 30%, 15%);
@@ -95,12 +95,18 @@ body.theme-light {
     --btn-secondary-bg: hsla(30, 15%, 85%, 0.6);
 }
 
+/* 3. LANDING PAGE OVERRIDES */
+body.state-landing {
+    --bg-gradient-start: rgba(45, 38, 32, 0.45);
+    --bg-gradient-end: rgba(22, 18, 15, 0.7);
+}
+
 /* Base Body Styles */
 body {
     min-height: 100vh;
     font-family: var(--font-ui);
     color: var(--text-primary);
-    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end)), url('background.png') no-repeat center center fixed / cover;
     display: flex;
     justify-content: center;
     align-items: center;
