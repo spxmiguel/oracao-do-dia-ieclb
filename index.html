@@ -19,6 +19,9 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🙏</text></svg>">
 </head>
 <body class="theme-auto">
+    <!-- Particles background -->
+    <div id="particles-container" class="particles-container" aria-hidden="true"></div>
+    
     <!-- Decorative background elements -->
     <div class="background-decorations" aria-hidden="true">
         <div class="glow-orb orb-1"></div>
@@ -29,10 +32,16 @@
         <!-- Header -->
         <header class="app-header">
             <div class="logo-area">
-                <span class="logo-icon" aria-hidden="true">⛪</span>
+                <span class="logo-icon" aria-hidden="true" id="logo-dev-trigger" style="cursor: pointer;" title="Versão 2.0">⛪</span>
                 <h1 class="logo-title">Oração do Dia</h1>
             </div>
             <div class="header-actions">
+                <button id="btn-settings-toggle" class="icon-button" aria-label="Configurações de IA e Voz" title="Configurações">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
+                </button>
                 <button id="btn-theme-toggle" class="icon-button" aria-label="Alternar tema de cores escuro/claro" title="Alternar tema">
                     <svg class="icon icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="4"/>
@@ -51,6 +60,7 @@
             <article class="prayer-card" id="prayer-card">
                 <div class="card-header">
                     <span id="period-badge" class="period-badge">Carregando...</span>
+                    <span id="ai-active-indicator" class="ai-active-indicator hidden" title="Oração gerada por Inteligência Artificial">✨ IA Ativa</span>
                 </div>
                 <div class="card-body">
                     <h2 id="prayer-title" class="prayer-title">Conectando coração e mente...</h2>
@@ -88,13 +98,13 @@
                     <svg class="btn-icon icon-refresh" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
                     </svg>
-                    <span>Nova Oração</span>
+                    <span id="btn-new-text">Nova Oração</span>
                 </button>
             </div>
             
-            <!-- Period Simulator (for user testing & verification) -->
-            <section class="simulator-panel" aria-label="Painel de Simulação de Horários">
-                <h3 class="simulator-title">Simulador de Período</h3>
+            <!-- Period Simulator (Hidden by default, shown by tapping Church ⛪ 5 times) -->
+            <section id="dev-simulator-panel" class="simulator-panel hidden" aria-label="Painel de Simulação de Horários">
+                <h3 class="simulator-title">Simulador de Período (Dev Mode)</h3>
                 <div class="simulator-buttons">
                     <button class="btn-sim" data-hour="2" aria-label="Simular período da Madrugada">Madrugada</button>
                     <button class="btn-sim" data-hour="8" aria-label="Simular período da Manhã">Manhã</button>
@@ -110,6 +120,78 @@
             <p><strong>Oração do Dia IECLB</strong> • Inspirado na tradição luterana de fé e acolhimento.</p>
             <p class="footer-note">Este aplicativo roda 100% no seu navegador e respeita sua privacidade. Desenvolvido para momentos de paz e reflexão.</p>
         </footer>
+    </div>
+
+    <!-- Settings Configuration Modal -->
+    <div id="settings-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 id="settings-modal-title">Configurações Devocionais</h2>
+                <button id="btn-close-settings" class="close-button" aria-label="Fechar configurações">&times;</button>
+            </header>
+            <div class="modal-body">
+                <!-- Gemini API config -->
+                <section class="settings-section">
+                    <h3>✨ Inteligência Artificial (Opcional)</h3>
+                    <p class="settings-description">
+                        Cole sua chave gratuita da API do Gemini para gerar orações personalizadas em tempo real. A chave fica salva **apenas no seu navegador** e não é compartilhada.
+                    </p>
+                    <div class="input-group">
+                        <label for="input-api-key">Chave de API do Gemini:</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="input-api-key" placeholder="Cole sua chave AIzaSy..." autocomplete="off">
+                            <button id="btn-toggle-key-visibility" class="btn-text-toggle" type="button">Mostrar</button>
+                        </div>
+                        <span class="helper-text">
+                            Obtenha uma chave grátis no <a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio</a>.
+                        </span>
+                    </div>
+
+                    <!-- Mood selector -->
+                    <div class="input-group">
+                        <label for="select-mood">Como você se sente hoje? (Guia a IA)</label>
+                        <select id="select-mood">
+                            <option value="default">☕ Equilibrado / Reflexão geral</option>
+                            <option value="grato">🙏 Grato por algo especial</option>
+                            <option value="cansado">😴 Cansado e necessitando de repouso</option>
+                            <option value="ansioso">🥺 Ansioso ou sob preocupações</option>
+                            <option value="triste">😢 Triste ou buscando consolo divino</option>
+                            <option value="fortalecido">💪 Fortalecido e pronto para agir</option>
+                            <option value="confuso">🤔 Confuso e necessitando direção</option>
+                        </select>
+                    </div>
+
+                    <div class="settings-status-row">
+                        <span id="api-status-badge" class="status-badge status-offline">IA Inativa</span>
+                        <button id="btn-test-api" class="btn-text-action hidden" type="button">Testar Chave</button>
+                    </div>
+                </section>
+
+                <!-- Voice / Speech config -->
+                <section class="settings-section">
+                    <h3>🔊 Configurações da Voz</h3>
+                    <div class="input-group">
+                        <label for="select-voice">Voz de Leitura:</label>
+                        <select id="select-voice">
+                            <option value="default">Voz padrão do navegador</option>
+                        </select>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group flex-1">
+                            <label for="input-voice-rate">Velocidade: <span id="val-voice-rate">0.9x</span></label>
+                            <input type="range" id="input-voice-rate" min="0.5" max="1.5" step="0.1" value="0.9">
+                        </div>
+                        <div class="input-group flex-1">
+                            <label for="input-voice-pitch">Tom (Grave/Agudo): <span id="val-voice-pitch">1.0</span></label>
+                            <input type="range" id="input-voice-pitch" min="0.5" max="1.5" step="0.1" value="1.0">
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <footer class="modal-footer">
+                <button id="btn-save-settings" class="btn btn-primary" type="button">Salvar e Aplicar</button>
+            </footer>
+        </div>
     </div>
 
     <!-- JS Link -->

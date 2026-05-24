@@ -1,0 +1,68 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "oração do dia",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": [
+            "cancelar",
+            "parar",
+            "fechar"
+          ]
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": [
+            "ajuda",
+            "como funciona",
+            "o que fazer"
+          ]
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": [
+            "tchau",
+            "encerrar",
+            "silêncio",
+            "sair"
+          ]
+        },
+        {
+          "name": "OracaoDoDiaIntent",
+          "slots": [],
+          "samples": [
+            "oração do dia",
+            "fazer uma oração",
+            "rezar",
+            "minha oração",
+            "ler oração",
+            "oração",
+            "oração de hoje"
+          ]
+        },
+        {
+          "name": "NovaOracaoIntent",
+          "slots": [],
+          "samples": [
+            "outra oração",
+            "nova oração",
+            "mudar a oração",
+            "gerar outra",
+            "leia mais uma",
+            "reze outra"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        }
+      ],
+      "types": []
+    }
+  }
+}

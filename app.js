@@ -1,5 +1,5 @@
 /**
- * Oração do Dia IECLB - Lógica da Aplicação
+ * Oração do Dia IECLB - Lógica da Aplicação (Versão 2.0 com IA & Alexa)
  * Roda 100% no lado do cliente, sem backend ou dependências externas.
  */
 
@@ -34,7 +34,7 @@ const prayersDatabase = {
         },
         {
             title: "Caminho de Fé e Ação",
-            text: "Deus da Vida, que em Jesus Cristo nos deste o maior exemplo de serviço e compaixão.\nLembro-me, nesta manhã, de que a foi cristã nos chama a ser pessoas ativas no mundo, espalhando sementes de paz, amor e reconciliação. Abençoa o meu trabalho, as minhas tarefas domésticas e as minhas relações.\nQue as minhas palavras transmitam esperança e que as minhas ações reflitam a Tua bondade. Dá-me discernimento para não me calar diante da injustiça e um espírito pronto para estender a mão aos que mais precisam no dia de hoje.\nAmém."
+            text: "Deus da Vida, que em Jesus Cristo nos deste o maior exemplo de serviço e compaixão.\nLembro-me, nesta manhã, de que a fé cristã nos chama a ser pessoas ativas no mundo, espalhando sementes de paz, amor e reconciliação. Abençoa o meu trabalho, as minhas tarefas domésticas e as minhas relações.\nQue as minhas palavras transmitam esperança e que as minhas ações reflitam a Tua bondade. Dá-me discernimento para não me calar diante da injustiça e um espírito pronto para estender a mão aos que mais precisam no dia de hoje.\nAmém."
         },
         {
             title: "Serviço e Comunhão",
@@ -64,7 +64,7 @@ const prayersDatabase = {
         },
         {
             title: "Presença e Fortalecimento",
-            text: "Deus de amor, às vezes o cansaço do meio do dia nos faz questionar os nossos caminhos e nos sentimos sozinhos nas nossas lutas.\nAbre os meus olhos nesta tarde para perceber os sinais da Tua presença amorosa ao meu redor: no sorriso de um colega, no vento que sopra ou na Tua Palavra que me fortalece.\nRenova a minha fé e dá-me a certeza de que a Tua mão segura a minha, sustentando-me em cada dificuldade e me conduzindo à paz.\nAmém."
+            text: "Deus de amor, às vezes o cansaço do meio do dia nos faz questionar os nossos caminhos e nos sentimos sozinhos nas nossas lutas.\nAbre os meus olhos nesta tarde para perceber os sinais da Tua presença amorosa ao meu redor: no sorriso de um colega, no vento que sobra ou na Tua Palavra que me fortalece.\nRenova a minha foi e dá-me a certeza de que a Tua mão segura a minha, sustentando-me em cada dificuldade e me conduzindo à paz.\nAmém."
         },
         {
             title: "Justiça, Diálogo e Ecumenismo",
@@ -86,11 +86,11 @@ const prayersDatabase = {
         },
         {
             title: "Confiança e Entrega nas Mãos de Deus",
-            text: "Deus da Esperança, enquanto a noite cobre o mundo, eu coloco a minha vida inteiramente sob o Teu cuidado.\nTu és o meu refúgio e a minha fortaleza, o Deus em quem confio em qualquer circunstância. Que o meu sono seja um ato de fé e entrega total a Ti.\nSei que estás no controle de todas as coisas e que o amanhã trará novas oportunidades de crescimento e serviço. Guarda-me sob a Tua sombra protetora e renova as minhas forças físicas e espirituais para o novo dia.\nAmém."
+            text: "Deus da Esperança, enquanto a noite cobre o mundo, eu coloco a minha vida inteiramente sob o Teu cuidado.\nTu és o meu refúgio e a minha fortaleza, o Deus em quem confio em qualquer circunstância. Que o meu sono seja um ato de foi e entrega total a Ti.\nSei que estás no controle de todas as coisas e que o amanhã trará novas oportunidades de crescimento e serviço. Guarda-me sob a Tua sombra protetora e renova as minhas forças físicas e espirituais para o novo dia.\nAmém."
         },
         {
             title: "Luz e Consolo para o Mundo",
-            text: "Deus de consolação, ao findar deste dia, lembro-me em minhas orações de todas as pessoas que enfrentam noites de angústia e solidão.\nConforta os que choram a perda de entes queridos, os enfermos nos leitos de dor e aqueles que sofrem sob o peso da ansiedade ou da depression.\nQue a Tua luz resplandeça nas trevas de suas vidas e traga a paz que tanto necessitam. Que a Tua Igreja seja uma presença ativa de amparo e carinho para com todos os que sofrem neste anoitecer.\nAmém."
+            text: "Deus de consolação, ao findar deste dia, lembro-me em minhas orações de todas as pessoas que enfrentam noites de angústia e solidão.\nConforta os que choram a perda de entes queridos, os enfermos nos leitos de dor e aqueles que sofrem sob o peso da ansiedade ou da depressão.\nQue a Tua luz resplandeça nas trevas de suas vidas e traga a paz que tanto necessitam. Que a Tua Igreja seja uma presença ativa de amparo e carinho para com todos os que sofrem neste anoitecer.\nAmém."
         }
     ]
 };
@@ -101,8 +101,16 @@ let currentPeriod = '';   // 'madrugada', 'manha', 'tarde', 'noite'
 let currentPrayer = null; // { title: string, text: string }
 let lastPrayerIndex = -1; // Evita repetir a mesma oração consecutivamente
 let themeMode = 'auto';    // 'auto' (usa o período) ou 'light' (modo claro sepia)
+let devTriggerClicks = 0;  // Clicks para revelar painel dev
 
-// Síntese de voz (TTS) referências globais para evitar garbage collection
+// CONFIGURAÇÕES DO USUÁRIO (Salvas no LocalStorage)
+let geminiApiKey = localStorage.getItem('oracao-gemini-key') || '';
+let selectedMood = localStorage.getItem('oracao-selected-mood') || 'default';
+let voiceRate = parseFloat(localStorage.getItem('oracao-voice-rate')) || 0.9;
+let voicePitch = parseFloat(localStorage.getItem('oracao-voice-pitch')) || 1.0;
+let selectedVoiceName = localStorage.getItem('oracao-voice-name') || '';
+
+// Síntese de voz (TTS)
 let speechUtterance = null;
 let isSpeaking = false;
 let voices = [];
@@ -110,17 +118,72 @@ let voices = [];
 // 3. SELETORES DOM
 const bodyEl = document.body;
 const periodBadgeEl = document.getElementById('period-badge');
+const aiActiveIndicator = document.getElementById('ai-active-indicator');
+const prayerCard = document.getElementById('prayer-card');
 const prayerTitleEl = document.getElementById('prayer-title');
 const prayerTextEl = document.getElementById('prayer-text');
+
+// Header buttons
+const logoDevTrigger = document.getElementById('logo-dev-trigger');
+const btnSettingsToggle = document.getElementById('btn-settings-toggle');
 const btnThemeToggle = document.getElementById('btn-theme-toggle');
+
+// Main buttons
 const btnNewPrayer = document.getElementById('btn-new-prayer');
+const btnNewText = document.getElementById('btn-new-text');
 const btnSpeakPrayer = document.getElementById('btn-speak-prayer');
 const btnSpeakText = document.getElementById('btn-speak-text');
 const ttsContainer = document.getElementById('tts-container');
-const ttsStatusText = document.getElementById('tts-status-text');
-const simulatorButtons = document.querySelectorAll('.btn-sim');
 
-// 4. LÓGICA DE DETECÇÃO DE HORÁRIO E PERÍODO
+// Panels & Modals
+const devSimulatorPanel = document.getElementById('dev-simulator-panel');
+const simulatorButtons = document.querySelectorAll('.btn-sim');
+const settingsModal = document.getElementById('settings-modal');
+const btnCloseSettings = document.getElementById('btn-close-settings');
+const btnSaveSettings = document.getElementById('btn-save-settings');
+
+// Modal Form Inputs
+const inputApiKey = document.getElementById('input-api-key');
+const selectMood = document.getElementById('select-mood');
+const apiStatusBadge = document.getElementById('api-status-badge');
+const btnTestApi = document.getElementById('btn-test-api');
+const selectVoice = document.getElementById('select-voice');
+const inputVoiceRate = document.getElementById('input-voice-rate');
+const inputVoicePitch = document.getElementById('input-voice-pitch');
+const valVoiceRate = document.getElementById('val-voice-rate');
+const valVoicePitch = document.getElementById('val-voice-pitch');
+const btnToggleKeyVisibility = document.getElementById('btn-toggle-key-visibility');
+
+// 4. EFEITO DE PARTÍCULAS
+function createParticles() {
+    const container = document.getElementById('particles-container');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    // Cria 18 partículas no plano de fundo para dar textura visual
+    const count = 18;
+    for (let i = 0; i < count; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        const size = Math.random() * 4 + 2; // 2px a 6px
+        const left = Math.random() * 100;
+        const duration = Math.random() * 12 + 10; // 10s a 22s
+        const delay = Math.random() * 15;
+        const opacity = Math.random() * 0.25 + 0.1;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${left}%`;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.opacity = opacity;
+        
+        container.appendChild(particle);
+    }
+}
+
+// 5. LÓGICA DE DETECÇÃO DE HORÁRIO E PERÍODO
 function getActualHour() {
     if (currentHour === 'auto') {
         return new Date().getHours();
@@ -145,15 +208,11 @@ function getPeriodLabel(period) {
     }
 }
 
-// 5. ATUALIZAÇÃO DO TEMA VISUAL
+// 6. ATUALIZAÇÃO DO TEMA VISUAL
 function updateTheme() {
-    // Limpa classes antigas de período
     bodyEl.classList.remove('period-madrugada', 'period-manha', 'period-tarde', 'period-noite');
-    
-    // Sempre define a classe do período atual para que, se o usuário voltar ao 'auto', funcione instantaneamente
     bodyEl.classList.add(`period-${currentPeriod}`);
     
-    // Aplica o override manual de modo claro se selecionado
     if (themeMode === 'light') {
         bodyEl.classList.add('theme-light');
     } else {
@@ -161,28 +220,147 @@ function updateTheme() {
     }
 }
 
-// 6. SELEÇÃO E RENDERIZAÇÃO DA ORAÇÃO
+// 7. INTEGRAÇÃO GEMINI API (CLIENT-SIDE COM CHAVE DO USUÁRIO)
+async function testApiKey(key) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: "Diga apenas 'OK'" }] }]
+            })
+        });
+        return response.ok;
+    } catch (e) {
+        return false;
+    }
+}
+
+function updateApiStatusBadge(key) {
+    if (!key) {
+        apiStatusBadge.textContent = "IA Inativa (Usando banco local)";
+        apiStatusBadge.className = "status-badge status-offline";
+        btnTestApi.classList.add('hidden');
+        return;
+    }
+    apiStatusBadge.textContent = "Chave Configurada";
+    apiStatusBadge.className = "status-badge status-testing";
+    btnTestApi.classList.remove('hidden');
+}
+
+async function generateAiPrayer(period, mood) {
+    if (!geminiApiKey) return null;
+    
+    const periodTranslations = {
+        madrugada: 'Madrugada (00:00 às 04:59)',
+        manha: 'Manhã (05:00 às 11:59)',
+        tarde: 'Tarde (12:00 às 17:59)',
+        noite: 'Noite (18:00 às 23:59)'
+    };
+    
+    const moodPrompts = {
+        default: 'um sentimento de equilíbrio e reflexão geral',
+        grato: 'um coração grato por bênçãos recebidas',
+        cansado: 'cansaço, sobrecarga física ou mental e necessidade de repouso',
+        ansioso: 'ansiedade, inquietações e preocupações com o futuro',
+        triste: 'tristeza, luto ou busca por consolo divino',
+        fortalecido: 'sentimento de fortalecimento, esperança e disposição para a ação',
+        confuso: 'confusão mental e busca por direção e sabedoria nas decisões'
+    };
+    
+    const prompt = `Você é um pastor/pastora da IECLB (Igreja Evangélica de Confissão Luterana no Brasil). Escreva uma oração em português acolhedora, respeitosa e profunda para o período da ${periodTranslations[period]}.
+O sentimento atual de quem está orando é: ${moodPrompts[mood] || moodPrompts.default}.
+
+A oração deve refletir a teologia luterana da graça (Sola Gratia), com foco em amor, confiança em Deus, comunidade e acolhimento. Evite linguagem excessivamente formal ou arcaica, prefira um tom humano, compassivo e reflexivo. Ela deve ter de 3 a 4 parágrafos (entre 130 e 180 palavras).
+
+IMPORTANTE: Responda estritamente no formato JSON estruturado, sem blocos de código markdown extra (sem aspas triplas de crase \`\`\`json). O JSON deve conter exatamente duas chaves:
+"title" (string, o título da oração)
+"text" (string, o texto da oração, usando quebras de linha com '\\n' para separar os parágrafos).`;
+
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`;
+    
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: {
+                    responseMimeType: "application/json"
+                }
+            })
+        });
+        
+        if (!response.ok) throw new Error("Falha no status de resposta HTTP.");
+        
+        const data = await response.json();
+        const jsonText = data.candidates[0].content.parts[0].text;
+        const parsed = JSON.parse(jsonText.trim());
+        
+        if (parsed.title && parsed.text) {
+            return parsed;
+        }
+        throw new Error("Dados de oração incompletos.");
+    } catch (e) {
+        console.error("Erro ao chamar Gemini API:", e);
+        return null;
+    }
+}
+
+// Toast Notification
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.style.position = 'fixed';
+    toast.style.bottom = '24px';
+    toast.style.left = '50%';
+    toast.style.transform = 'translateX(-50%) translateY(20px)';
+    toast.style.background = 'var(--card-bg)';
+    toast.style.border = '1px solid var(--card-border)';
+    toast.style.color = 'var(--text-primary)';
+    toast.style.padding = '0.75rem 1.5rem';
+    toast.style.borderRadius = '50px';
+    toast.style.fontSize = '0.8rem';
+    toast.style.fontWeight = '600';
+    toast.style.zIndex = '1000';
+    toast.style.opacity = '0';
+    toast.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+    toast.style.boxShadow = '0 8px 30px var(--shadow-color)';
+    toast.style.backdropFilter = 'blur(8px)';
+    toast.style.webkitBackdropFilter = 'blur(8px)';
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+        toast.style.opacity = '1';
+    }, 50);
+    
+    setTimeout(() => {
+        toast.style.transform = 'translateX(-50%) translateY(20px)';
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
+}
+
+// 8. RENDERIZAÇÃO DA ORAÇÃO
 function displayPrayer(prayer, animate = true) {
     currentPrayer = prayer;
     
     if (animate) {
-        // Transição suave de fade-out
         prayerTitleEl.classList.add('fade-out');
         prayerTextEl.classList.add('fade-out');
         
         setTimeout(() => {
-            // Atualiza os dados
             periodBadgeEl.textContent = getPeriodLabel(currentPeriod);
             prayerTitleEl.textContent = prayer.title;
             prayerTextEl.textContent = prayer.text;
             
-            // Transição suave de fade-in
             prayerTitleEl.classList.remove('fade-out');
             prayerTextEl.classList.remove('fade-out');
             prayerTitleEl.classList.add('fade-in');
             prayerTextEl.classList.add('fade-in');
             
-            // Remove a classe de animação depois de concluir
             setTimeout(() => {
                 prayerTitleEl.classList.remove('fade-in');
                 prayerTextEl.classList.remove('fade-in');
@@ -195,13 +373,42 @@ function displayPrayer(prayer, animate = true) {
     }
 }
 
-function loadNewPrayer(animate = true) {
-    stopSpeaking(); // Para a leitura anterior se estiver rodando
+async function loadNewPrayer(animate = true) {
+    stopSpeaking();
+    
+    // Se tiver chave de API do Gemini, tenta gerar por IA
+    if (geminiApiKey) {
+        aiActiveIndicator.classList.remove('hidden');
+        btnNewText.textContent = "Gerando por IA...";
+        btnNewPrayer.disabled = true;
+        
+        if (animate) {
+            prayerTitleEl.classList.add('fade-out');
+            prayerTextEl.classList.add('fade-out');
+        }
+        
+        const aiPrayer = await generateAiPrayer(currentPeriod, selectedMood);
+        
+        btnNewText.textContent = "Nova Oração";
+        btnNewPrayer.disabled = false;
+        
+        if (aiPrayer) {
+            prayerCard.classList.add('ai-active');
+            displayPrayer(aiPrayer, animate);
+            return;
+        } else {
+            // Se falhar, usa orações locais sem quebrar
+            showToast("⚠️ Conexão falhou. Carregando oração local.");
+        }
+    }
+    
+    // Fallback/Local Database
+    aiActiveIndicator.classList.add('hidden');
+    prayerCard.classList.remove('ai-active');
     
     const prayers = prayersDatabase[currentPeriod];
     let randomIndex;
     
-    // Evita repetir a mesma oração consecutivamente no mesmo clique
     if (prayers.length > 1) {
         do {
             randomIndex = Math.floor(Math.random() * prayers.length);
@@ -214,62 +421,70 @@ function loadNewPrayer(animate = true) {
     displayPrayer(prayers[randomIndex], animate);
 }
 
-// Inicialização/Sincronização com base nas escolhas de horário
 function syncPeriod(animate = true) {
     const hour = getActualHour();
     const newPeriod = determinePeriod(hour);
     
-    // Se o período mudou ou é a primeira execução
     if (newPeriod !== currentPeriod) {
         currentPeriod = newPeriod;
-        lastPrayerIndex = -1; // Reseta cache
+        lastPrayerIndex = -1;
         updateTheme();
         loadNewPrayer(animate);
     }
 }
 
-// 7. MÓDULO TEXT-TO-SPEECH (TTS) COM WEB SPEECH API
-function loadVoices() {
-    if ('speechSynthesis' in window) {
-        voices = window.speechSynthesis.getVoices();
-    }
+// 9. MÓDULO SÍNTESE DE VOZ (TTS)
+function populateVoiceList() {
+    if (!('speechSynthesis' in window)) return;
+    voices = window.speechSynthesis.getVoices();
+    
+    selectVoice.innerHTML = '<option value="default">Voz padrão do navegador</option>';
+    
+    // Filtra vozes em português
+    const ptVoices = voices.filter(v => v.lang.toLowerCase().includes('pt'));
+    ptVoices.forEach(v => {
+        const option = document.createElement('option');
+        option.value = v.name;
+        option.textContent = `${v.name} (${v.lang})`;
+        if (v.name === selectedVoiceName) {
+            option.selected = true;
+        }
+        selectVoice.appendChild(option);
+    });
 }
 
-// Escuta evento de carregamento de vozes assíncronas do Chrome/Edge
 if ('speechSynthesis' in window) {
     if (window.speechSynthesis.onvoiceschanged !== undefined) {
-        window.speechSynthesis.onvoiceschanged = loadVoices;
+        window.speechSynthesis.onvoiceschanged = populateVoiceList;
     }
-    loadVoices();
 }
 
 function startSpeaking() {
     if (!('speechSynthesis' in window) || !currentPrayer) {
-        alert("A síntese de voz não é suportada ou não há oração carregada no seu navegador.");
+        alert("A síntese de voz não é suportada no seu navegador.");
         return;
     }
     
-    window.speechSynthesis.cancel(); // Cancela falas anteriores
+    window.speechSynthesis.cancel();
     
-    // Texto a ser lido: Título + Pausa + Oração
     const textToSpeak = `${currentPrayer.title}. ${currentPrayer.text}`;
-    
     speechUtterance = new SpeechSynthesisUtterance(textToSpeak);
     speechUtterance.lang = 'pt-BR';
+    speechUtterance.rate = voiceRate;
+    speechUtterance.pitch = voicePitch;
     
-    // Ajusta tom e velocidade para uma leitura mais suave e contemplativa
-    speechUtterance.rate = 0.9;  // Ligeiramente mais pausada
-    speechUtterance.pitch = 1.0; // Tom natural
-    
-    // Tenta selecionar uma voz pt-BR adequada se disponível
-    if (voices.length > 0) {
-        const ptBRVoice = voices.find(v => v.lang.includes('pt-BR') || v.lang.includes('pt_BR'));
-        if (ptBRVoice) {
-            speechUtterance.voice = ptBRVoice;
+    // Tenta aplicar a voz selecionada nas configurações
+    if (voices.length > 0 && selectedVoiceName) {
+        const customVoice = voices.find(v => v.name === selectedVoiceName);
+        if (customVoice) {
+            speechUtterance.voice = customVoice;
         }
+    } else {
+        // Fallback para voz em português qualquer
+        const defaultPt = voices.find(v => v.lang.includes('pt-BR') || v.lang.includes('pt_BR'));
+        if (defaultPt) speechUtterance.voice = defaultPt;
     }
     
-    // Configura eventos
     speechUtterance.onstart = () => {
         isSpeaking = true;
         btnSpeakText.textContent = "Parar Oração";
@@ -304,23 +519,34 @@ function resetTTSUI() {
     speechUtterance = null;
 }
 
-// 8. EVENTOS E CONFIGURAÇÃO DE LISTENERS
+// 10. INICIALIZAÇÃO E LISTENERS
 function init() {
-    // 8.1 Inicializa Tema salvo em localStorage
-    const savedTheme = localStorage.getItem('oracao-theme-mode');
-    if (savedTheme === 'light') {
-        themeMode = 'light';
-    } else {
-        themeMode = 'auto';
+    // 10.1 Partículas & Vozes
+    createParticles();
+    if ('speechSynthesis' in window) {
+        populateVoiceList();
     }
     
-    // 8.2 Sincroniza Horário inicial
+    // 10.2 Carrega tema manual ou auto
+    const savedTheme = localStorage.getItem('oracao-theme-mode');
+    themeMode = savedTheme === 'light' ? 'light' : 'auto';
+    
+    // 10.3 Carrega configurações no form modal
+    inputApiKey.value = geminiApiKey;
+    selectMood.value = selectedMood;
+    inputVoiceRate.value = voiceRate;
+    valVoiceRate.textContent = voiceRate + 'x';
+    inputVoicePitch.value = voicePitch;
+    valVoicePitch.textContent = voicePitch.toFixed(1);
+    
+    updateApiStatusBadge(geminiApiKey);
+    
+    // 10.4 Sincronização inicial
     syncPeriod(false);
     updateTheme();
     
-    // 8.3 Listener para botão de nova oração
+    // 10.5 Event Listeners - Controles Principais
     btnNewPrayer.addEventListener('click', () => {
-        // Animação de giro no ícone
         const icon = btnNewPrayer.querySelector('.icon-refresh');
         if (icon) {
             icon.classList.add('spin-animation');
@@ -329,51 +555,136 @@ function init() {
         loadNewPrayer(true);
     });
     
-    // 8.4 Listener para reprodução de voz
     btnSpeakPrayer.addEventListener('click', () => {
-        if (isSpeaking) {
-            stopSpeaking();
-        } else {
-            startSpeaking();
-        }
+        if (isSpeaking) stopSpeaking();
+        else startSpeaking();
     });
     
-    // 8.5 Listener para alternar tema
     btnThemeToggle.addEventListener('click', () => {
-        if (themeMode === 'auto') {
-            themeMode = 'light';
-        } else {
-            themeMode = 'auto';
-        }
+        themeMode = themeMode === 'auto' ? 'light' : 'auto';
         localStorage.setItem('oracao-theme-mode', themeMode);
         updateTheme();
     });
     
-    // 8.6 Configura o painel do simulador de períodos
+    // 10.6 Dev Mode panel (Taps ⛪ 5 times)
+    logoDevTrigger.addEventListener('click', () => {
+        devTriggerClicks++;
+        if (devTriggerClicks >= 5) {
+            devSimulatorPanel.classList.toggle('hidden');
+            if (!devSimulatorPanel.classList.contains('hidden')) {
+                devSimulatorPanel.scrollIntoView({ behavior: 'smooth' });
+                showToast("🔧 Modo desenvolvedor ativo.");
+            }
+            devTriggerClicks = 0;
+        }
+    });
+    
+    // Simulator buttons listeners
     simulatorButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Remove a classe ativa dos botões do simulador
             simulatorButtons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             
-            // Atualiza hora simulada
-            const selectedHour = btn.getAttribute('data-hour');
-            currentHour = selectedHour;
-            
-            // Sincroniza período e força carregamento de oração nova
+            currentHour = btn.getAttribute('data-hour');
             stopSpeaking();
             
             const hour = getActualHour();
             const newPeriod = determinePeriod(hour);
-            
             currentPeriod = newPeriod;
-            lastPrayerIndex = -1; // Permite qualquer oração no novo período
+            lastPrayerIndex = -1;
             updateTheme();
             loadNewPrayer(true);
         });
     });
     
-    // Atualiza o período periodicamente caso o usuário deixe a aba aberta (a cada 5 minutos)
+    // 10.7 Modais & Configurações listeners
+    btnSettingsToggle.addEventListener('click', () => {
+        inputApiKey.value = geminiApiKey;
+        selectMood.value = selectedMood;
+        inputVoiceRate.value = voiceRate;
+        valVoiceRate.textContent = voiceRate + 'x';
+        inputVoicePitch.value = voicePitch;
+        valVoicePitch.textContent = voicePitch.toFixed(1);
+        updateApiStatusBadge(geminiApiKey);
+        populateVoiceList();
+        
+        settingsModal.classList.remove('hidden');
+    });
+    
+    btnCloseSettings.addEventListener('click', () => {
+        settingsModal.classList.add('hidden');
+    });
+    
+    // Close modal clicking outside
+    settingsModal.addEventListener('click', (e) => {
+        if (e.target === settingsModal) {
+            settingsModal.classList.add('hidden');
+        }
+    });
+    
+    btnToggleKeyVisibility.addEventListener('click', () => {
+        if (inputApiKey.type === 'password') {
+            inputApiKey.type = 'text';
+            btnToggleKeyVisibility.textContent = 'Ocultar';
+        } else {
+            inputApiKey.type = 'password';
+            btnToggleKeyVisibility.textContent = 'Mostrar';
+        }
+    });
+    
+    // Real-time rates ranges values updates
+    inputVoiceRate.addEventListener('input', () => {
+        valVoiceRate.textContent = inputVoiceRate.value + 'x';
+    });
+    inputVoicePitch.addEventListener('input', () => {
+        valVoicePitch.textContent = parseFloat(inputVoicePitch.value).toFixed(1);
+    });
+    
+    // Save Configs Button
+    btnSaveSettings.addEventListener('click', () => {
+        geminiApiKey = inputApiKey.value.trim();
+        selectedMood = selectMood.value;
+        voiceRate = parseFloat(inputVoiceRate.value);
+        voicePitch = parseFloat(inputVoicePitch.value);
+        selectedVoiceName = selectVoice.value;
+        
+        localStorage.setItem('oracao-gemini-key', geminiApiKey);
+        localStorage.setItem('oracao-selected-mood', selectedMood);
+        localStorage.setItem('oracao-voice-rate', voiceRate);
+        localStorage.setItem('oracao-voice-pitch', voicePitch);
+        localStorage.setItem('oracao-voice-name', selectedVoiceName);
+        
+        settingsModal.classList.add('hidden');
+        stopSpeaking();
+        
+        showToast("💾 Configurações salvas.");
+        loadNewPrayer(true);
+    });
+    
+    // Test API Connection Button
+    btnTestApi.addEventListener('click', async () => {
+        const testKey = inputApiKey.value.trim();
+        if (!testKey) return;
+        
+        apiStatusBadge.textContent = "Verificando...";
+        apiStatusBadge.className = "status-badge status-testing";
+        btnTestApi.disabled = true;
+        
+        const ok = await testApiKey(testKey);
+        btnTestApi.disabled = false;
+        
+        if (ok) {
+            apiStatusBadge.textContent = "Conexão Ativa! ✨";
+            apiStatusBadge.className = "status-badge status-online";
+            showToast("✅ Chave da Gemini API validada com sucesso!");
+        } else {
+            apiStatusBadge.textContent = "Chave Inválida/Erro";
+            apiStatusBadge.className = "status-badge status-offline";
+            showToast("❌ Falha na conexão. Verifique sua chave da API.");
+        }
+    });
+    
+    // Periodically verify auto-sync every 5 min
     setInterval(() => {
         if (currentHour === 'auto') {
             syncPeriod(true);
@@ -381,5 +692,4 @@ function init() {
     }, 5 * 60 * 1000);
 }
 
-// Inicia aplicação após o carregamento do DOM
 document.addEventListener('DOMContentLoaded', init);
