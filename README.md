@@ -1,6 +1,6 @@
-# ⛪ Oração do Dia IECLB - Devocional Digital
+# ⛪ Oração do Dia Luterana - Devocional Digital
 
-Este é um projeto front-end minimalista, moderno e responsivo que funciona como um devocional digital diário. O aplicativo adapta-se automaticamente ao fuso horário local do usuário para exibir orações correspondentes ao período atual (Madrugada, Manhã, Tarde ou Noite) inspiradas na tradição de fé, amor e acolhimento da **IECLB (Igreja Evangélica de Confissão Luterana no Brasil)**.
+Este é um projeto front-end minimalista, moderno e responsivo que funciona como um devocional digital diário. O aplicativo adapta-se automaticamente ao fuso horário local do usuário para exibir orações correspondentes ao período atual (Madrugada, Manhã, Tarde ou Noite) inspiradas na tradição de fé, amor e acolhimento luterana.
 
 O projeto roda **100% no lado do cliente** via **GitHub Pages**, sem dependências externas, sem frameworks e sem complexidades de backend.
 

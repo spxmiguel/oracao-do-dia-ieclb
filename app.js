@@ -1,9 +1,9 @@
 /**
- * Oração do Dia IECLB - Lógica da Aplicação (Versão 2.1 com IA & Alexa)
+ * Oração do Dia Luterana - Lógica da Aplicação (Versão 2.1 com IA & Alexa)
  * Roda 100% no lado do cliente, sem backend ou dependências externas.
  */
 
-// 1. BANCO DE ORAÇÕES LOCAL (Inspiradas na teologia e tradição luterana - IECLB)
+// 1. BANCO DE ORAÇÕES LOCAL (Inspiradas na teologia e tradição luterana)
 const prayersDatabase = {
     madrugada: [
         {
@@ -280,7 +280,7 @@ async function generateAiPrayer(period, mood) {
         confuso: 'confusão mental e busca por direção e sabedoria nas decisões'
     };
     
-    const prompt = `Você é um pastor/pastora da IECLB (Igreja Evangélica de Confissão Luterana no Brasil). Escreva uma oração em português acolhedora, respeitosa e profunda para o período da ${periodTranslations[period]}.
+    const prompt = `Você é um pastor/pastora da tradição luterana no Brasil. Escreva uma oração em português acolhedora, respeitosa e profunda para o período da ${periodTranslations[period]}.
 O sentimento atual de quem está orando é: ${moodPrompts[mood] || moodPrompts.default}.
 
 A oração deve refletir a teologia luterana da graça (Sola Gratia), com foco em amor, confiança em Deus, comunidade e acolhimento. Evite linguagem excessivamente formal ou arcaica, prefira um tom humano, compassivo e reflexivo. Ela deve ter de 3 a 4 parágrafos (entre 130 e 180 palavras).
