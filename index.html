@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oração do Dia IECLB</title>
+    <!-- Meta tags SEO -->
+    <meta name="description" content="Encontre paz, esperança e gratidão com orações diárias personalizadas para cada período do seu dia, inspiradas na tradição luterana da IECLB.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Favicon (Emoji 🙏) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🙏</text></svg>">
+</head>
+<body class="theme-auto">
+    <!-- Decorative background elements -->
+    <div class="background-decorations" aria-hidden="true">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+    
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <span class="logo-icon" aria-hidden="true">⛪</span>
+                <h1 class="logo-title">Oração do Dia</h1>
+            </div>
+            <div class="header-actions">
+                <button id="btn-theme-toggle" class="icon-button" aria-label="Alternar tema de cores escuro/claro" title="Alternar tema">
+                    <svg class="icon icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"/>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                    </svg>
+                    <svg class="icon icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Prayer Card -->
+            <article class="prayer-card" id="prayer-card">
+                <div class="card-header">
+                    <span id="period-badge" class="period-badge">Carregando...</span>
+                </div>
+                <div class="card-body">
+                    <h2 id="prayer-title" class="prayer-title">Conectando coração e mente...</h2>
+                    <div class="prayer-text-container">
+                        <p id="prayer-text" class="prayer-text">Buscando uma reflexão para o seu momento...</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span id="prayer-reference" class="prayer-reference">Inspirado na fé luterana • IECLB</span>
+                </div>
+            </article>
+
+            <!-- TTS Visualizer / Status -->
+            <div id="tts-container" class="tts-container hidden">
+                <div class="audio-wave" aria-hidden="true">
+                    <span class="bar bar-1"></span>
+                    <span class="bar bar-2"></span>
+                    <span class="bar bar-3"></span>
+                    <span class="bar bar-4"></span>
+                    <span class="bar bar-5"></span>
+                </div>
+                <span id="tts-status-text" class="tts-status-text">Lendo oração...</span>
+            </div>
+
+            <!-- Main Control Buttons -->
+            <div class="controls-area">
+                <button id="btn-speak-prayer" class="btn btn-secondary" aria-label="Ouvir a oração em voz alta">
+                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                    </svg>
+                    <span id="btn-speak-text">Ouvir Oração</span>
+                </button>
+                <button id="btn-new-prayer" class="btn btn-primary" aria-label="Gerar outra oração do mesmo período">
+                    <svg class="btn-icon icon-refresh" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                    </svg>
+                    <span>Nova Oração</span>
+                </button>
+            </div>
+            
+            <!-- Period Simulator (for user testing & verification) -->
+            <section class="simulator-panel" aria-label="Painel de Simulação de Horários">
+                <h3 class="simulator-title">Simulador de Período</h3>
+                <div class="simulator-buttons">
+                    <button class="btn-sim" data-hour="2" aria-label="Simular período da Madrugada">Madrugada</button>
+                    <button class="btn-sim" data-hour="8" aria-label="Simular período da Manhã">Manhã</button>
+                    <button class="btn-sim" data-hour="15" aria-label="Simular período da Tarde">Tarde</button>
+                    <button class="btn-sim" data-hour="20" aria-label="Simular período da Noite">Noite</button>
+                    <button class="btn-sim active" data-hour="auto" aria-label="Usar horário automático do sistema">Automático</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p><strong>Oração do Dia IECLB</strong> • Inspirado na tradição luterana de fé e acolhimento.</p>
+            <p class="footer-note">Este aplicativo roda 100% no seu navegador e respeita sua privacidade. Desenvolvido para momentos de paz e reflexão.</p>
+        </footer>
+    </div>
+
+    <!-- JS Link -->
+    <script src="app.js"></script>
+</body>
+</html>
