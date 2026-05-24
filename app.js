@@ -106,7 +106,7 @@ let devTriggerClicks = 0;  // Clicks para revelar painel dev
 // CONFIGURAÇÕES DO USUÁRIO & CHAVE EMBUTIDA (Opção 1)
 // Se você quiser embutir sua chave restrita por domínio para que todos os visitantes usem a IA:
 // 1. Codifique sua chave em Base64 (ex: em base64encode.org) e insira abaixo:
-const EMBEDDED_KEY_B64 = ''; 
+const EMBEDDED_KEY_B64 = 'QUl6YVN5RDBjOXJhek1lOGFlR09vUkRuV3hqMzhpeGdVZEZqYTdz'; 
 
 let geminiApiKey = localStorage.getItem('oracao-gemini-key') || 
                    (EMBEDDED_KEY_B64 ? atob(EMBEDDED_KEY_B64) : '');
