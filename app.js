@@ -464,28 +464,121 @@ if ('speechSynthesis' in window) {
     }
 }
 
+// CONTROLES DE ÁUDIO (Google Translate TTS & Web Speech fallback)
+let audioQueue = [];
+let currentAudioIndex = 0;
+let googleAudioPlayer = new Audio();
+
+function splitTextIntoChunks(text, maxLen) {
+    // Divide o texto por pontos, exclamações, interrogações ou quebras de linha
+    const sentences = text.match(/[^.!?\n]+[.!?\n]+|[^.!?\n]+$/g) || [text];
+    const chunks = [];
+    let currentChunk = "";
+    
+    for (let sentence of sentences) {
+        sentence = sentence.trim();
+        if (!sentence) continue;
+        
+        // Se a frase inteira for maior que o limite, quebra por palavras
+        if ((currentChunk + " " + sentence).length > maxLen) {
+            if (currentChunk) {
+                chunks.push(currentChunk.trim());
+                currentChunk = sentence;
+            } else {
+                const words = sentence.split(" ");
+                for (let word of words) {
+                    if ((currentChunk + " " + word).length > maxLen) {
+                        chunks.push(currentChunk.trim());
+                        currentChunk = word;
+                    } else {
+                        currentChunk += (currentChunk ? " " : "") + word;
+                    }
+                }
+            }
+        } else {
+            currentChunk += (currentChunk ? " " : "") + sentence;
+        }
+    }
+    if (currentChunk) {
+        chunks.push(currentChunk.trim());
+    }
+    return chunks;
+}
+
 function startSpeaking() {
-    if (!('speechSynthesis' in window) || !currentPrayer) {
-        alert("A síntese de voz não é suportada no seu navegador.");
+    if (!currentPrayer) return;
+    
+    stopSpeaking(); // Limpa reproduções anteriores
+    
+    const textToSpeak = `${currentPrayer.title}. ${currentPrayer.text}`;
+    
+    // Tenta usar o motor do Google Translate TTS (muito mais natural e humanizado)
+    try {
+        const chunks = splitTextIntoChunks(textToSpeak, 180);
+        audioQueue = chunks.map(chunk => 
+            `https://translate.google.com/translate_tts?ie=UTF-8&tl=pt-BR&client=tw-ob&q=${encodeURIComponent(chunk)}`
+        );
+        
+        currentAudioIndex = 0;
+        isSpeaking = true;
+        btnSpeakText.textContent = "Parar Oração";
+        ttsContainer.classList.remove('hidden');
+        btnSpeakPrayer.classList.add('active');
+        
+        playNextGoogleChunk();
+    } catch (err) {
+        console.warn("Falha no Google TTS, usando Web Speech API nativa...", err);
+        startNativeSpeaking(textToSpeak);
+    }
+}
+
+function playNextGoogleChunk() {
+    if (!isSpeaking) return;
+    
+    if (currentAudioIndex >= audioQueue.length) {
+        resetTTSUI();
+        return;
+    }
+    
+    googleAudioPlayer.src = audioQueue[currentAudioIndex];
+    googleAudioPlayer.play().catch(err => {
+        console.warn("Erro de reprodução de áudio, usando fallback nativo...", err);
+        const textToSpeak = `${currentPrayer.title}. ${currentPrayer.text}`;
+        startNativeSpeaking(textToSpeak);
+    });
+    
+    currentAudioIndex++;
+}
+
+googleAudioPlayer.onended = () => {
+    playNextGoogleChunk();
+};
+
+googleAudioPlayer.onerror = (e) => {
+    console.error("Erro no player do Google:", e);
+    if (isSpeaking) {
+        const textToSpeak = `${currentPrayer.title}. ${currentPrayer.text}`;
+        startNativeSpeaking(textToSpeak);
+    }
+};
+
+// Fala Nativa de Fallback (Web Speech API)
+function startNativeSpeaking(text) {
+    if (!('speechSynthesis' in window)) {
+        resetTTSUI();
         return;
     }
     
     window.speechSynthesis.cancel();
-    
-    const textToSpeak = `${currentPrayer.title}. ${currentPrayer.text}`;
-    speechUtterance = new SpeechSynthesisUtterance(textToSpeak);
+    speechUtterance = new SpeechSynthesisUtterance(text);
     speechUtterance.lang = 'pt-BR';
     speechUtterance.rate = voiceRate;
     speechUtterance.pitch = voicePitch;
     
-    // Tenta aplicar a voz selecionada nas configurações
     if (voices.length > 0 && selectedVoiceName) {
         const customVoice = voices.find(v => v.name === selectedVoiceName);
-        if (customVoice) {
-            speechUtterance.voice = customVoice;
-        }
+        if (customVoice) speechUtterance.voice = customVoice;
     } else {
-        // Fallback para voz em português qualquer
         const defaultPt = voices.find(v => v.lang.includes('pt-BR') || v.lang.includes('pt_BR'));
         if (defaultPt) speechUtterance.voice = defaultPt;
     }
@@ -501,8 +594,7 @@ function startSpeaking() {
         resetTTSUI();
     };
     
-    speechUtterance.onerror = (e) => {
-        console.error("Erro no TTS:", e);
+    speechUtterance.onerror = () => {
         resetTTSUI();
     };
     
@@ -510,9 +602,20 @@ function startSpeaking() {
 }
 
 function stopSpeaking() {
+    isSpeaking = false;
+    
+    try {
+        googleAudioPlayer.pause();
+        googleAudioPlayer.src = "";
+    } catch (e) {}
+    
+    audioQueue = [];
+    currentAudioIndex = 0;
+    
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
     }
+    
     resetTTSUI();
 }
 
