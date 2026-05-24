@@ -103,8 +103,13 @@ let lastPrayerIndex = -1; // Evita repetir a mesma oração consecutivamente
 let themeMode = 'auto';    // 'auto' (usa o período) ou 'light' (modo claro sepia)
 let devTriggerClicks = 0;  // Clicks para revelar painel dev
 
-// CONFIGURAÇÕES DO USUÁRIO (Salvas no LocalStorage)
-let geminiApiKey = localStorage.getItem('oracao-gemini-key') || '';
+// CONFIGURAÇÕES DO USUÁRIO & CHAVE EMBUTIDA (Opção 1)
+// Se você quiser embutir sua chave restrita por domínio para que todos os visitantes usem a IA:
+// 1. Codifique sua chave em Base64 (ex: em base64encode.org) e insira abaixo:
+const EMBEDDED_KEY_B64 = ''; 
+
+let geminiApiKey = localStorage.getItem('oracao-gemini-key') || 
+                   (EMBEDDED_KEY_B64 ? atob(EMBEDDED_KEY_B64) : '');
 let selectedMood = localStorage.getItem('oracao-selected-mood') || 'default';
 let voiceRate = parseFloat(localStorage.getItem('oracao-voice-rate')) || 0.9;
 let voicePitch = parseFloat(localStorage.getItem('oracao-voice-pitch')) || 1.0;
