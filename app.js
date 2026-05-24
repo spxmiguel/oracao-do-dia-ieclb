@@ -564,7 +564,7 @@ async function loadNewPrayer(animate = true, forceAi = false) {
         const aiPrayer = await generateAiPrayer(currentPeriod, selectedMood);
         
         if (btnAiText && btnAiPrayer) {
-            btnAiText.textContent = "Orar com IA";
+            btnAiText.textContent = "Gerar com IA";
             btnAiPrayer.disabled = false;
         }
         
