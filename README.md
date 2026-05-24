@@ -1,47 +1,55 @@
 # ⛪ Oração do Dia Luterana - Devocional Digital
 
-Este é um projeto front-end minimalista, moderno e responsivo que funciona como um devocional digital diário. O aplicativo adapta-se automaticamente ao fuso horário local do usuário para exibir orações correspondentes ao período atual (Madrugada, Manhã, Tarde ou Noite) inspiradas na tradição de fé, amor e acolhimento luterana.
+Este é um projeto front-end de altíssimo nível, combinando uma estética editorial clássica de "Santuário Digital" com tecnologia moderna para criar um devocional diário luterano impecável. O aplicativo adapta-se automaticamente ao fuso horário do usuário para exibir orações correspondentes ao período atual (Madrugada, Manhã, Tarde ou Noite), inspiradas na tradição teológica de fé, graça e acolhimento luterana.
 
-O projeto roda **100% no lado do cliente** via **GitHub Pages**, sem dependências externas, sem frameworks e sem complexidades de backend.
+O projeto é hospedado **100% no lado do cliente** via **GitHub Pages**, rodando de forma extremamente veloz, sem dependências pesadas, sem rastreadores e sem complexidades de banco de dados no servidor.
 
 ---
 
 ## ✨ Funcionalidades Principais
 
-*   **🕒 Detecção Automática de Período**: O sistema detecta o horário local do dispositivo do usuário e ajusta a interface:
-    *   `00:00 - 04:59` → Madrugada (🌌)
-    *   `05:00 - 11:59` → Manhã (🌅)
-    *   `12:00 - 17:59` → Tarde (☀️)
-    *   `18:00 - 23:59` → Noite (🌙)
-*   **🎨 Temas Visuais Dinâmicos**: A interface adota automaticamente um gradiente de cores que representa o período do dia atual com efeito premium de *Glassmorphism* (cartão translúcido desfocado) e fundo de partículas luminosas flutuantes.
-*   **🙏 Banco de Orações Local (Offline)**: Inclui um acervo local de **20 orações extensas** (5 por período do dia) escritas com linguagem acolhedora, respeitosa e profunda, abordando temas da teologia luterana como a graça (Sola Gratia), comunhão, cuidado com a criação e justiça.
-*   **🤖 Inteligência Artificial Opcional (Gemini API)**: Integração opcional com o modelo **Gemini 1.5 Flash** para geração de orações personalizadas em tempo real com base no sentimento atual selecionado pelo usuário (Grato, Cansado, Ansioso, etc.).
-*   **🔊 Leitura por Voz (Text-to-Speech)**: Player de áudio integrado usando a API nativa do navegador (`SpeechSynthesisUtterance`), com controle de velocidade, tom e seleção de voz.
-*   **📱 Mobile-First & Acessível**: Design fluido, responsivo e adaptado para celulares, com suporte completo para navegação por teclado e bons contrastes de cores.
-*   **🎙️ Integração com Alexa**: Inclui uma pasta com arquivos prontos para criar uma skill gratuita da Alexa (*Alexa-Hosted Skill*) e ouvir suas orações nos dispositivos Echo.
+*   **📖 Estética de Santuário Digital**: Design inspirado em livros litúrgicos clássicos de couro e papel texturizado. Inclui:
+    *   Molduras internas recortadas e texturas táteis sutis (overlay de ruído analógico).
+    *   Tipografia elegante usando as fontes *Cinzel* (títulos clássicos), *Alegreya* (leitura confortável com Letra Capitular/Drop Cap) e *Outfit* (elementos de controle modernos).
+    *   Divisores geométricos e de estrelas (`✦`), além de ícones SVG estilizados e responsivos para cada momento sagrado.
+*   **🕒 Detecção Automática de Período**: O sistema ajusta a paleta de cores litúrgica e as orações com base na hora local:
+    *   `00:00 - 04:59` → Madrugada (🌌 - Tons violeta profundo e estrelas)
+    *   `05:00 - 11:59` → Manhã (🌅 - Tons aurorais dourados e rosados)
+    *   `12:00 - 17:59` → Tarde (☀️ - Tons azuis celestes e quentes)
+    *   `18:00 - 23:59` → Noite (🌙 - Tons azul marinho e luar)
+*   **🎲 Motor de Orações Combinatório (Offline & Instantâneo)**: 
+    Para evitar repetições excessivas sem sobrecarregar o peso do aplicativo, as orações locais são geradas por um motor combinatório inteligente que divide a oração em 5 partes teológicas (Invocação, Ação de Graças, Reflexão, Intercessão e Bênção/Amém). 
+    *   Com 6 variações ricas escritas para cada parte, o sistema gera **$6^5 = 7.776$ combinações exclusivas por período do dia**, resultando em **31.104 orações possíveis** carregadas instantaneamente (0ms de atraso).
+*   **🤖 Inteligência Artificial sob Demanda (Gemini 2.5 Flash)**:
+    Integração opcional para gerar orações personalizadas em tempo real com base no sentimento atual selecionado pelo usuário (Grato, Cansado, Ansioso, etc.). A geração por IA é acionada manualmente através do botão **"Gerar com IA"** para economizar dados e evitar esperas desnecessárias no primeiro carregamento.
+*   **🔊 Narração Inteligente (Text-to-Speech)**:
+    Player de voz integrado que lê a oração usando a API nativa do navegador (`SpeechSynthesisUtterance`). O leitor foi configurado com filtros que removem tags de formatação e evitam a leitura robótica de elementos de interface (como títulos de botões ou metadados).
+*   **📱 Responsividade & Acessibilidade Premium**:
+    Suporte a telas sensíveis ao toque, navegação facilitada por teclado, contrastes rigorosos e micro-transições suaves nas interações com botões.
+*   **🎙️ Integração com Alexa**:
+    Inclui recursos prontos na pasta `alexa-skill` para criar uma Skill de devocional personalizada para dispositivos Echo.
 
 ---
 
-## 🛠️ Segurança da Chave da API (Como funciona a IA sem vazar dados)
+## 🛠️ Segurança e Privacidade da Chave da API
 
-Como o aplicativo é hospedado de forma estática no GitHub Pages, **não é possível embutir uma chave de API secreta diretamente no código-fonte**, pois qualquer pessoa poderia inspecionar o código e roubá-la.
+Como o aplicativo é hospedado de forma estática no GitHub Pages, implementamos mecanismos para garantir a máxima segurança dos usuários:
 
-Para resolver isso, implementamos duas soluções limpas e seguras:
-
-1.  **Local Storage (Padrão)**: O usuário cola sua chave de API do Gemini no painel de configurações. Essa chave é salva **apenas no navegador dele** (`localStorage`) e as requisições partem direto do cliente para a API do Google, garantindo privacidade e segurança absoluta de dados.
-2.  **Restrição por Domínio (Para uso público amplo)**: Se você deseja que qualquer visitante do seu site use a IA sem precisar digitar uma chave, você pode criar uma chave no Google Cloud Console e **restringi-la para aceitar requisições vindas apenas do seu domínio** (ex: `https://seu-usuario.github.io/*`). Dessa forma, mesmo que alguém copie a chave do código-fonte, ela não funcionará em nenhum outro site ou aplicativo, protegendo sua cota de uso.
+1.  **Local Storage Criptografado/Mascarado**: A chave de API do Gemini inserida pelo usuário é armazenada apenas em seu próprio navegador (`localStorage`).
+2.  **Visual Seguro**: Na interface de configurações, a chave é permanentemente mascarada (`••••••••••••••••••••`) para evitar exposição acidental da tela (shoulder surfing).
+3.  **Requisições Diretas**: A comunicação ocorre diretamente entre o navegador do usuário e os servidores de segurança da API do Google, sem intermediários.
 
 ---
 
-## 📁 Estrutura de Arquivos
+## 📁 Estrutura do Projeto
 
 ```
 oracao-do-dia-ieclb/
-├── index.html        # Estrutura semântica e modal de configurações
-├── style.css         # Variáveis de temas por período, CSS Grid, partículas e modal
-├── app.js            # Lógica de períodos, banco de orações, TTS e chamada de API Gemini
-├── README.md         # Este guia
-└── alexa-skill/      # Modelos e códigos para integração com assistente Alexa
+├── index.html        # Estrutura semântica HTML5 com overlays e modal de configurações
+├── style.css         # Design System, variáveis HSL por período, texturas e animações
+├── app.js            # Motor combinatório local, controle de áudio TTS, integração Gemini e manipulação do DOM
+├── README.md         # Este guia do desenvolvedor
+└── alexa-skill/      # Diretório da skill Alexa-Hosted
     ├── index.js
     ├── package.json
     ├── model.json
@@ -50,15 +58,14 @@ oracao-do-dia-ieclb/
 
 ---
 
-## 🚀 Como Executar e Implantar
+## 🚀 Como Executar e Hospedar
 
-### Executar Localmente
-Basta abrir o arquivo `index.html` em qualquer navegador moderno. Não há necessidade de servidores locais ou compilação.
+### Rodar Localmente
+Basta abrir o arquivo `index.html` em qualquer navegador moderno. Como o projeto usa JS puro e requisições HTTP padrão, não é necessária nenhuma etapa de compilação ou build.
 
-### Como Hospedar no GitHub Pages
-1. Crie um repositório público no GitHub.
-2. Faça o push dos arquivos do projeto para o repositório.
-3. Acesse as **Settings (Configurações)** do repositório no GitHub.
-4. Vá em **Pages** no menu lateral esquerdo.
-5. Em *Build and deployment*, selecione a branch `main` e a pasta `/ (root)`.
-6. Salve. Em poucos instantes o GitHub fornecerá o link público do seu aplicativo devocional!
+### Publicar no GitHub Pages
+1. Crie um repositório no GitHub.
+2. Envie os arquivos do projeto para o repositório (`git push`).
+3. Vá em **Settings** > **Pages** no repositório.
+4. Sob **Build and deployment**, selecione a branch `main` e a pasta raiz `/ (root)`.
+5. Clique em salvar. Em instantes o site estará público no seu domínio do GitHub Pages (ex: `https://seu-usuario.github.io/oracao-do-dia-ieclb/`).
