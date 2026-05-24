@@ -142,9 +142,10 @@ body {
     background-size: cover;
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* Removing align-items: center prevents the top from being cut off on short screens */
     position: relative;
     overflow-x: hidden;
+    overflow-y: auto;
     transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
     padding: 1.5rem;
 }
@@ -238,6 +239,9 @@ body {
     flex-direction: column;
     gap: 1.5rem;
     transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Safe vertical centering */
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 /* Header */
@@ -1211,4 +1215,22 @@ body.state-transitioning .landing-tagline {
     transition: transform 0.3s ease, color 0.5s ease;
     display: inline-block;
     vertical-align: middle;
+}
+
+/* Fix height-squishing on short laptops/mobile landscapes */
+@media (max-height: 650px) {
+    .landing-screen {
+        padding: 2rem;
+        justify-content: center;
+        gap: 2rem;
+    }
+    .landing-header { margin-top: 0; }
+    .landing-footer { margin-bottom: 0; }
+    .app-container {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+    .prayer-card {
+        padding: 2rem;
+    }
 }
