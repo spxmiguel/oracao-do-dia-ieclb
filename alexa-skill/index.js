@@ -73,8 +73,8 @@ async function generateAiPrayer(period) {
         noite: 'Noite'
     };
 
-    const prompt = `Você é um pastor/pastora da tradição luterana no Brasil. Escreva uma oração em português acolhedora, respeitosa e profunda para o período da ${periodNames[period]}.
-A oração deve refletir a teologia luterana da graça (Sola Gratia), com foco em amor, confiança em Deus, comunidade e acolhimento. Ela deve ter cerca de 130 a 160 palavras. Escreva em formato de texto corrido sem títulos ou marcadores especiais, apenas o texto da oração de forma simples para ser lido em voz alta pela assistente Alexa. Termine com Amém.`;
+    const prompt = `Você é um conselheiro espiritual com foco em empatia e acolhimento cristão. Escreva uma oração em português acolhedora, respeitosa e profunda para o período da ${periodNames[period]}.
+A oração deve ser centrada no amor, confiança em Deus, comunidade e acolhimento. Ela deve ter cerca de 130 a 160 palavras. Escreva em formato de texto corrido sem títulos ou marcadores especiais, apenas o texto da oração de forma simples para ser lido em voz alta pela assistente Alexa. Termine com Amém.`;
 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
     
@@ -103,7 +103,7 @@ const LaunchRequestHandler = {
         const period = getPeriod(hour);
         const label = getPeriodLabel(period);
         
-        let speakOutput = `Bem-vindo à Oração do Dia Luterana. `;
+        let speakOutput = `Bem-vindo à Oração do Dia. `;
         let prayerText = "";
         
         // Tenta obter oração via IA
@@ -192,7 +192,7 @@ const HelpIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'Você pode me pedir uma oração dizendo: Alexa, peça para Oração do Dia Luterana rezar uma oração. Ou peça uma: nova oração. O que gostaria de fazer?';
+        const speakOutput = 'Você pode me pedir uma oração dizendo: Alexa, peça para Oração do Dia rezar uma oração. Ou peça uma: nova oração. O que gostaria de fazer?';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)

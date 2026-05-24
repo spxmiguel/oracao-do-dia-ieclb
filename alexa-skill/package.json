@@ -1,7 +1,7 @@
 {
-  "name": "oracao-do-dia-luterana-alexa-skill",
+  "name": "oracao-do-dia-alexa-skill",
   "version": "1.0.0",
-  "description": "Alexa Skill for Oração do Dia Luterana",
+  "description": "Alexa Skill for Oração do Dia",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

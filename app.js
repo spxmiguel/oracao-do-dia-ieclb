@@ -429,10 +429,10 @@ async function generateAiPrayer(period, mood) {
         confuso: 'confusão mental e busca por direção e sabedoria nas decisões'
     };
     
-    const prompt = `Você é um pastor/pastora da tradição luterana no Brasil. Escreva uma oração em português acolhedora, respeitosa e profunda para o período da ${periodTranslations[period]}.
+    const prompt = `Você é um conselheiro espiritual com foco em empatia e acolhimento cristão. Escreva uma oração em português acolhedora, respeitosa e profunda para o período da ${periodTranslations[period]}.
 O sentimento atual de quem está orando é: ${moodPrompts[mood] || moodPrompts.default}.
 
-A oração deve refletir a teologia luterana da graça (Sola Gratia), com foco em amor, confiança em Deus, comunidade e acolhimento. Evite linguagem excessivamente formal ou arcaica, prefira um tom humano, compassivo e reflexivo. Ela deve ter de 3 a 4 parágrafos (entre 130 e 180 palavras).
+A oração deve ser centrada no amor, confiança em Deus, comunidade e acolhimento. Evite linguagem excessivamente formal ou arcaica, prefira um tom humano, compassivo e reflexivo. Ela deve ter de 3 a 4 parágrafos (entre 130 e 180 palavras).
 
 IMPORTANTE: Responda estritamente no formato JSON estruturado, sem blocos de código markdown extra (sem aspas triplas de crase \`\`\`json). O JSON deve conter exatamente duas chaves:
 "title" (string, o título da oração)

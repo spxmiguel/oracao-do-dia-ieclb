@@ -1,4 +1,4 @@
-# Alexa Skill - Oração do Dia Luterana
+# Alexa Skill - Oração do Dia
 
 Este diretório contém todos os arquivos necessários para criar uma Skill personalizada da Alexa que lê as orações do devocional baseando-se no horário do seu dispositivo Alexa (Madrugada, Manhã, Tarde ou Noite) e suporta geração em tempo real usando a Gemini API de forma 100% segura.
 

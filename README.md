@@ -1,6 +1,6 @@
-# ⛪ Oração do Dia Luterana - Devocional Digital
+# ⛪ Oração do Dia - Devocional Digital
 
-Este é um projeto front-end de altíssimo nível, combinando uma estética editorial clássica de "Santuário Digital" com tecnologia moderna para criar um devocional diário luterano impecável. O aplicativo adapta-se automaticamente ao fuso horário do usuário para exibir orações correspondentes ao período atual (Madrugada, Manhã, Tarde ou Noite), inspiradas na tradição teológica de fé, graça e acolhimento luterana.
+Este é um projeto front-end de altíssimo nível, combinando uma estética editorial clássica de "Santuário Digital" com tecnologia moderna para criar um devocional diário impecável. O aplicativo adapta-se automaticamente ao fuso horário do usuário para exibir orações correspondentes ao período atual (Madrugada, Manhã, Tarde ou Noite), inspiradas em reflexões de fé, graça e acolhimento.
 
 O projeto é hospedado **100% no lado do cliente** via **GitHub Pages**, rodando de forma extremamente veloz, sem dependências pesadas, sem rastreadores e sem complexidades de banco de dados no servidor.
 
