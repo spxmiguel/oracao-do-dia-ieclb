@@ -17,6 +17,7 @@
 
 /* MADRUGADA: Deep indigo & starry sky */
 body.period-madrugada {
+    --bg-fallback: #08090d;
     --bg-gradient-start: hsla(235, 50%, 8%, 0.85);
     --bg-gradient-end: hsla(265, 45%, 14%, 0.85);
     --card-bg: hsla(235, 45%, 12%, 0.65);
@@ -33,6 +34,7 @@ body.period-madrugada {
 
 /* MANHÃ: Warm morning sunrise */
 body.period-manha {
+    --bg-fallback: #130a08;
     --bg-gradient-start: hsla(22, 50%, 10%, 0.82);
     --bg-gradient-end: hsla(345, 45%, 16%, 0.82);
     --card-bg: hsla(22, 45%, 13%, 0.65);
@@ -49,6 +51,7 @@ body.period-manha {
 
 /* TARDE: Warm golden daylight & soft blue */
 body.period-tarde {
+    --bg-fallback: #090e12;
     --bg-gradient-start: hsla(205, 50%, 10%, 0.85);
     --bg-gradient-end: hsla(190, 45%, 15%, 0.85);
     --card-bg: hsla(205, 45%, 13%, 0.65);
@@ -65,6 +68,7 @@ body.period-tarde {
 
 /* NOITE: Purple twilight */
 body.period-noite {
+    --bg-fallback: #0b070f;
     --bg-gradient-start: hsla(275, 50%, 8%, 0.85);
     --bg-gradient-end: hsla(300, 40%, 12%, 0.85);
     --card-bg: hsla(275, 45%, 12%, 0.65);
@@ -81,6 +85,7 @@ body.period-noite {
 
 /* 2. MANUAL LIGHT THEME OVERRIDE */
 body.theme-light {
+    --bg-fallback: #eae0d5;
     --bg-gradient-start: hsla(30, 20%, 95%, 0.85);
     --bg-gradient-end: hsla(30, 15%, 88%, 0.85);
     --card-bg: hsla(0, 0%, 100%, 0.88);
@@ -97,8 +102,13 @@ body.theme-light {
 
 /* 3. LANDING PAGE OVERRIDES */
 body.state-landing {
+    --bg-fallback: #16120f;
     --bg-gradient-start: rgba(45, 38, 32, 0.45);
     --bg-gradient-end: rgba(22, 18, 15, 0.7);
+}
+
+html {
+    background-color: #12100e;
 }
 
 /* Base Body Styles */
@@ -106,7 +116,12 @@ body {
     min-height: 100vh;
     font-family: var(--font-ui);
     color: var(--text-primary);
-    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end)), url('background.png') no-repeat center center fixed / cover;
+    background-color: var(--bg-fallback, #12100e);
+    background-image: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end)), url('background.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
