@@ -725,6 +725,22 @@ function init() {
     updateTheme();
     
     // Event Listeners - Controles Principais
+    const btnGenerateLanding = document.getElementById('btn-generate-landing');
+    if (btnGenerateLanding) {
+        btnGenerateLanding.addEventListener('click', () => {
+            document.body.classList.add('state-transitioning');
+            
+            // Inicia o carregamento/geração da oração em paralelo
+            loadNewPrayer(true);
+            
+            // Transição de telas após 800ms
+            setTimeout(() => {
+                document.body.classList.remove('state-landing', 'state-transitioning');
+                document.body.classList.add('state-app');
+            }, 800);
+        });
+    }
+
     btnNewPrayer.addEventListener('click', () => {
         const icon = btnNewPrayer.querySelector('.icon-refresh');
         if (icon) {

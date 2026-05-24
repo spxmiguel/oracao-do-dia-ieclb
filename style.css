@@ -204,6 +204,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Header */
@@ -969,4 +970,130 @@ input[type="range"]::-webkit-slider-thumb:hover {
         flex-direction: column;
         gap: 1rem;
     }
+    .landing-title {
+        font-size: 1.65rem;
+        letter-spacing: 0.18em;
+    }
+    .btn-generate-landing {
+        padding: 0.9rem 2.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Landing Page Screen Styles */
+.landing-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5.5rem 2rem;
+    pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
+}
+
+.landing-header {
+    margin-top: 10vh;
+}
+
+.landing-title {
+    font-family: var(--font-prayer);
+    font-size: 2.25rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: rgba(255, 255, 255, 0.95);
+    text-align: center;
+    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.landing-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-generate-landing {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.95);
+    padding: 1.1rem 3.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    border-radius: 50px;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-generate-landing:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.45);
+    transform: scale(1.05);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.35);
+}
+
+.btn-generate-landing:active {
+    transform: scale(0.97);
+}
+
+.landing-footer {
+    margin-bottom: 5vh;
+}
+
+.landing-tagline {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    color: rgba(255, 255, 255, 0.45);
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.8s ease;
+}
+
+/* Page States Logic styling */
+body.state-landing .app-container {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(40px);
+}
+
+body.state-app .app-container {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+body.state-app .landing-screen {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+/* Specific transitioning states for landing elements sliding away */
+body.state-transitioning .landing-title {
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+body.state-transitioning .btn-generate-landing {
+    transform: translateY(100px) scale(0.95);
+    opacity: 0;
+}
+
+body.state-transitioning .landing-tagline {
+    opacity: 0;
 }
