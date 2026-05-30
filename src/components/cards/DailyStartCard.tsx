@@ -44,7 +44,7 @@ export function DailyStartCard({
 
         <div className="pr-20">
           <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-morning-accent dark:text-night-accent">
-            Start para o dia
+            Devocional de hoje
           </p>
           <h2 className="mt-3 font-serif text-3xl leading-tight sm:text-4xl">{devotion.title}</h2>
         </div>

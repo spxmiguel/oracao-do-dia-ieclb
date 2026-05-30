@@ -41,7 +41,7 @@ export function Home({ denomination, prayerProfile, audioEnabled, todayCompletio
     <div className="space-y-6">
       <header className="space-y-2">
         <p className="text-sm font-semibold opacity-65">{formatDisplayDate()}</p>
-        <h1 className="font-serif text-4xl leading-tight">Start para o dia</h1>
+        <h1 className="font-serif text-4xl leading-tight">Primeiros Minutos</h1>
         <p className="max-w-xl leading-7 opacity-75">Uma mensagem diária para ler com calma e uma oração para colocar os primeiros minutos diante de Deus.</p>
         <p className="text-sm font-semibold text-morning-accent">{getDenominationLabel(denomination)}</p>
       </header>

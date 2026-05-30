@@ -71,7 +71,7 @@ Este projeto foi preparado para substituir uma aplicação estática anterior: n
 - Firebase Client SDK modular, sem backend próprio.
 - Firestore com listeners em tempo real e cache em localStorage.
 - Conteúdo mockado local com 21 devocionais únicos.
-- Biblioteca anual local com 365 entradas em estilo “Start para o dia”: leitura, versículo, mensagem diária e oração personalizada.
+- Biblioteca anual local com 365 entradas: leitura, versículo, mensagem diária e oração personalizada.
 - Premium implementado apenas como lista de espera.
 
 ## Limitações do MVP
