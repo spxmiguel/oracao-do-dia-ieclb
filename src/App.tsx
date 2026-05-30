@@ -33,7 +33,7 @@ function App() {
     return (
       <main className="flex min-h-screen items-center justify-center px-6 text-center">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.24em] text-morning-accent night:text-night-accent">Primeiros Minutos</p>
+          <p className="text-xs font-bold uppercase tracking-[0.24em] text-morning-accent dark:text-night-accent">Primeiros Minutos</p>
           <h1 className="mt-3 font-serif text-3xl">Preparando seu ritual...</h1>
         </div>
       </main>
@@ -65,7 +65,7 @@ function App() {
   return (
     <>
       <PageContainer>
-        {appState.error && <p className="mb-4 rounded-2xl bg-red-500/10 p-3 text-sm text-red-700 night:text-red-200">{appState.error}</p>}
+        {appState.error && <p className="mb-4 rounded-2xl bg-red-500/10 p-3 text-sm text-red-700 dark:text-red-200">{appState.error}</p>}
         {page === "home" && (
           <Home
             audioEnabled={appState.preferences.audioEnabled}

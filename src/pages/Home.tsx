@@ -54,9 +54,10 @@ export function Home({ denomination, prayerProfile, audioEnabled, todayCompletio
       <header>
         <p className="text-sm font-semibold opacity-65">{formatDisplayDate()}</p>
         <h1 className="mt-2 font-serif text-4xl">{greeting}</h1>
-        <p className="mt-2 text-sm font-semibold text-morning-accent night:text-night-accent">{getDenominationLabel(denomination)}</p>
+        <p className="mt-2 text-sm font-semibold text-morning-accent dark:text-night-accent">{getDenominationLabel(denomination)}</p>
       </header>
       <GamificationCard completions={completions} currentStreak={currentStreak} totalCompletedDays={totalCompletedDays} />
+      {speech.error && <p className="rounded-2xl bg-amber-500/10 p-3 text-sm font-semibold text-amber-800 dark:text-amber-100">{speech.error}</p>}
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
         {homeState === "BREATHING" && <BreathingFocus onComplete={() => void onBreathingDone()} />}
         {homeState === "MORNING" && (

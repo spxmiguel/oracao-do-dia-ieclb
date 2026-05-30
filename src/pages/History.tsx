@@ -36,6 +36,21 @@ export function History({ completions, currentStreak, totalCompletedDays, isPrem
           <span>Destaque cheio: manhã e noite feitas</span>
         </div>
       </Card>
+      <Card className="space-y-3">
+        <h2 className="font-serif text-2xl">Últimos 7 dias</h2>
+        {[...completions]
+          .sort((a, b) => b.date.localeCompare(a.date))
+          .slice(0, 7)
+          .map((completion) => (
+            <div key={completion.date} className="flex items-center justify-between rounded-2xl bg-white/55 p-3 text-sm dark:bg-white/8">
+              <span className="font-semibold">{completion.date}</span>
+              <span className="opacity-75">
+                {completion.morningDone && completion.nightDone ? "dia completo" : completion.morningDone ? "manhã feita" : completion.nightDone ? "noite feita" : "em aberto"}
+              </span>
+            </div>
+          ))}
+        {completions.length === 0 && <p className="text-sm opacity-75">Nenhum ritual concluído ainda. Respiração, manhã e noite começam a alimentar seu histórico.</p>}
+      </Card>
       {!isPremium && (
         <Card className="space-y-3">
           <h2 className="font-serif text-2xl">Premium em breve</h2>

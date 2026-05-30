@@ -32,23 +32,23 @@ export function PersonalPrayerCard({
     <Card className="space-y-5">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-morning-accent night:text-night-accent">
+          <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-morning-accent dark:text-night-accent">
             <Sparkles className="h-4 w-4" />
             Palavra do dia
           </p>
           <h2 className="mt-2 font-serif text-3xl">{devotion.word}</h2>
         </div>
-        <span className="rounded-full bg-morning-accent/15 px-3 py-1 text-xs font-bold night:bg-night-accent/18">
+        <span className="rounded-full bg-morning-accent/15 px-3 py-1 text-xs font-bold dark:bg-night-accent/18">
           {devotion.dayIndex + 1}/365
         </span>
       </div>
 
-      <blockquote className="rounded-3xl bg-morning-soft/80 p-4 night:bg-night-soft">
+      <blockquote className="rounded-3xl bg-morning-soft/80 p-4 dark:bg-night-soft">
         <p className="font-serif text-lg leading-relaxed">“{devotion.verse.text}”</p>
         <cite className="mt-3 block text-sm not-italic opacity-70">{devotion.verse.reference}</cite>
       </blockquote>
 
-      <div className="rounded-3xl bg-white/55 p-4 night:bg-white/6">
+      <div className="rounded-3xl bg-white/55 p-4 dark:bg-white/6">
         <p className="text-sm font-bold">Sua oração de hoje</p>
         <p className="mt-3 whitespace-pre-line leading-7 opacity-85">{prayer}</p>
       </div>

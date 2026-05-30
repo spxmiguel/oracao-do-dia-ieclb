@@ -19,17 +19,17 @@ export function NightCard({ content, audioEnabled, isSpeaking, onSpeak, onStop, 
   return (
     <Card className="space-y-5">
       <div>
-        <p className="text-xs font-bold uppercase tracking-[0.22em] text-morning-accent night:text-night-accent">Noite</p>
+        <p className="text-xs font-bold uppercase tracking-[0.22em] text-morning-accent dark:text-night-accent">Noite</p>
         <h2 className="mt-2 font-serif text-3xl">Fechar o dia em paz</h2>
       </div>
-      <div className="rounded-3xl bg-morning-soft/80 p-4 night:bg-night-soft">
+      <div className="rounded-3xl bg-morning-soft/80 p-4 dark:bg-night-soft">
         <p className="text-sm font-bold">Pergunta noturna</p>
         <p className="mt-2 font-serif text-xl leading-relaxed">{content.night.question}</p>
       </div>
       <div className="space-y-3">
         {content.night.checklist.map((item) => (
-          <div key={item} className="flex items-center gap-3 rounded-2xl bg-white/55 p-3 night:bg-white/6">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-morning-accent/20 text-morning-text night:bg-night-accent/20 night:text-night-text">
+          <div key={item} className="flex items-center gap-3 rounded-2xl bg-white/55 p-3 dark:bg-white/6">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-morning-accent/20 text-morning-text dark:bg-night-accent/20 dark:text-night-text">
               <Check className="h-4 w-4" />
             </span>
             <span className="text-sm font-medium">{item}</span>

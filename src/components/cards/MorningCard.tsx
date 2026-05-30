@@ -19,15 +19,15 @@ export function MorningCard({ content, audioEnabled, isSpeaking, onSpeak, onStop
   return (
     <Card className="space-y-5">
       <div>
-        <p className="text-xs font-bold uppercase tracking-[0.22em] text-morning-accent night:text-night-accent">Manhã</p>
+        <p className="text-xs font-bold uppercase tracking-[0.22em] text-morning-accent dark:text-night-accent">Manhã</p>
         <h2 className="mt-2 font-serif text-3xl">{content.title}</h2>
       </div>
-      <blockquote className="rounded-3xl bg-morning-soft/80 p-4 night:bg-night-soft">
+      <blockquote className="rounded-3xl bg-morning-soft/80 p-4 dark:bg-night-soft">
         <p className="font-serif text-xl leading-relaxed">“{content.verse.text}”</p>
         <cite className="mt-3 block text-sm not-italic opacity-70">{content.verse.reference}</cite>
       </blockquote>
       <p className="leading-7 opacity-85">{content.morning.reflection}</p>
-      <div className="rounded-3xl bg-white/55 p-4 night:bg-white/6">
+      <div className="rounded-3xl bg-white/55 p-4 dark:bg-white/6">
         <p className="text-sm font-bold">Oração</p>
         <p className="mt-2 leading-7 opacity-85">{content.morning.prayer}</p>
       </div>

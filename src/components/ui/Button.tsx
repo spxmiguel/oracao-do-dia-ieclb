@@ -8,10 +8,10 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const variants: Record<ButtonVariant, string> = {
-  primary: "bg-morning-text text-white night:bg-night-accent hover:opacity-90",
-  secondary: "bg-white/70 text-morning-text ring-1 ring-black/5 night:bg-white/10 night:text-night-text night:ring-white/10",
-  ghost: "text-morning-text hover:bg-black/5 night:text-night-text night:hover:bg-white/10",
-  danger: "bg-red-500/10 text-red-700 ring-1 ring-red-500/20 night:text-red-200"
+  primary: "bg-morning-text text-white dark:bg-night-accent hover:opacity-90",
+  secondary: "bg-white/70 text-morning-text ring-1 ring-black/5 dark:bg-white/10 dark:text-night-text dark:ring-white/10",
+  ghost: "text-morning-text hover:bg-black/5 dark:text-night-text dark:hover:bg-white/10",
+  danger: "bg-red-500/10 text-red-700 ring-1 ring-red-500/20 dark:text-red-200"
 };
 
 export function Button({ children, className = "", variant = "primary", icon, ...props }: ButtonProps) {

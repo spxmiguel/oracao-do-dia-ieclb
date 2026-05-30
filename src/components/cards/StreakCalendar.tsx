@@ -26,12 +26,12 @@ export function StreakCalendar({ completions, isPremium }: StreakCalendarProps) 
             title={key}
             className={`aspect-square rounded-xl border transition ${
               locked
-                ? "border-black/5 bg-black/5 blur-[1px] night:border-white/10 night:bg-white/10"
+                ? "border-black/5 bg-black/5 blur-[1px] dark:border-white/10 dark:bg-white/10"
                 : full
-                  ? "border-morning-accent bg-morning-accent night:border-night-accent night:bg-night-accent"
+                  ? "border-morning-accent bg-morning-accent dark:border-night-accent dark:bg-night-accent"
                   : partial
-                    ? "border-morning-accent/50 bg-morning-accent/25 night:border-night-accent/50 night:bg-night-accent/25"
-                    : "border-black/5 bg-white/55 night:border-white/10 night:bg-white/8"
+                    ? "border-morning-accent/50 bg-morning-accent/25 dark:border-night-accent/50 dark:bg-night-accent/25"
+                    : "border-black/5 bg-white/55 dark:border-white/10 dark:bg-white/8"
             }`}
           />
         );

@@ -70,3 +70,47 @@ button {
   border-color: #6366f1;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.22);
 }
+
+.night [class*="dark:bg-white/6"] {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.night [class*="dark:bg-white/8"] {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.night [class*="dark:bg-white/10"] {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.night [class*="dark:bg-night-soft"] {
+  background-color: #1b2436 !important;
+}
+
+.night [class*="dark:bg-night-accent"] {
+  background-color: #6366f1 !important;
+}
+
+.night [class*="dark:bg-night-accent/18"] {
+  background-color: rgba(99, 102, 241, 0.18) !important;
+}
+
+.night [class*="dark:bg-night-accent/20"] {
+  background-color: rgba(99, 102, 241, 0.2) !important;
+}
+
+.night [class*="dark:bg-night-accent/25"] {
+  background-color: rgba(99, 102, 241, 0.25) !important;
+}
+
+.night [class*="dark:text-night-text"] {
+  color: #e2e8f0 !important;
+}
+
+.night [class*="dark:text-night-accent"] {
+  color: #6366f1 !important;
+}
+
+.night [class*="dark:border-white/10"] {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}

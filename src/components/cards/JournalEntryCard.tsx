@@ -18,7 +18,7 @@ export function JournalEntryCard({ entry, onEdit, onDelete }: JournalEntryCardPr
           <p className="mt-1 text-sm font-semibold">{getMoodEmoji(entry.mood)} {getMoodLabel(entry.mood)}</p>
         </div>
         <div className="flex gap-1">
-          <button className="rounded-full p-2 hover:bg-black/5 night:hover:bg-white/10" onClick={() => onEdit(entry)} type="button" aria-label="Editar entrada">
+          <button className="rounded-full p-2 hover:bg-black/5 dark:hover:bg-white/10" onClick={() => onEdit(entry)} type="button" aria-label="Editar entrada">
             <Edit3 className="h-4 w-4" />
           </button>
           <button className="rounded-full p-2 text-red-600 hover:bg-red-500/10" onClick={() => onDelete(entry.id)} type="button" aria-label="Excluir entrada">

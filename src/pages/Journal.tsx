@@ -4,6 +4,7 @@ import { JournalEntryCard } from "../components/cards/JournalEntryCard";
 import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
 import type { JournalEntry } from "../types";
+import { getMoodLabel } from "../utils/content";
 
 type JournalProps = {
   entries: JournalEntry[];
@@ -41,15 +42,19 @@ export function Journal({ entries, isPremium, userEmail, onAdd, onUpdate, onDele
     <div className="space-y-5">
       <header>
         <h1 className="font-serif text-4xl">Diário</h1>
-        <p className="mt-2 opacity-75">Escreva uma oração, pensamento ou reflexão privada.</p>
+        <p className="mt-2 opacity-75">Um lugar privado para guardar orações, respostas percebidas, pesos do dia e trechos que você quer lembrar depois.</p>
       </header>
+      <Card className="space-y-2 text-sm">
+        <p className="font-bold">Para que serve?</p>
+        <p className="leading-6 opacity-75">Use como memória espiritual: salve a oração personalizada, registre como você chegou hoje e volte depois para perceber constância, gratidão e mudanças pequenas.</p>
+      </Card>
       <Card>
         <form className="space-y-4" onSubmit={submit}>
           <textarea className="field min-h-36 resize-none" value={content} onChange={(event) => setContent(event.target.value)} placeholder="Deus, hoje eu..." required />
           <div className="flex flex-wrap gap-2">
             {moods.map((item) => (
-              <button key={item} type="button" onClick={() => setMood(item)} className={`rounded-full px-4 py-2 text-sm font-semibold ${mood === item ? "bg-morning-text text-white night:bg-night-accent" : "bg-white/60 night:bg-white/8"}`}>
-                {item}
+              <button key={item} type="button" onClick={() => setMood(item)} className={`rounded-full px-4 py-2 text-sm font-semibold ${mood === item ? "bg-morning-text text-white dark:bg-night-accent" : "bg-white/60 dark:bg-white/8"}`}>
+                {getMoodLabel(item)}
               </button>
             ))}
           </div>

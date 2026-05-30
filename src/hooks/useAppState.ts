@@ -180,6 +180,10 @@ export function useAppState(user: User | null, hasGuestProfile = false) {
     let streak = 0;
     const completedDates = new Set(completions.filter((item) => item.morningDone && item.nightDone).map((item) => item.date));
     const date = new Date();
+    const todayCompletion = completions.find((item) => item.date === getTodayKey(date));
+    if (!todayCompletion?.nightDone) {
+      date.setDate(date.getDate() - 1);
+    }
     for (let index = 0; index < 365; index += 1) {
       if (!completedDates.has(getTodayKey(date))) break;
       streak += 1;

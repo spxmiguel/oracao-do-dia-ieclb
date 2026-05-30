@@ -95,7 +95,7 @@ export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, 
             Horário da noite
             <input className="field" type="time" value={preferences.nightReminderTime} onChange={(event) => setPreferences((current) => ({ ...current, nightReminderTime: event.target.value }))} />
           </label>
-          <div className="space-y-3 rounded-3xl bg-white/55 p-4 night:bg-white/8">
+          <div className="space-y-3 rounded-3xl bg-white/55 p-4 dark:bg-white/8">
             <div>
               <p className="text-sm font-bold">Como você quer orar agora?</p>
               <p className="mt-1 text-sm opacity-70">Isso molda uma oração diária em 4 partes: gratidão, entrega, pedido e prática.</p>
@@ -126,7 +126,7 @@ export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, 
                 {prayerLengthOptions.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
               </select>
             </label>
-            <label className="flex items-center justify-between rounded-2xl bg-white/60 p-3 text-sm font-semibold night:bg-white/8">
+            <label className="flex items-center justify-between rounded-2xl bg-white/60 p-3 text-sm font-semibold dark:bg-white/8">
               Incluir pedidos pessoais
               <input type="checkbox" checked={preferences.prayerProfile.includePersonalRequests} onChange={(event) => setPreferences((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, includePersonalRequests: event.target.checked } }))} />
             </label>

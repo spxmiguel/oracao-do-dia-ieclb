@@ -34,11 +34,11 @@ export function PremiumWaitlistModal({ defaultEmail, onClose, onJoin }: PremiumW
               Estamos preparando histórico completo, backup avançado e rituais especiais. Entre na lista de espera para ser avisado no lançamento.
             </p>
           </div>
-          <button className="rounded-full p-2 hover:bg-black/5 night:hover:bg-white/10" onClick={onClose} type="button" aria-label="Fechar modal">
+          <button className="rounded-full p-2 hover:bg-black/5 dark:hover:bg-white/10" onClick={onClose} type="button" aria-label="Fechar modal">
             <X className="h-5 w-5" />
           </button>
         </div>
-        <p className="rounded-2xl bg-morning-accent/15 p-3 text-sm font-bold night:bg-night-accent/20">Nenhuma cobrança será feita agora.</p>
+        <p className="rounded-2xl bg-morning-accent/15 p-3 text-sm font-bold dark:bg-night-accent/20">Nenhuma cobrança será feita agora.</p>
         <ul className="grid gap-2 text-sm opacity-85">
           <li>histórico completo</li>
           <li>backup avançado</li>
@@ -47,13 +47,13 @@ export function PremiumWaitlistModal({ defaultEmail, onClose, onJoin }: PremiumW
           <li>personalizações visuais extras</li>
         </ul>
         {status === "success" ? (
-          <p className="rounded-2xl bg-emerald-500/10 p-4 font-semibold text-emerald-700 night:text-emerald-200">
+          <p className="rounded-2xl bg-emerald-500/10 p-4 font-semibold text-emerald-700 dark:text-emerald-200">
             Você entrou na lista. Vamos te avisar quando estiver pronto.
           </p>
         ) : (
           <form className="space-y-3" onSubmit={handleSubmit}>
             <input
-              className="w-full rounded-2xl border border-black/10 bg-white/70 px-4 py-3 outline-none focus:ring-2 focus:ring-morning-accent night:border-white/10 night:bg-white/8 night:focus:ring-night-accent"
+              className="w-full rounded-2xl border border-black/10 bg-white/70 px-4 py-3 outline-none focus:ring-2 focus:ring-morning-accent dark:border-white/10 dark:bg-white/8 dark:focus:ring-night-accent"
               onChange={(event) => setEmail(event.target.value)}
               placeholder="seu@email.com"
               type="email"

@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { Headphones } from "lucide-react";
 import { denominations, prayerFocusOptions, prayerLengthOptions, prayerToneOptions } from "../data";
 import type { UserPreferences } from "../types";
 import { PremiumWaitlistModal } from "../components/premium/PremiumWaitlistModal";
 import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
+import { STORAGE_KEYS } from "../utils/storage";
 
 type SettingsProps = {
   email: string;
@@ -17,9 +19,51 @@ type SettingsProps = {
 export function Settings({ email, preferences, onSave, onLogout, onResetCache, onJoinPremium }: SettingsProps) {
   const [draft, setDraft] = useState(preferences);
   const [showPremium, setShowPremium] = useState(false);
+  const [voiceProvider, setVoiceProvider] = useState(() => localStorage.getItem(STORAGE_KEYS.voiceProvider) || "browser");
+  const [elevenLabsKey, setElevenLabsKey] = useState(() => localStorage.getItem(STORAGE_KEYS.elevenLabsApiKey) || "");
+  const [elevenLabsVoiceId, setElevenLabsVoiceId] = useState(() => localStorage.getItem(STORAGE_KEYS.elevenLabsVoiceId) || "21m00Tcm4TlvDq8ikWAM");
+  const [voiceStatus, setVoiceStatus] = useState<string | null>(null);
 
   const save = async () => {
     await onSave({ ...draft, isPremium: false });
+    localStorage.setItem(STORAGE_KEYS.voiceProvider, voiceProvider);
+    localStorage.setItem(STORAGE_KEYS.elevenLabsApiKey, elevenLabsKey.trim());
+    localStorage.setItem(STORAGE_KEYS.elevenLabsVoiceId, elevenLabsVoiceId.trim());
+  };
+
+  const testElevenLabs = async () => {
+    setVoiceStatus("Testando voz...");
+    localStorage.setItem(STORAGE_KEYS.voiceProvider, "elevenlabs");
+    localStorage.setItem(STORAGE_KEYS.elevenLabsApiKey, elevenLabsKey.trim());
+    localStorage.setItem(STORAGE_KEYS.elevenLabsVoiceId, elevenLabsVoiceId.trim());
+    try {
+      if (!elevenLabsKey.trim()) {
+        setVoiceStatus("Cole sua API key da ElevenLabs para testar.");
+        return;
+      }
+      const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${elevenLabsVoiceId.trim() || "21m00Tcm4TlvDq8ikWAM"}?output_format=mp3_44100_128`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "xi-api-key": elevenLabsKey.trim()
+        },
+        body: JSON.stringify({
+          text: "Primeiros Minutos. Esta é uma prévia da narração.",
+          model_id: "eleven_multilingual_v2"
+        })
+      });
+      if (!response.ok) {
+        setVoiceStatus("Não consegui validar a chave ou a voz. Confira a API key e o Voice ID.");
+        return;
+      }
+      const audioUrl = URL.createObjectURL(await response.blob());
+      const audio = new Audio(audioUrl);
+      audio.onended = () => URL.revokeObjectURL(audioUrl);
+      await audio.play();
+      setVoiceStatus("ElevenLabs funcionando neste dispositivo.");
+    } catch {
+      setVoiceStatus("O teste falhou. Em GitHub Pages, a chave precisa ser sua e aceita pelo navegador.");
+    }
   };
 
   const resetCache = () => {
@@ -37,7 +81,7 @@ export function Settings({ email, preferences, onSave, onLogout, onResetCache, o
       <Card className="space-y-3">
         <p className="text-sm opacity-65">Conta</p>
         <p className="font-semibold">{email || "Modo sem login"}</p>
-        <p className="rounded-2xl bg-white/55 p-3 text-sm font-bold night:bg-white/8">Plano: Free</p>
+        <p className="rounded-2xl bg-white/55 p-3 text-sm font-bold dark:bg-white/8">Plano: Free</p>
         <Button variant="secondary" onClick={() => setShowPremium(true)}>Premium em breve</Button>
       </Card>
       <Card className="space-y-4">
@@ -49,8 +93,8 @@ export function Settings({ email, preferences, onSave, onLogout, onResetCache, o
         </label>
         <label className="grid gap-2 text-sm font-semibold">Manhã<input className="field" type="time" value={draft.morningReminderTime} onChange={(event) => setDraft((current) => ({ ...current, morningReminderTime: event.target.value }))} /></label>
         <label className="grid gap-2 text-sm font-semibold">Noite<input className="field" type="time" value={draft.nightReminderTime} onChange={(event) => setDraft((current) => ({ ...current, nightReminderTime: event.target.value }))} /></label>
-        <label className="flex items-center justify-between rounded-2xl bg-white/55 p-4 text-sm font-semibold night:bg-white/8">Narração<input type="checkbox" checked={draft.audioEnabled} onChange={(event) => setDraft((current) => ({ ...current, audioEnabled: event.target.checked }))} /></label>
-        <div className="space-y-3 rounded-3xl bg-white/55 p-4 night:bg-white/8">
+        <label className="flex items-center justify-between rounded-2xl bg-white/55 p-4 text-sm font-semibold dark:bg-white/8">Narração<input type="checkbox" checked={draft.audioEnabled} onChange={(event) => setDraft((current) => ({ ...current, audioEnabled: event.target.checked }))} /></label>
+        <div className="space-y-3 rounded-3xl bg-white/55 p-4 dark:bg-white/8">
           <div>
             <p className="text-sm font-bold">Perfil de oração</p>
             <p className="mt-1 text-sm opacity-70">Usado para montar a oração diária em gratidão, entrega, pedido e prática.</p>
@@ -73,14 +117,29 @@ export function Settings({ email, preferences, onSave, onLogout, onResetCache, o
               {prayerLengthOptions.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
             </select>
           </label>
-          <label className="flex items-center justify-between rounded-2xl bg-white/60 p-3 text-sm font-semibold night:bg-white/8">
+          <label className="flex items-center justify-between rounded-2xl bg-white/60 p-3 text-sm font-semibold dark:bg-white/8">
             Incluir pedidos pessoais
             <input type="checkbox" checked={draft.prayerProfile.includePersonalRequests} onChange={(event) => setDraft((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, includePersonalRequests: event.target.checked } }))} />
           </label>
         </div>
-        <div className="space-y-2 rounded-3xl bg-white/55 p-4 text-sm night:bg-white/8">
+        <div className="space-y-3 rounded-3xl bg-white/55 p-4 text-sm dark:bg-white/8">
           <p className="font-bold">Voz</p>
-          <p className="opacity-75">O app toca áudios premium gerados com ElevenLabs quando eles estiverem publicados. Se algum áudio ainda não existir, usa a melhor voz em português disponível neste navegador.</p>
+          <p className="opacity-75">Use a voz do navegador ou uma chave própria da ElevenLabs salva só neste dispositivo. Não colocamos chave compartilhada no código.</p>
+          <label className="grid gap-2 text-sm font-semibold">
+            Provedor
+            <select className="field" value={voiceProvider} onChange={(event) => setVoiceProvider(event.target.value)}>
+              <option value="browser">Voz do navegador</option>
+              <option value="elevenlabs">ElevenLabs</option>
+            </select>
+          </label>
+          {voiceProvider === "elevenlabs" && (
+            <div className="space-y-3">
+              <input className="field" type="password" value={elevenLabsKey} onChange={(event) => setElevenLabsKey(event.target.value)} placeholder="ElevenLabs API key" />
+              <input className="field" value={elevenLabsVoiceId} onChange={(event) => setElevenLabsVoiceId(event.target.value)} placeholder="Voice ID" />
+              <Button variant="secondary" icon={<Headphones className="h-4 w-4" />} onClick={testElevenLabs} type="button">Testar voz</Button>
+              {voiceStatus && <p className="rounded-2xl bg-white/60 p-3 text-sm font-semibold dark:bg-white/8">{voiceStatus}</p>}
+            </div>
+          )}
         </div>
         <label className="grid gap-2 text-sm font-semibold">
           Tema

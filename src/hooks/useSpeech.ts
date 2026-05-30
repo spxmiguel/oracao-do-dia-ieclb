@@ -1,7 +1,43 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { STORAGE_KEYS } from "../utils/storage";
+
+type VoiceProvider = "browser" | "elevenlabs";
+
+const getVoiceProvider = (): VoiceProvider =>
+  localStorage.getItem(STORAGE_KEYS.voiceProvider) === "elevenlabs" ? "elevenlabs" : "browser";
+
+const getElevenLabsVoiceId = () =>
+  localStorage.getItem(STORAGE_KEYS.elevenLabsVoiceId)?.trim() || "21m00Tcm4TlvDq8ikWAM";
+
+const requestElevenLabsAudio = async (text: string): Promise<Blob | null> => {
+  const apiKey = localStorage.getItem(STORAGE_KEYS.elevenLabsApiKey)?.trim();
+  if (!apiKey) return null;
+
+  const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${getElevenLabsVoiceId()}?output_format=mp3_44100_128`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "xi-api-key": apiKey
+    },
+    body: JSON.stringify({
+      text,
+      model_id: "eleven_multilingual_v2",
+      voice_settings: {
+        stability: 0.66,
+        similarity_boost: 0.82,
+        style: 0.12,
+        use_speaker_boost: true
+      }
+    })
+  });
+
+  if (!response.ok) return null;
+  return response.blob();
+};
 
 export function useSpeech() {
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const isSupported = typeof window !== "undefined" && "speechSynthesis" in window;
@@ -56,6 +92,7 @@ export function useSpeech() {
   const speak = useCallback(
     async (text: string, audioSrc?: string) => {
       stop();
+      setError(null);
 
       if (audioSrc) {
         const audio = new Audio(audioSrc);
@@ -80,6 +117,35 @@ export function useSpeech() {
         }
       }
 
+      if (getVoiceProvider() === "elevenlabs") {
+        try {
+          const audioBlob = await requestElevenLabsAudio(text);
+          if (audioBlob) {
+            const audioUrl = URL.createObjectURL(audioBlob);
+            const audio = new Audio(audioUrl);
+            audioRef.current = audio;
+            audio.onended = () => {
+              URL.revokeObjectURL(audioUrl);
+              setIsSpeaking(false);
+              audioRef.current = null;
+            };
+            audio.onerror = () => {
+              URL.revokeObjectURL(audioUrl);
+              setIsSpeaking(false);
+              audioRef.current = null;
+              setError("Não consegui tocar a voz da ElevenLabs. Usei a voz do navegador.");
+              speakWithBrowser(text);
+            };
+            setIsSpeaking(true);
+            await audio.play();
+            return;
+          }
+          setError("Configure sua chave da ElevenLabs em Perfil > Voz.");
+        } catch {
+          setError("ElevenLabs não respondeu agora. Usei a voz do navegador.");
+        }
+      }
+
       speakWithBrowser(text);
     },
     [speakWithBrowser, stop]
@@ -87,5 +153,5 @@ export function useSpeech() {
 
   useEffect(() => stop, [stop]);
 
-  return { speak, stop, isSpeaking, isSupported, voiceName: preferredVoice?.name ?? "áudio do ritual" };
+  return { speak, stop, isSpeaking, isSupported, error, voiceName: preferredVoice?.name ?? "áudio do ritual" };
 }
