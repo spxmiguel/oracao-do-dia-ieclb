@@ -32,7 +32,40 @@ export type UserPreferences = {
   nightReminderTime: string;
   audioEnabled: boolean;
   themeMode: "auto" | "morning" | "night";
+  prayerProfile: PrayerProfile;
   isPremium: boolean;
+};
+
+export type PrayerFocus =
+  | "peace"
+  | "gratitude"
+  | "direction"
+  | "family"
+  | "forgiveness"
+  | "discipline";
+
+export type PrayerTone = "intimate" | "reverent" | "direct";
+
+export type PrayerLength = "short" | "balanced" | "deep";
+
+export type PrayerProfile = {
+  focus: PrayerFocus;
+  tone: PrayerTone;
+  length: PrayerLength;
+  includePersonalRequests: boolean;
+};
+
+export type YearlyDevotion = {
+  dayIndex: number;
+  word: string;
+  verse: {
+    reference: string;
+    text: string;
+  };
+  gratitudeSeed: string;
+  surrenderSeed: string;
+  requestSeed: string;
+  practiceSeed: string;
 };
 
 export type Completion = {

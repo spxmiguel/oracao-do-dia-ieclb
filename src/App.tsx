@@ -72,6 +72,7 @@ function App() {
             completions={appState.completions}
             currentStreak={appState.currentStreak}
             denomination={appState.preferences.denomination}
+            prayerProfile={appState.preferences.prayerProfile}
             onBreathingDone={appState.markBreathingDone}
             onMorningDone={appState.markMorningDone}
             onNightDone={appState.markNightDone}

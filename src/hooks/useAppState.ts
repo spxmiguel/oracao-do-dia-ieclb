@@ -12,8 +12,24 @@ const defaultPreferences: UserPreferences = {
   nightReminderTime: "21:30",
   audioEnabled: true,
   themeMode: "auto",
+  prayerProfile: {
+    focus: "peace",
+    tone: "intimate",
+    length: "balanced",
+    includePersonalRequests: true
+  },
   isPremium: false
 };
+
+const normalizePreferences = (preferences: Partial<UserPreferences> | null | undefined): UserPreferences => ({
+  ...defaultPreferences,
+  ...preferences,
+  prayerProfile: {
+    ...defaultPreferences.prayerProfile,
+    ...preferences?.prayerProfile
+  },
+  isPremium: false
+});
 
 const emptyTodayCompletion = (): Completion => ({
   date: getTodayKey(),
@@ -55,7 +71,7 @@ export function useAppState(user: User | null, hasGuestProfile = false) {
       (profile) => {
         setHasProfile(Boolean(profile));
         if (profile) {
-          setPreferencesCache({ ...defaultPreferences, ...profile, isPremium: false });
+          setPreferencesCache(normalizePreferences(profile));
         }
         setLoading(false);
       },
@@ -92,7 +108,7 @@ export function useAppState(user: User | null, hasGuestProfile = false) {
 
   const setPreferences = useCallback(
     async (nextPreferences: UserPreferences) => {
-      const safePreferences = { ...nextPreferences, isPremium: false };
+      const safePreferences = normalizePreferences(nextPreferences);
       setPreferencesCache(safePreferences);
       if (user) {
         const existing = await firestore.getUserProfile(user.uid);
@@ -186,7 +202,7 @@ export function useAppState(user: User | null, hasGuestProfile = false) {
   );
 
   return {
-    preferences,
+    preferences: normalizePreferences(preferences),
     completions,
     journalEntries,
     hasCompletedBreathingToday: getTodayCompletion().breathingDone,

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { denominations } from "../data";
+import { denominations, prayerFocusOptions, prayerLengthOptions, prayerToneOptions } from "../data";
 import type { UserPreferences } from "../types";
 import { PremiumWaitlistModal } from "../components/premium/PremiumWaitlistModal";
 import { Button } from "../components/ui/Button";
@@ -50,6 +50,34 @@ export function Settings({ email, preferences, onSave, onLogout, onResetCache, o
         <label className="grid gap-2 text-sm font-semibold">Manhã<input className="field" type="time" value={draft.morningReminderTime} onChange={(event) => setDraft((current) => ({ ...current, morningReminderTime: event.target.value }))} /></label>
         <label className="grid gap-2 text-sm font-semibold">Noite<input className="field" type="time" value={draft.nightReminderTime} onChange={(event) => setDraft((current) => ({ ...current, nightReminderTime: event.target.value }))} /></label>
         <label className="flex items-center justify-between rounded-2xl bg-white/55 p-4 text-sm font-semibold night:bg-white/8">Narração<input type="checkbox" checked={draft.audioEnabled} onChange={(event) => setDraft((current) => ({ ...current, audioEnabled: event.target.checked }))} /></label>
+        <div className="space-y-3 rounded-3xl bg-white/55 p-4 night:bg-white/8">
+          <div>
+            <p className="text-sm font-bold">Perfil de oração</p>
+            <p className="mt-1 text-sm opacity-70">Usado para montar a oração diária em gratidão, entrega, pedido e prática.</p>
+          </div>
+          <label className="grid gap-2 text-sm font-semibold">
+            Foco
+            <select className="field" value={draft.prayerProfile.focus} onChange={(event) => setDraft((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, focus: event.target.value as UserPreferences["prayerProfile"]["focus"] } }))}>
+              {prayerFocusOptions.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+            </select>
+          </label>
+          <label className="grid gap-2 text-sm font-semibold">
+            Tom
+            <select className="field" value={draft.prayerProfile.tone} onChange={(event) => setDraft((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, tone: event.target.value as UserPreferences["prayerProfile"]["tone"] } }))}>
+              {prayerToneOptions.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+            </select>
+          </label>
+          <label className="grid gap-2 text-sm font-semibold">
+            Tamanho
+            <select className="field" value={draft.prayerProfile.length} onChange={(event) => setDraft((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, length: event.target.value as UserPreferences["prayerProfile"]["length"] } }))}>
+              {prayerLengthOptions.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+            </select>
+          </label>
+          <label className="flex items-center justify-between rounded-2xl bg-white/60 p-3 text-sm font-semibold night:bg-white/8">
+            Incluir pedidos pessoais
+            <input type="checkbox" checked={draft.prayerProfile.includePersonalRequests} onChange={(event) => setDraft((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, includePersonalRequests: event.target.checked } }))} />
+          </label>
+        </div>
         <div className="space-y-2 rounded-3xl bg-white/55 p-4 text-sm night:bg-white/8">
           <p className="font-bold">Voz</p>
           <p className="opacity-75">O app toca áudios premium gerados com ElevenLabs quando eles estiverem publicados. Se algum áudio ainda não existir, usa a melhor voz em português disponível neste navegador.</p>

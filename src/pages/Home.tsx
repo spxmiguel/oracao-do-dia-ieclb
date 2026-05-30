@@ -4,18 +4,21 @@ import { DaySummaryCard } from "../components/cards/DaySummaryCard";
 import { GamificationCard } from "../components/cards/GamificationCard";
 import { MorningCard } from "../components/cards/MorningCard";
 import { NightCard } from "../components/cards/NightCard";
+import { PersonalPrayerCard } from "../components/cards/PersonalPrayerCard";
 import { BreathingFocus } from "../components/ui/BreathingFocus";
 import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
-import type { Completion, Denomination, HomeState } from "../types";
+import type { Completion, Denomination, HomeState, PrayerProfile } from "../types";
 import { getDenominationLabel } from "../utils/content";
 import { formatDisplayDate, isNightTime } from "../utils/date";
 import { useSpeech } from "../hooks/useSpeech";
 import { useTodayContent } from "../hooks/useTodayContent";
+import { useYearlyDevotion } from "../hooks/useYearlyDevotion";
 import { getAudioPath } from "../utils/audio";
 
 type HomeProps = {
   denomination: Denomination;
+  prayerProfile: PrayerProfile;
   audioEnabled: boolean;
   todayCompletion: Completion;
   completions: Completion[];
@@ -28,9 +31,10 @@ type HomeProps = {
   onOpenJournal: () => void;
 };
 
-export function Home({ denomination, audioEnabled, todayCompletion, completions, currentStreak, totalCompletedDays, onBreathingDone, onMorningDone, onNightDone, onSaveJournal, onOpenJournal }: HomeProps) {
+export function Home({ denomination, prayerProfile, audioEnabled, todayCompletion, completions, currentStreak, totalCompletedDays, onBreathingDone, onMorningDone, onNightDone, onSaveJournal, onOpenJournal }: HomeProps) {
   const [forceNight, setForceNight] = useState(false);
   const { content } = useTodayContent(denomination);
+  const yearlyDevotion = useYearlyDevotion();
   const speech = useSpeech();
   const night = isNightTime();
 
@@ -56,21 +60,33 @@ export function Home({ denomination, audioEnabled, todayCompletion, completions,
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
         {homeState === "BREATHING" && <BreathingFocus onComplete={() => void onBreathingDone()} />}
         {homeState === "MORNING" && (
-          <MorningCard
-            audioEnabled={audioEnabled}
-            audioSrc={getAudioPath(content.id, "morning")}
-            content={content}
-            isSpeaking={speech.isSpeaking}
-            onDone={onMorningDone}
-            onSaveJournal={() => onSaveJournal(`${content.title}\n\n${content.morning.reflection}\n\n${content.morning.prayer}`)}
-            onSpeak={() =>
-              speech.speak(
-                `${content.title}. ${content.verse.text}. ${content.verse.reference}. ${content.morning.reflection} Pausa para oração. ${content.morning.prayer}`,
-                getAudioPath(content.id, "morning")
-              )
-            }
-            onStop={speech.stop}
-          />
+          <div className="space-y-5">
+            <PersonalPrayerCard
+              audioEnabled={audioEnabled}
+              denomination={denomination}
+              devotion={yearlyDevotion}
+              isSpeaking={speech.isSpeaking}
+              onSaveJournal={(journalContent) => void onSaveJournal(journalContent)}
+              onSpeak={speech.speak}
+              onStop={speech.stop}
+              profile={prayerProfile}
+            />
+            <MorningCard
+              audioEnabled={audioEnabled}
+              audioSrc={getAudioPath(content.id, "morning")}
+              content={content}
+              isSpeaking={speech.isSpeaking}
+              onDone={onMorningDone}
+              onSaveJournal={() => onSaveJournal(`${content.title}\n\n${content.morning.reflection}\n\n${content.morning.prayer}`)}
+              onSpeak={() =>
+                speech.speak(
+                  `${content.title}. ${content.verse.text}. ${content.verse.reference}. ${content.morning.reflection} Pausa para oração. ${content.morning.prayer}`,
+                  getAudioPath(content.id, "morning")
+                )
+              }
+              onStop={speech.stop}
+            />
+          </div>
         )}
         {homeState === "MIDDAY_REST" && !forceNight && (
           <Card className="space-y-5 text-center">

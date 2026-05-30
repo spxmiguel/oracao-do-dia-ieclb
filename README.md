@@ -10,7 +10,9 @@ React 18, TypeScript estrito, Vite, Tailwind CSS, Framer Motion, Lucide React, F
 
 - Onboarding com Google ou modo local sem login.
 - Escolha entre Evangélico, Católico e Cristão sem religião.
+- Perguntas de perfil para personalizar o foco, tom e tamanho da oração.
 - Ritual diário com respiração, devocional da manhã e fechamento noturno.
+- Palavra do dia, versículo e oração personalizada em uma rotação anual de 365 dias.
 - Diário privado com humor, edição e exclusão.
 - Histórico de constância, XP privado, níveis e conquistas.
 - Cache local para fallback visual.
@@ -74,6 +76,7 @@ Este projeto foi preparado para substituir uma aplicação estática anterior: n
 - Firebase Client SDK modular, sem backend próprio.
 - Firestore com listeners em tempo real e cache em localStorage.
 - Conteúdo mockado local com 21 devocionais únicos.
+- Biblioteca anual local com 365 entradas para palavra do dia, versículo e blocos de oração.
 - Premium implementado apenas como lista de espera.
 
 ## Limitações do MVP
