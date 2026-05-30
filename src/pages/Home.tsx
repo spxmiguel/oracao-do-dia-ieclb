@@ -52,12 +52,16 @@ export function Home({ denomination, audioEnabled, todayCompletion, currentStrea
         {homeState === "BREATHING" && <BreathingFocus onComplete={() => void onBreathingDone()} />}
         {homeState === "MORNING" && (
           <MorningCard
-            audioEnabled={audioEnabled && speech.isSupported}
+            audioEnabled={audioEnabled}
             content={content}
             isSpeaking={speech.isSpeaking}
             onDone={onMorningDone}
             onSaveJournal={() => onSaveJournal(`${content.title}\n\n${content.morning.reflection}\n\n${content.morning.prayer}`)}
-            onSpeak={speech.speak}
+            onSpeak={() =>
+              speech.speak(
+                `${content.title}. ${content.verse.text}. ${content.verse.reference}. ${content.morning.reflection} Pausa para oração. ${content.morning.prayer}`
+              )
+            }
             onStop={speech.stop}
           />
         )}
@@ -69,7 +73,7 @@ export function Home({ denomination, audioEnabled, todayCompletion, currentStrea
           </Card>
         )}
         {(homeState === "NIGHT" || forceNight) && (
-          <NightCard audioEnabled={audioEnabled && speech.isSupported} content={content} isSpeaking={speech.isSpeaking} onDone={onNightDone} onSpeak={speech.speak} onStop={speech.stop} />
+          <NightCard audioEnabled={audioEnabled} content={content} isSpeaking={speech.isSpeaking} onDone={onNightDone} onSpeak={speech.speak} onStop={speech.stop} />
         )}
         {homeState === "COMPLETED" && <DaySummaryCard streak={currentStreak} onOpenJournal={onOpenJournal} />}
       </motion.div>

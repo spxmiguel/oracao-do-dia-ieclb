@@ -8,7 +8,7 @@ type MorningCardProps = {
   content: DailyContent;
   audioEnabled: boolean;
   isSpeaking: boolean;
-  onSpeak: (text: string) => void;
+  onSpeak: (text: string) => void | Promise<void>;
   onStop: () => void;
   onDone: () => void;
   onSaveJournal: () => void;
@@ -30,17 +30,13 @@ export function MorningCard({ content, audioEnabled, isSpeaking, onSpeak, onStop
         <p className="text-sm font-bold">Oração</p>
         <p className="mt-2 leading-7 opacity-85">{content.morning.prayer}</p>
       </div>
-      <div className="rounded-3xl border border-morning-accent/25 p-4 night:border-night-accent/30">
-        <p className="text-sm font-bold">Direção prática</p>
-        <p className="mt-2 leading-7 opacity-85">{content.morning.practicalGoal}</p>
-      </div>
       <div className="flex flex-wrap gap-2">
         <Button icon={<Check className="h-4 w-4" />} onClick={onDone}>Marcar como feito</Button>
         {audioEnabled && (
           isSpeaking ? (
-            <Button variant="secondary" icon={<Square className="h-4 w-4" />} onClick={onStop}>Parar áudio</Button>
+            <Button variant="secondary" icon={<Square className="h-4 w-4" />} onClick={onStop}>Parar narração</Button>
           ) : (
-            <Button variant="secondary" icon={<Headphones className="h-4 w-4" />} onClick={() => onSpeak(content.morning.audioText)}>Ouvir</Button>
+            <Button variant="secondary" icon={<Headphones className="h-4 w-4" />} onClick={() => onSpeak(content.morning.audioText)}>Narrar devocional</Button>
           )
         )}
         <Button variant="ghost" icon={<Clipboard className="h-4 w-4" />} onClick={() => void copyTextToClipboard(content.morning.prayer)}>Copiar oração</Button>

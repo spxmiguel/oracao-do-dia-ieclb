@@ -8,7 +8,7 @@ type NightCardProps = {
   content: DailyContent;
   audioEnabled: boolean;
   isSpeaking: boolean;
-  onSpeak: (text: string) => void;
+  onSpeak: (text: string) => void | Promise<void>;
   onStop: () => void;
   onDone: () => void;
 };
@@ -43,9 +43,9 @@ export function NightCard({ content, audioEnabled, isSpeaking, onSpeak, onStop, 
         <Button icon={<Moon className="h-4 w-4" />} onClick={onDone}>Fechar meu dia</Button>
         {audioEnabled && (
           isSpeaking ? (
-            <Button variant="secondary" icon={<Square className="h-4 w-4" />} onClick={onStop}>Parar áudio</Button>
+            <Button variant="secondary" icon={<Square className="h-4 w-4" />} onClick={onStop}>Parar narração</Button>
           ) : (
-            <Button variant="secondary" icon={<Headphones className="h-4 w-4" />} onClick={() => onSpeak(audioText)}>Ouvir</Button>
+            <Button variant="secondary" icon={<Headphones className="h-4 w-4" />} onClick={() => onSpeak(audioText)}>Narrar fechamento</Button>
           )
         )}
         <Button variant="ghost" icon={<Clipboard className="h-4 w-4" />} onClick={() => void copyTextToClipboard(content.night.shortPrayer)}>Copiar oração</Button>

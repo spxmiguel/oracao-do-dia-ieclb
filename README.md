@@ -14,6 +14,7 @@ React 18, TypeScript estrito, Vite, Tailwind CSS, Framer Motion, Lucide React, F
 - Diário privado com humor, edição e exclusão.
 - Histórico de constância e calendário dos últimos 30 dias.
 - Cache local para fallback visual.
+- Narração via voz do navegador ou ElevenLabs local com chave própria do usuário.
 - Lista de espera Premium em breve, sem cobrança.
 - PWA instalável e compatível com GitHub Pages.
 
@@ -33,6 +34,8 @@ npm run preview
 3. Crie um banco Cloud Firestore em modo production.
 4. Copie `.env.example` para `.env` e preencha as variáveis `VITE_FIREBASE_*`.
 5. Publique as regras com o arquivo `firestore.rules`.
+
+Este repositório já inclui `.firebaserc` e `firebase.json` apontando para o projeto `primeiros-minutos`. O `.env` local fica fora do Git.
 
 Estrutura usada:
 
@@ -66,7 +69,8 @@ Este projeto foi preparado para substituir uma aplicação estática anterior: n
 ## Limitações do MVP
 
 - Sem notificações push agendadas.
-- Sem IA dinâmica.
+- Sem geração dinâmica de conteúdo devocional.
+- ElevenLabs é opcional e usa chave local do próprio usuário; não há chave compartilhada no frontend.
 - Sem pagamentos, assinatura, checkout, Stripe, Cloud Functions, Apple Login, marketplace ou anúncios.
 - O modo offline depende do app já ter sido carregado ao menos uma vez.
 
