@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, User, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { GoogleAuthProvider, User, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import { useCallback, useEffect, useState } from "react";
 import { auth } from "../config/firebase";
 
@@ -40,17 +40,7 @@ export function useAuth() {
     [runAuthAction]
   );
 
-  const signInWithEmail = useCallback(
-    (email: string, password: string) => runAuthAction(() => signInWithEmailAndPassword(auth!, email, password)),
-    [runAuthAction]
-  );
-
-  const signUpWithEmail = useCallback(
-    (email: string, password: string) => runAuthAction(() => createUserWithEmailAndPassword(auth!, email, password)),
-    [runAuthAction]
-  );
-
   const logout = useCallback(() => runAuthAction(() => signOut(auth!)), [runAuthAction]);
 
-  return { user, loading, error, signInWithGoogle, signInWithEmail, signUpWithEmail, logout };
+  return { user, loading, error, signInWithGoogle, logout };
 }

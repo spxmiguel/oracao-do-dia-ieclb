@@ -1,5 +1,5 @@
-import { FormEvent, useState } from "react";
-import { Chrome, Mail, UserRound } from "lucide-react";
+import { useState } from "react";
+import { Chrome, UserRound } from "lucide-react";
 import { denominations } from "../data";
 import type { UserPreferences } from "../types";
 import { Button } from "../components/ui/Button";
@@ -10,15 +10,11 @@ type OnboardingProps = {
   authError: string | null;
   isAuthenticated: boolean;
   onGoogle: () => Promise<void> | void;
-  onEmailLogin: (email: string, password: string) => Promise<void> | void;
-  onEmailSignup: (email: string, password: string) => Promise<void> | void;
   onSavePreferences: (preferences: UserPreferences) => Promise<void>;
   onGuestStart: () => void;
 };
 
-export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, onEmailLogin, onEmailSignup, onSavePreferences, onGuestStart }: OnboardingProps) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, onSavePreferences, onGuestStart }: OnboardingProps) {
   const [guestSelected, setGuestSelected] = useState(false);
   const [preferences, setPreferences] = useState<UserPreferences>({
     denomination: "evangelical",
@@ -29,15 +25,6 @@ export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, 
     isPremium: false
   });
   const [saving, setSaving] = useState(false);
-
-  const handleAuth = (event: FormEvent, action: "login" | "signup") => {
-    event.preventDefault();
-    if (action === "login") {
-      void onEmailLogin(email, password);
-    } else {
-      void onEmailSignup(email, password);
-    }
-  };
 
   const savePreferences = async () => {
     setSaving(true);
@@ -69,14 +56,9 @@ export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, 
           >
             Continuar sem login
           </Button>
-          <form className="space-y-3" onSubmit={(event) => handleAuth(event, "login")}>
-            <input className="field" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="E-mail" type="email" required />
-            <input className="field" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Senha" type="password" minLength={6} required />
-            <div className="grid gap-2 sm:grid-cols-2">
-              <Button icon={<Mail className="h-4 w-4" />} disabled={authLoading} type="submit">Entrar</Button>
-              <Button variant="secondary" disabled={authLoading} onClick={(event) => handleAuth(event, "signup")} type="button">Criar conta</Button>
-            </div>
-          </form>
+          <p className="rounded-3xl bg-white/55 p-4 text-sm leading-6 opacity-75">
+            Para reduzir riscos do MVP, não usamos senha própria. Entre com Google para backup na nuvem ou continue sem login neste dispositivo.
+          </p>
           {authError && <p className="rounded-2xl bg-red-500/10 p-3 text-sm text-red-700">{authError}</p>}
         </Card>
       ) : (

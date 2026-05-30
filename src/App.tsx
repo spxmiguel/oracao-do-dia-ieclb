@@ -46,8 +46,6 @@ function App() {
         authError={auth.error}
         authLoading={auth.loading}
         isAuthenticated={Boolean(auth.user) || guestStarted}
-        onEmailLogin={auth.signInWithEmail}
-        onEmailSignup={auth.signUpWithEmail}
         onGoogle={auth.signInWithGoogle}
         onGuestStart={() => setGuestStarted(true)}
         onSavePreferences={async (preferences) => {

@@ -8,7 +8,7 @@ React 18, TypeScript estrito, Vite, Tailwind CSS, Framer Motion, Lucide React, F
 
 ## Funcionalidades
 
-- Onboarding com Google, e-mail/senha ou modo local sem login.
+- Onboarding com Google ou modo local sem login.
 - Escolha entre Evangélico, Católico e Cristão sem religião.
 - Ritual diário com respiração, devocional da manhã e fechamento noturno.
 - Diário privado com humor, edição e exclusão.
@@ -40,7 +40,7 @@ Se um arquivo de áudio ainda não existir, o app usa a melhor voz em português
 ## Firebase
 
 1. Crie um projeto no Firebase.
-2. Ative Authentication com Google e Email/Password.
+2. Ative Authentication com Google. Mantenha Email/Password desativado neste MVP.
 3. Crie um banco Cloud Firestore em modo production.
 4. Copie `.env.example` para `.env` e preencha as variáveis `VITE_FIREBASE_*`.
 5. Publique as regras com o arquivo `firestore.rules`.
