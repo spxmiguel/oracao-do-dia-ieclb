@@ -136,7 +136,7 @@ export function useSpeech() {
       if (getVoiceProvider() === "google_translate") {
         const played = await speakWithGoogleTranslate(text);
         if (played) return;
-        setError("Narrador do Google indisponível agora. Usei a voz do navegador.");
+        setError(null);
       }
 
       if (audioSrc && getVoiceProvider() === "browser") {

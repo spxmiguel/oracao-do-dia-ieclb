@@ -9,7 +9,6 @@ import { Journal } from "./pages/Journal";
 import { Onboarding } from "./pages/Onboarding";
 import { Settings } from "./pages/Settings";
 import type { AppPage } from "./types";
-import { isNightTime } from "./utils/date";
 import { STORAGE_KEYS } from "./utils/storage";
 
 function App() {
@@ -21,8 +20,7 @@ function App() {
 
   const theme = useMemo(() => {
     if (appState.preferences.themeMode === "night") return "night";
-    if (appState.preferences.themeMode === "morning") return "morning";
-    return isNightTime() ? "night" : "morning";
+    return "morning";
   }, [appState.preferences.themeMode]);
 
   useEffect(() => {
@@ -82,12 +80,10 @@ function App() {
             currentStreak={appState.currentStreak}
             denomination={appState.preferences.denomination}
             prayerProfile={appState.preferences.prayerProfile}
-            cloudSaveEnabled={Boolean(auth.user)}
             onBreathingDone={appState.markBreathingDone}
             onMorningDone={appState.markMorningDone}
             onNightDone={appState.markNightDone}
             onOpenJournal={() => setPage("journal")}
-            onOpenSettings={() => setPage("settings")}
             onSaveJournal={async (content) => {
               await appState.addJournalEntry({ content, mood: "grateful" });
               setPage("journal");
