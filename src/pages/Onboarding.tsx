@@ -44,7 +44,7 @@ export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, 
       <div className="mb-8 text-center">
         <p className="text-xs font-bold uppercase tracking-[0.24em] text-morning-accent">Primeiros Minutos</p>
         <h1 className="mt-3 font-serif text-4xl leading-tight">Os primeiros minutos do seu dia, entregues a Deus.</h1>
-        <p className="mt-4 leading-7 opacity-75">Um ritual cristão simples para Palavra, oração e reflexão.</p>
+        <p className="mt-4 leading-7 opacity-75">Um devocional cristão simples para Palavra, oração e reflexão.</p>
       </div>
 
       {!isAuthenticated && !guestSelected ? (
@@ -75,7 +75,7 @@ export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, 
               {setupStep === "identity" ? "Primeiro ajuste" : "Seu jeito de começar"}
             </p>
             <h2 className="mt-2 font-serif text-3xl">
-              {setupStep === "identity" ? "Vamos preparar seu ritual" : "Me conta como sua manhã costuma chegar"}
+              {setupStep === "identity" ? "Vamos preparar seu devocional" : "Me conta como sua manhã costuma chegar"}
             </h2>
             <p className="mt-2 opacity-75">
               {setupStep === "identity"
@@ -113,7 +113,7 @@ export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, 
                 Quero opção de narração
                 <input type="checkbox" checked={preferences.audioEnabled} onChange={(event) => setPreferences((current) => ({ ...current, audioEnabled: event.target.checked }))} />
               </label>
-              <Button className="w-full" onClick={() => setSetupStep("prayer")}>Continuar</Button>
+                <Button className="w-full" onClick={() => setSetupStep("prayer")}>Continuar</Button>
             </>
           ) : (
             <>

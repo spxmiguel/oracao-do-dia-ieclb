@@ -31,7 +31,7 @@ export function PremiumWaitlistModal({ defaultEmail, onClose, onJoin }: PremiumW
           <div>
             <h2 className="font-serif text-3xl">Premium em breve</h2>
             <p className="mt-3 leading-7 opacity-80">
-              Estamos preparando histórico completo, backup avançado e rituais especiais. Entre na lista de espera para ser avisado no lançamento.
+              Estamos preparando histórico completo, backup avançado e devocionais especiais. Entre na lista de espera para ser avisado no lançamento.
             </p>
           </div>
           <button className="rounded-full p-2 hover:bg-black/5 dark:hover:bg-white/10" onClick={onClose} type="button" aria-label="Fechar modal">
@@ -43,7 +43,7 @@ export function PremiumWaitlistModal({ defaultEmail, onClose, onJoin }: PremiumW
           <li>histórico completo</li>
           <li>backup avançado</li>
           <li>filtros do diário</li>
-          <li>rituais especiais para ansiedade, prova, gratidão e descanso</li>
+          <li>devocionais especiais para ansiedade, prova, gratidão e descanso</li>
           <li>personalizações visuais extras</li>
         </ul>
         {status === "success" ? (

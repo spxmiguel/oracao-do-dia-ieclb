@@ -34,7 +34,7 @@ function App() {
       <main className="flex min-h-screen items-center justify-center px-6 text-center">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.24em] text-morning-accent dark:text-night-accent">Primeiros Minutos</p>
-          <h1 className="mt-3 font-serif text-3xl">Preparando seu ritual...</h1>
+          <h1 className="mt-3 font-serif text-3xl">Abrindo seu devocional...</h1>
         </div>
       </main>
     );

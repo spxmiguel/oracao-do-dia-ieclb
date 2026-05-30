@@ -12,7 +12,7 @@ React 18, TypeScript estrito, Vite, Tailwind CSS, Framer Motion, Lucide React, F
 - Cloud save por conta Google, com migração do progresso local ao entrar depois.
 - Escolha entre Evangélico, Católico e Cristão sem religião.
 - Perguntas de perfil para personalizar o foco, tom e tamanho da oração.
-- Ritual diário em formato de devocional curto, com leitura, versículo, impulso e oração.
+- Devocional diário curto, com leitura, versículo, impulso e oração.
 - Palavra do dia, versículo e oração personalizada em uma rotação anual de 365 dias.
 - Diário privado com humor, edição, exclusão e sincronização em nuvem quando conectado.
 - Histórico de constância, XP privado, níveis e conquistas.
@@ -85,7 +85,7 @@ Este projeto foi preparado para substituir uma aplicação estática anterior: n
 ## Próximos Passos Possíveis
 
 - Adicionar notificações locais quando viável no ambiente PWA.
-- Expandir biblioteca de rituais estáticos.
+- Expandir biblioteca de devocionais estáticos.
 - Avaliar áudios próprios estáticos no futuro, caso faça sentido.
 - Criar filtros premium do diário quando o produto for lançado.
 - Melhorar métricas privadas de constância sem elementos sociais.

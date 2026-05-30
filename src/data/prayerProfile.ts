@@ -107,7 +107,7 @@ export const prayerDiscoveryLengthOptions: Array<{
   },
   {
     value: "balanced",
-    title: "Quero um ritual de dois minutos",
+    title: "Quero um devocional de dois minutos",
     description: "Tempo suficiente para agradecer, entregar e pedir."
   },
   {

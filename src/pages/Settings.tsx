@@ -56,7 +56,7 @@ export function Settings({ email, preferences, onSave, onLogout, onResetCache, o
     <div className="space-y-5">
       <header>
         <h1 className="font-serif text-4xl">Perfil</h1>
-        <p className="mt-2 opacity-75">Ajuste seu ritual sem transformar isso em barulho.</p>
+        <p className="mt-2 opacity-75">Ajuste seu momento com Deus sem transformar isso em barulho.</p>
       </header>
       <Card className="space-y-3">
         <p className="text-sm opacity-65">Conta</p>

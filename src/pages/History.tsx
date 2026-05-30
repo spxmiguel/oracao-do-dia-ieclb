@@ -49,7 +49,7 @@ export function History({ completions, currentStreak, totalCompletedDays, isPrem
               </span>
             </div>
           ))}
-        {completions.length === 0 && <p className="text-sm opacity-75">Nenhum ritual concluído ainda. Respiração, manhã e noite começam a alimentar seu histórico.</p>}
+        {completions.length === 0 && <p className="text-sm opacity-75">Nenhum devocional concluído ainda. Respiração, manhã e noite começam a alimentar seu histórico.</p>}
       </Card>
       {!isPremium && (
         <Card className="space-y-3">
