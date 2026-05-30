@@ -1,45 +1,47 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { STORAGE_KEYS } from "../utils/storage";
 
-type VoiceProvider = "browser" | "elevenlabs";
+type VoiceProvider = "google_translate" | "browser";
 
 const getVoiceProvider = (): VoiceProvider =>
-  localStorage.getItem(STORAGE_KEYS.voiceProvider) === "elevenlabs" ? "elevenlabs" : "browser";
+  localStorage.getItem(STORAGE_KEYS.voiceProvider) === "browser" ? "browser" : "google_translate";
 
-const getElevenLabsVoiceId = () =>
-  localStorage.getItem(STORAGE_KEYS.elevenLabsVoiceId)?.trim() || "21m00Tcm4TlvDq8ikWAM";
+const splitTextForGoogle = (text: string): string[] => {
+  const normalized = text.replace(/\s+/g, " ").trim();
+  if (!normalized) return [];
 
-const requestElevenLabsAudio = async (text: string): Promise<Blob | null> => {
-  const apiKey = localStorage.getItem(STORAGE_KEYS.elevenLabsApiKey)?.trim();
-  if (!apiKey) return null;
+  const sentences = normalized.match(/[^.!?]+[.!?]*/g) ?? [normalized];
+  const chunks: string[] = [];
+  let current = "";
 
-  const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${getElevenLabsVoiceId()}?output_format=mp3_44100_128`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "xi-api-key": apiKey
-    },
-    body: JSON.stringify({
-      text,
-      model_id: "eleven_multilingual_v2",
-      voice_settings: {
-        stability: 0.66,
-        similarity_boost: 0.82,
-        style: 0.12,
-        use_speaker_boost: true
-      }
-    })
+  sentences.forEach((sentence) => {
+    const next = `${current} ${sentence}`.trim();
+    if (next.length <= 180) {
+      current = next;
+      return;
+    }
+    if (current) chunks.push(current);
+    if (sentence.length <= 180) {
+      current = sentence.trim();
+      return;
+    }
+    sentence.match(/.{1,170}(\s|$)/g)?.forEach((part) => chunks.push(part.trim()));
+    current = "";
   });
 
-  if (!response.ok) return null;
-  return response.blob();
+  if (current) chunks.push(current);
+  return chunks.filter(Boolean);
 };
+
+const googleTranslateAudioUrl = (text: string): string =>
+  `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=pt-BR&q=${encodeURIComponent(text)}`;
 
 export function useSpeech() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const playbackIdRef = useRef(0);
   const isSupported = typeof window !== "undefined" && "speechSynthesis" in window;
 
   useEffect(() => {
@@ -61,6 +63,7 @@ export function useSpeech() {
   );
 
   const stop = useCallback(() => {
+    playbackIdRef.current += 1;
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -71,6 +74,42 @@ export function useSpeech() {
     }
     setIsSpeaking(false);
   }, [isSupported]);
+
+  const speakWithGoogleTranslate = useCallback(
+    async (text: string) => {
+      const chunks = splitTextForGoogle(text);
+      if (chunks.length === 0) return false;
+
+      const playbackId = playbackIdRef.current;
+      setIsSpeaking(true);
+
+      for (const chunk of chunks) {
+        if (playbackId !== playbackIdRef.current) return true;
+        const audio = new Audio(googleTranslateAudioUrl(chunk));
+        audio.preload = "auto";
+        audioRef.current = audio;
+
+        try {
+          await audio.play();
+          await new Promise<void>((resolve, reject) => {
+            audio.onended = () => resolve();
+            audio.onerror = () => reject(new Error("Google Translate TTS falhou."));
+          });
+        } catch {
+          setIsSpeaking(false);
+          audioRef.current = null;
+          return false;
+        }
+      }
+
+      if (playbackId === playbackIdRef.current) {
+        setIsSpeaking(false);
+        audioRef.current = null;
+      }
+      return true;
+    },
+    []
+  );
 
   const speakWithBrowser = useCallback(
     (text: string) => {
@@ -94,7 +133,13 @@ export function useSpeech() {
       stop();
       setError(null);
 
-      if (audioSrc) {
+      if (getVoiceProvider() === "google_translate") {
+        const played = await speakWithGoogleTranslate(text);
+        if (played) return;
+        setError("Narrador do Google indisponível agora. Usei a voz do navegador.");
+      }
+
+      if (audioSrc && getVoiceProvider() === "browser") {
         const audio = new Audio(audioSrc);
         audioRef.current = audio;
         audio.onended = () => {
@@ -117,41 +162,12 @@ export function useSpeech() {
         }
       }
 
-      if (getVoiceProvider() === "elevenlabs") {
-        try {
-          const audioBlob = await requestElevenLabsAudio(text);
-          if (audioBlob) {
-            const audioUrl = URL.createObjectURL(audioBlob);
-            const audio = new Audio(audioUrl);
-            audioRef.current = audio;
-            audio.onended = () => {
-              URL.revokeObjectURL(audioUrl);
-              setIsSpeaking(false);
-              audioRef.current = null;
-            };
-            audio.onerror = () => {
-              URL.revokeObjectURL(audioUrl);
-              setIsSpeaking(false);
-              audioRef.current = null;
-              setError("Não consegui tocar a voz da ElevenLabs. Usei a voz do navegador.");
-              speakWithBrowser(text);
-            };
-            setIsSpeaking(true);
-            await audio.play();
-            return;
-          }
-          setError("Configure sua chave da ElevenLabs em Perfil > Voz.");
-        } catch {
-          setError("ElevenLabs não respondeu agora. Usei a voz do navegador.");
-        }
-      }
-
       speakWithBrowser(text);
     },
-    [speakWithBrowser, stop]
+    [speakWithBrowser, speakWithGoogleTranslate, stop]
   );
 
   useEffect(() => stop, [stop]);
 
-  return { speak, stop, isSpeaking, isSupported, error, voiceName: preferredVoice?.name ?? "áudio do ritual" };
+  return { speak, stop, isSpeaking, isSupported, error, voiceName: getVoiceProvider() === "google_translate" ? "Narrador Google" : preferredVoice?.name ?? "voz do navegador" };
 }

@@ -4,7 +4,7 @@ PWA cristão mobile-first para começar e terminar o dia com Palavra, oração e
 
 ## Stack
 
-React 18, TypeScript estrito, Vite, Tailwind CSS, Framer Motion, Lucide React, Firebase Auth, Cloud Firestore, vite-plugin-pwa, localStorage, Web Speech API e geração opcional de áudio ElevenLabs.
+React 18, TypeScript estrito, Vite, Tailwind CSS, Framer Motion, Lucide React, Firebase Auth, Cloud Firestore, vite-plugin-pwa, localStorage e Web Speech API.
 
 ## Funcionalidades
 
@@ -16,7 +16,7 @@ React 18, TypeScript estrito, Vite, Tailwind CSS, Framer Motion, Lucide React, F
 - Diário privado com humor, edição e exclusão.
 - Histórico de constância, XP privado, níveis e conquistas.
 - Cache local para fallback visual.
-- Narração via voz do navegador, chave própria da ElevenLabs no dispositivo ou MP3s estáticos gerados com ElevenLabs.
+- Narração via narrador do Google Tradutor, com fallback para voz do navegador.
 - Lista de espera Premium em breve, sem cobrança.
 - PWA instalável e compatível com GitHub Pages.
 
@@ -29,18 +29,9 @@ npm run build
 npm run preview
 ```
 
-## Áudios ElevenLabs
+## Narração
 
-GitHub Pages não tem backend para proteger uma chave compartilhada. Por isso, há duas formas seguras de usar ElevenLabs:
-
-1. Em `Perfil > Voz`, selecionar ElevenLabs e colar uma API key própria. A chave fica apenas no localStorage do dispositivo.
-2. Gerar arquivos MP3 antes do deploy e publicar os áudios estáticos em `public/audio`.
-
-```bash
-ELEVENLABS_API_KEY=sua_chave ELEVENLABS_VOICE_ID=id_da_voz npm run generate:audio
-```
-
-Se a ElevenLabs não estiver configurada ou falhar, o app usa a melhor voz em português disponível no navegador. O endpoint usado é o Text to Speech oficial da ElevenLabs (`/v1/text-to-speech/{voice_id}`).
+O app usa o narrador do Google Tradutor por áudio direto no navegador e mantém a Web Speech API como fallback. Não há chave de voz no frontend.
 
 ## Firebase
 
@@ -86,7 +77,7 @@ Este projeto foi preparado para substituir uma aplicação estática anterior: n
 
 - Sem notificações push agendadas.
 - Sem geração dinâmica de conteúdo devocional.
-- ElevenLabs é opcional via chave local do usuário ou geração estática local; não há chave compartilhada no frontend.
+- Não há chave de voz compartilhada no frontend.
 - Sem pagamentos, assinatura, checkout, Stripe, Cloud Functions, Apple Login, marketplace ou anúncios.
 - O modo offline depende do app já ter sido carregado ao menos uma vez.
 
@@ -94,6 +85,6 @@ Este projeto foi preparado para substituir uma aplicação estática anterior: n
 
 - Adicionar notificações locais quando viável no ambiente PWA.
 - Expandir biblioteca de rituais estáticos.
-- Publicar pacote inicial de MP3s gerados com ElevenLabs.
+- Avaliar áudios próprios estáticos no futuro, caso faça sentido.
 - Criar filtros premium do diário quando o produto for lançado.
 - Melhorar métricas privadas de constância sem elementos sociais.

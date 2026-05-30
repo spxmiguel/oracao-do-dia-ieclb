@@ -14,7 +14,6 @@ import { formatDisplayDate, isNightTime } from "../utils/date";
 import { useSpeech } from "../hooks/useSpeech";
 import { useTodayContent } from "../hooks/useTodayContent";
 import { useYearlyDevotion } from "../hooks/useYearlyDevotion";
-import { getAudioPath } from "../utils/audio";
 
 type HomeProps = {
   denomination: Denomination;
@@ -74,15 +73,13 @@ export function Home({ denomination, prayerProfile, audioEnabled, todayCompletio
             />
             <MorningCard
               audioEnabled={audioEnabled}
-              audioSrc={getAudioPath(content.id, "morning")}
               content={content}
               isSpeaking={speech.isSpeaking}
               onDone={onMorningDone}
               onSaveJournal={() => onSaveJournal(`${content.title}\n\n${content.morning.reflection}\n\n${content.morning.prayer}`)}
               onSpeak={() =>
                 speech.speak(
-                  `${content.title}. ${content.verse.text}. ${content.verse.reference}. ${content.morning.reflection} Pausa para oração. ${content.morning.prayer}`,
-                  getAudioPath(content.id, "morning")
+                  `${content.title}. ${content.verse.text}. ${content.verse.reference}. ${content.morning.reflection} Pausa para oração. ${content.morning.prayer}`
                 )
               }
               onStop={speech.stop}
@@ -97,7 +94,7 @@ export function Home({ denomination, prayerProfile, audioEnabled, todayCompletio
           </Card>
         )}
         {(homeState === "NIGHT" || forceNight) && (
-          <NightCard audioEnabled={audioEnabled} audioSrc={getAudioPath(content.id, "night")} content={content} isSpeaking={speech.isSpeaking} onDone={onNightDone} onSpeak={speech.speak} onStop={speech.stop} />
+          <NightCard audioEnabled={audioEnabled} content={content} isSpeaking={speech.isSpeaking} onDone={onNightDone} onSpeak={speech.speak} onStop={speech.stop} />
         )}
         {homeState === "COMPLETED" && <DaySummaryCard streak={currentStreak} onOpenJournal={onOpenJournal} />}
       </motion.div>
