@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color: #2c2a29;
+  background: #fdfbf7;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(196, 164, 132, 0.2), transparent 34rem),
+    linear-gradient(180deg, #fdfbf7 0%, #f6efe6 100%);
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.night body {
+  color: #e2e8f0;
+  background:
+    radial-gradient(circle at top right, rgba(99, 102, 241, 0.24), transparent 32rem),
+    linear-gradient(180deg, #121826 0%, #172033 100%);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.field {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid rgba(44, 42, 41, 0.12);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0.85rem 1rem;
+  color: inherit;
+  outline: none;
+  transition: box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.field:focus {
+  border-color: #c4a484;
+  box-shadow: 0 0 0 3px rgba(196, 164, 132, 0.22);
+}
+
+.night .field {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.night .field:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.22);
+}
