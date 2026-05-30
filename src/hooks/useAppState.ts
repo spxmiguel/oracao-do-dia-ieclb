@@ -176,6 +176,25 @@ export function useAppState(user: User | null, hasGuestProfile = false) {
     setJournalCache([]);
   }, [setCompletionsCache, setJournalCache, setPreferencesCache]);
 
+  const syncLocalToCloud = useCallback(
+    async (uid: string) => {
+      const safePreferences = normalizePreferences(preferences);
+      const existingProfile = await firestore.getUserProfile(uid);
+      if (existingProfile) {
+        await firestore.updateUserProfile(uid, safePreferences);
+      } else {
+        await firestore.createUserProfile(uid, safePreferences);
+      }
+
+      await Promise.all([
+        ...completions.map((completion) => firestore.upsertCompletion(uid, completion)),
+        ...journalEntries.map((entry) => firestore.addJournalEntry(uid, entry))
+      ]);
+      setHasProfile(true);
+    },
+    [completions, journalEntries, preferences]
+  );
+
   const currentStreak = useMemo(() => {
     let streak = 0;
     const completedDates = new Set(completions.filter((item) => item.morningDone && item.nightDone).map((item) => item.date));
@@ -221,6 +240,7 @@ export function useAppState(user: User | null, hasGuestProfile = false) {
     updateJournalEntry,
     deleteJournalEntry,
     resetLocalCache,
+    syncLocalToCloud,
     getTodayCompletion,
     currentStreak,
     totalCompletedDays,

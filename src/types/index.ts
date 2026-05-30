@@ -58,10 +58,14 @@ export type PrayerProfile = {
 export type YearlyDevotion = {
   dayIndex: number;
   word: string;
+  title: string;
+  readReference: string;
   verse: {
     reference: string;
     text: string;
   };
+  devotional: string;
+  impulse: string;
   gratitudeSeed: string;
   surrenderSeed: string;
   requestSeed: string;

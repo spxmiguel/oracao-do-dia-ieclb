@@ -62,6 +62,16 @@ function App() {
   const email = auth.user?.email ?? "";
   const todayCompletion = appState.getTodayCompletion();
 
+  const handleGoogleCloudSave = async () => {
+    const credential = await auth.signInWithGoogle();
+    if (credential?.user) {
+      await appState.syncLocalToCloud(credential.user.uid);
+      localStorage.removeItem(STORAGE_KEYS.guestProfile);
+      setGuestProfile(false);
+      setGuestStarted(false);
+    }
+  };
+
   return (
     <>
       <PageContainer>
@@ -69,20 +79,20 @@ function App() {
         {page === "home" && (
           <Home
             audioEnabled={appState.preferences.audioEnabled}
-            completions={appState.completions}
             currentStreak={appState.currentStreak}
             denomination={appState.preferences.denomination}
             prayerProfile={appState.preferences.prayerProfile}
+            cloudSaveEnabled={Boolean(auth.user)}
             onBreathingDone={appState.markBreathingDone}
             onMorningDone={appState.markMorningDone}
             onNightDone={appState.markNightDone}
             onOpenJournal={() => setPage("journal")}
+            onOpenSettings={() => setPage("settings")}
             onSaveJournal={async (content) => {
               await appState.addJournalEntry({ content, mood: "grateful" });
               setPage("journal");
             }}
             todayCompletion={todayCompletion}
-            totalCompletedDays={appState.totalCompletedDays}
           />
         )}
         {page === "journal" && (
@@ -110,6 +120,7 @@ function App() {
           <Settings
             email={email}
             onJoinPremium={appState.joinPremiumWaitlist}
+            onGoogleCloudSave={handleGoogleCloudSave}
             onLogout={async () => {
               if (auth.user) {
                 await auth.logout();
@@ -121,6 +132,9 @@ function App() {
             onResetCache={appState.resetLocalCache}
             onSave={appState.setPreferences}
             preferences={appState.preferences}
+            cloudSaveEnabled={Boolean(auth.user)}
+            authError={auth.error}
+            authLoading={auth.loading}
           />
         )}
       </PageContainer>

@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, User, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+import { GoogleAuthProvider, User, UserCredential, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import { useCallback, useEffect, useState } from "react";
 import { auth } from "../config/firebase";
 
@@ -20,23 +20,24 @@ export function useAuth() {
     return unsubscribe;
   }, []);
 
-  const runAuthAction = useCallback(async (action: () => Promise<unknown>) => {
+  const runAuthAction = useCallback(async <T,>(action: () => Promise<T>): Promise<T | undefined> => {
     setError(null);
     setLoading(true);
     try {
       if (!auth) {
         throw new Error("Configure o Firebase no arquivo .env para autenticar.");
       }
-      await action();
+      return await action();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Não foi possível autenticar.");
+      return undefined;
     } finally {
       setLoading(false);
     }
   }, []);
 
   const signInWithGoogle = useCallback(
-    () => runAuthAction(() => signInWithPopup(auth!, new GoogleAuthProvider())),
+    (): Promise<UserCredential | undefined> => runAuthAction(() => signInWithPopup(auth!, new GoogleAuthProvider())),
     [runAuthAction]
   );
 

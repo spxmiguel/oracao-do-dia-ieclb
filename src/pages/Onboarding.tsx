@@ -9,7 +9,7 @@ type OnboardingProps = {
   authLoading: boolean;
   authError: string | null;
   isAuthenticated: boolean;
-  onGoogle: () => Promise<void> | void;
+  onGoogle: () => Promise<unknown> | void;
   onSavePreferences: (preferences: UserPreferences) => Promise<void>;
   onGuestStart: () => void;
 };

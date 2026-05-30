@@ -25,4 +25,12 @@ export const formatDisplayDate = (date = new Date()): string =>
     month: "long"
   }).format(date);
 
+export const formatBookDate = (date = new Date()): string =>
+  new Intl.DateTimeFormat("pt-BR", {
+    day: "2-digit",
+    month: "short"
+  })
+    .format(date)
+    .replace(".", "");
+
 export const isNightTime = (date = new Date()): boolean => date.getHours() >= 18;

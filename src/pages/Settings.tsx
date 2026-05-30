@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Headphones } from "lucide-react";
+import { Cloud, CloudOff, Headphones } from "lucide-react";
 import { denominations, prayerFocusOptions, prayerLengthOptions, prayerToneOptions } from "../data";
 import type { UserPreferences } from "../types";
 import { PremiumWaitlistModal } from "../components/premium/PremiumWaitlistModal";
@@ -14,9 +14,13 @@ type SettingsProps = {
   onLogout: () => Promise<void> | void;
   onResetCache: () => void;
   onJoinPremium: (email: string) => Promise<void>;
+  onGoogleCloudSave: () => Promise<void>;
+  cloudSaveEnabled: boolean;
+  authLoading: boolean;
+  authError: string | null;
 };
 
-export function Settings({ email, preferences, onSave, onLogout, onResetCache, onJoinPremium }: SettingsProps) {
+export function Settings({ email, preferences, onSave, onLogout, onResetCache, onJoinPremium, onGoogleCloudSave, cloudSaveEnabled, authLoading, authError }: SettingsProps) {
   const [draft, setDraft] = useState(preferences);
   const [showPremium, setShowPremium] = useState(false);
   const [voiceProvider, setVoiceProvider] = useState(() =>
@@ -57,7 +61,19 @@ export function Settings({ email, preferences, onSave, onLogout, onResetCache, o
       <Card className="space-y-3">
         <p className="text-sm opacity-65">Conta</p>
         <p className="font-semibold">{email || "Modo sem login"}</p>
-        <p className="rounded-2xl bg-white/55 p-3 text-sm font-bold dark:bg-white/8">Plano: Free</p>
+        <div className="rounded-2xl bg-white/55 p-3 text-sm font-bold dark:bg-white/8">
+          <p>Plano: Free</p>
+          <p className="mt-2 flex items-center gap-2 opacity-75">
+            {cloudSaveEnabled ? <Cloud className="h-4 w-4 text-morning-accent dark:text-night-accent" /> : <CloudOff className="h-4 w-4" />}
+            {cloudSaveEnabled ? "Cloud save ativo na sua conta Google." : "Progresso salvo apenas neste dispositivo."}
+          </p>
+        </div>
+        {!cloudSaveEnabled && (
+          <Button variant="secondary" icon={<Cloud className="h-4 w-4" />} onClick={() => void onGoogleCloudSave()} disabled={authLoading}>
+            {authLoading ? "Conectando..." : "Salvar na nuvem com Google"}
+          </Button>
+        )}
+        {authError && <p className="rounded-2xl bg-red-500/10 p-3 text-sm font-semibold text-red-700 dark:text-red-200">{authError}</p>}
         <Button variant="secondary" onClick={() => setShowPremium(true)}>Premium em breve</Button>
       </Card>
       <Card className="space-y-4">

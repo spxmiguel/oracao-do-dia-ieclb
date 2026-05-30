@@ -6,6 +6,29 @@ const words = [
   "Paciência", "Refúgio", "Bondade", "Clareza", "Força", "Silêncio", "Gratidão", "Caminho", "Misericórdia", "Recomeço"
 ];
 
+const titles = [
+  "UM COMEÇO ENTREGUE",
+  "ANTES DA PRESSA",
+  "O PRÓXIMO PASSO",
+  "FÉ NO DIA COMUM",
+  "DESCANSAR PARA OBEDECER",
+  "PERDÃO QUE ABRE CAMINHO",
+  "CORAGEM SEM BARULHO",
+  "ESPERANÇA PRÁTICA",
+  "PRESENÇA NO CAMINHO",
+  "FIDELIDADE NAS PEQUENAS COISAS",
+  "MANSIDÃO EM MOVIMENTO",
+  "ALEGRIA COM RAIZ",
+  "SABEDORIA PARA HOJE",
+  "ENTREGA REAL",
+  "CUIDADO QUE SUSTENTA",
+  "RENOVO PELA MANHÃ",
+  "VERDADE QUE ORGANIZA",
+  "AMOR EM ATITUDE",
+  "CONSTÂNCIA SERENA",
+  "LUZ PARA OS PASSOS"
+];
+
 const verses = [
   { reference: "Salmo 118:24", text: "Este é o dia que o Senhor fez; regozijemo-nos e alegremo-nos nele." },
   { reference: "Mateus 6:33", text: "Busquem, pois, em primeiro lugar o Reino de Deus e a sua justiça." },
@@ -65,10 +88,30 @@ const practiceSeeds = [
   "Que eu termine este dia mais inteiro do que comecei."
 ];
 
+const devotionalOpenings = [
+  "O dia começa melhor quando Deus não recebe apenas as sobras da nossa atenção. Antes das mensagens, das urgências e das respostas rápidas, existe um espaço pequeno e sagrado onde o coração pode voltar ao essencial.",
+  "Nem todo recomeço precisa ser dramático. Muitas vezes, a mudança mais profunda nasce de uma decisão simples: ouvir a Palavra, respirar com honestidade e escolher uma atitude fiel para as próximas horas.",
+  "A presença de Deus não torna o dia automático, mas dá direção para atravessá-lo com menos ruído. Quando a alma se alinha, até tarefas comuns podem se tornar lugar de obediência, amor e maturidade.",
+  "A fé amadurece no cotidiano. Ela aparece quando você responde com paciência, pede perdão, cumpre uma responsabilidade escondida ou escolhe fazer o bem sem precisar ser visto.",
+  "Deus não pede que você carregue o dia inteiro de uma vez. Ele chama você para o próximo passo, com verdade no coração e graça suficiente para este momento."
+];
+
+const impulseStarters = [
+  "Antes de começar sua rotina, escolha uma pessoa para tratar com atenção real hoje.",
+  "Anote uma preocupação e entregue-a a Deus em uma frase simples.",
+  "Faça uma pausa de trinta segundos antes da primeira decisão importante do dia.",
+  "Pratique uma bondade concreta sem anunciar.",
+  "Quando a pressa aparecer, repita o versículo do dia em voz baixa."
+];
+
 export const yearlyDevotions: YearlyDevotion[] = Array.from({ length: 365 }, (_, dayIndex) => ({
   dayIndex,
   word: words[dayIndex % words.length],
+  title: titles[dayIndex % titles.length],
+  readReference: verses[dayIndex % verses.length].reference,
   verse: verses[dayIndex % verses.length],
+  devotional: `${devotionalOpenings[dayIndex % devotionalOpenings.length]} ${requestSeeds[Math.floor(dayIndex / 3) % requestSeeds.length]} não como pressão, mas como resposta ao amor de Deus.`,
+  impulse: impulseStarters[Math.floor(dayIndex / 4) % impulseStarters.length],
   gratitudeSeed: gratitudeSeeds[dayIndex % gratitudeSeeds.length],
   surrenderSeed: surrenderSeeds[Math.floor(dayIndex / 2) % surrenderSeeds.length],
   requestSeed: requestSeeds[Math.floor(dayIndex / 3) % requestSeeds.length],

@@ -1,10 +1,9 @@
 import { motion } from "framer-motion";
+import { Cloud, CloudOff } from "lucide-react";
 import { useMemo, useState } from "react";
+import { DailyStartCard } from "../components/cards/DailyStartCard";
 import { DaySummaryCard } from "../components/cards/DaySummaryCard";
-import { GamificationCard } from "../components/cards/GamificationCard";
-import { MorningCard } from "../components/cards/MorningCard";
 import { NightCard } from "../components/cards/NightCard";
-import { PersonalPrayerCard } from "../components/cards/PersonalPrayerCard";
 import { BreathingFocus } from "../components/ui/BreathingFocus";
 import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
@@ -20,17 +19,17 @@ type HomeProps = {
   prayerProfile: PrayerProfile;
   audioEnabled: boolean;
   todayCompletion: Completion;
-  completions: Completion[];
   currentStreak: number;
-  totalCompletedDays: number;
   onBreathingDone: () => Promise<void>;
   onMorningDone: () => Promise<void>;
   onNightDone: () => Promise<void>;
   onSaveJournal: (content: string) => Promise<void>;
   onOpenJournal: () => void;
+  cloudSaveEnabled: boolean;
+  onOpenSettings: () => void;
 };
 
-export function Home({ denomination, prayerProfile, audioEnabled, todayCompletion, completions, currentStreak, totalCompletedDays, onBreathingDone, onMorningDone, onNightDone, onSaveJournal, onOpenJournal }: HomeProps) {
+export function Home({ denomination, prayerProfile, audioEnabled, todayCompletion, currentStreak, onBreathingDone, onMorningDone, onNightDone, onSaveJournal, onOpenJournal, cloudSaveEnabled, onOpenSettings }: HomeProps) {
   const [forceNight, setForceNight] = useState(false);
   const { content } = useTodayContent(denomination);
   const yearlyDevotion = useYearlyDevotion();
@@ -38,7 +37,6 @@ export function Home({ denomination, prayerProfile, audioEnabled, todayCompletio
   const night = isNightTime();
 
   const homeState: HomeState = useMemo(() => {
-    if (!todayCompletion.breathingDone) return "BREATHING";
     if (todayCompletion.morningDone && todayCompletion.nightDone) return "COMPLETED";
     if (!night && !todayCompletion.morningDone) return "MORNING";
     if (!night && todayCompletion.morningDone && !todayCompletion.nightDone) return "MIDDAY_REST";
@@ -55,41 +53,42 @@ export function Home({ denomination, prayerProfile, audioEnabled, todayCompletio
         <h1 className="mt-2 font-serif text-4xl">{greeting}</h1>
         <p className="mt-2 text-sm font-semibold text-morning-accent dark:text-night-accent">{getDenominationLabel(denomination)}</p>
       </header>
-      <GamificationCard completions={completions} currentStreak={currentStreak} totalCompletedDays={totalCompletedDays} />
+      <button
+        className="flex w-full items-center justify-between rounded-3xl border border-black/5 bg-white/50 p-4 text-left text-sm font-semibold shadow-soft dark:border-white/10 dark:bg-white/6"
+        onClick={onOpenSettings}
+        type="button"
+      >
+        <span className="flex items-center gap-3">
+          {cloudSaveEnabled ? <Cloud className="h-5 w-5 text-morning-accent dark:text-night-accent" /> : <CloudOff className="h-5 w-5 opacity-55" />}
+          {cloudSaveEnabled ? "Cloud save ativo com Google" : "Entre com Google para salvar na nuvem"}
+        </span>
+        <span className="opacity-60">{cloudSaveEnabled ? "sincronizado" : "local"}</span>
+      </button>
       {speech.error && <p className="rounded-2xl bg-amber-500/10 p-3 text-sm font-semibold text-amber-800 dark:text-amber-100">{speech.error}</p>}
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
-        {homeState === "BREATHING" && <BreathingFocus onComplete={() => void onBreathingDone()} />}
-        {homeState === "MORNING" && (
-          <div className="space-y-5">
-            <PersonalPrayerCard
-              audioEnabled={audioEnabled}
-              denomination={denomination}
-              devotion={yearlyDevotion}
-              isSpeaking={speech.isSpeaking}
-              onSaveJournal={(journalContent) => void onSaveJournal(journalContent)}
-              onSpeak={speech.speak}
-              onStop={speech.stop}
-              profile={prayerProfile}
-            />
-            <MorningCard
-              audioEnabled={audioEnabled}
-              content={content}
-              isSpeaking={speech.isSpeaking}
-              onDone={onMorningDone}
-              onSaveJournal={() => onSaveJournal(`${content.title}\n\n${content.morning.reflection}\n\n${content.morning.prayer}`)}
-              onSpeak={() =>
-                speech.speak(
-                  `${content.title}. ${content.verse.text}. ${content.verse.reference}. ${content.morning.reflection} Pausa para oração. ${content.morning.prayer}`
-                )
-              }
-              onStop={speech.stop}
-            />
+        {!todayCompletion.breathingDone && (
+          <div className="mb-5">
+            <BreathingFocus onComplete={() => void onBreathingDone()} />
           </div>
+        )}
+        {homeState === "MORNING" && (
+          <DailyStartCard
+            audioEnabled={audioEnabled}
+            completed={todayCompletion.morningDone}
+            denomination={denomination}
+            devotion={yearlyDevotion}
+            isSpeaking={speech.isSpeaking}
+            onComplete={onMorningDone}
+            onSaveJournal={(journalContent) => void onSaveJournal(journalContent)}
+            onSpeak={speech.speak}
+            onStop={speech.stop}
+            profile={prayerProfile}
+          />
         )}
         {homeState === "MIDDAY_REST" && !forceNight && (
           <Card className="space-y-5 text-center">
             <h2 className="font-serif text-3xl">Sua manhã foi entregue.</h2>
-            <p className="leading-7 opacity-80">Volte à noite para fechar o dia em paz.</p>
+            <p className="leading-7 opacity-80">A leitura de hoje já ficou com você. Volte à noite para fechar o dia em paz.</p>
             <Button variant="secondary" onClick={() => setForceNight(true)}>Abrir reflexão da noite agora</Button>
           </Card>
         )}
