@@ -49,7 +49,7 @@ O build é estático. Para repositórios publicados em subpath, defina:
 VITE_PUBLIC_BASE_PATH=/nome-do-repositorio/
 ```
 
-Depois rode `npm run build` e publique a pasta `dist`.
+Depois rode `npm run build` e publique a pasta `dist`. Este repositório já inclui um workflow em `.github/workflows/deploy.yml` que publica o `dist` no GitHub Pages usando `VITE_PUBLIC_BASE_PATH=/oracao-do-dia/`.
 
 ## Rebrand de App Anterior
 
