@@ -10,4 +10,11 @@ export const dailyContent: Record<Denomination, DailyContent[]> = {
 };
 
 export { denominations, denominationLabels } from "./denominations";
-export { prayerFocusOptions, prayerLengthOptions, prayerToneOptions } from "./prayerProfile";
+export {
+  prayerDiscoveryFocusOptions,
+  prayerDiscoveryLengthOptions,
+  prayerDiscoveryToneOptions,
+  prayerFocusOptions,
+  prayerLengthOptions,
+  prayerToneOptions
+} from "./prayerProfile";

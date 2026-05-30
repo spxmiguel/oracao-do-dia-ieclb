@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Chrome, UserRound } from "lucide-react";
-import { denominations, prayerFocusOptions, prayerLengthOptions, prayerToneOptions } from "../data";
+import { denominations, prayerDiscoveryFocusOptions, prayerDiscoveryLengthOptions, prayerDiscoveryToneOptions } from "../data";
 import type { UserPreferences } from "../types";
 import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
@@ -16,6 +16,7 @@ type OnboardingProps = {
 
 export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, onSavePreferences, onGuestStart }: OnboardingProps) {
   const [guestSelected, setGuestSelected] = useState(false);
+  const [setupStep, setSetupStep] = useState<"identity" | "prayer">("identity");
   const [preferences, setPreferences] = useState<UserPreferences>({
     denomination: "evangelical",
     morningReminderTime: "07:00",
@@ -70,72 +71,119 @@ export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, 
       ) : (
         <Card className="space-y-5">
           <div>
-            <h2 className="font-serif text-3xl">Preferências do ritual</h2>
-            <p className="mt-2 opacity-75">Escolha o tom do conteúdo, da oração e os horários que combinam com sua rotina.</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-morning-accent">
+              {setupStep === "identity" ? "Primeiro ajuste" : "Seu jeito de começar"}
+            </p>
+            <h2 className="mt-2 font-serif text-3xl">
+              {setupStep === "identity" ? "Vamos preparar seu ritual" : "Me conta como sua manhã costuma chegar"}
+            </h2>
+            <p className="mt-2 opacity-75">
+              {setupStep === "identity"
+                ? "Essas escolhas criam sua primeira experiência no app."
+                : "Não é um teste. São só sinais para a oração diária soar mais próxima de você."}
+            </p>
           </div>
-          <div className="grid gap-2">
-            {denominations.map((item) => (
-              <button
-                className={`rounded-2xl border p-4 text-left font-semibold transition ${
-                  preferences.denomination === item.value ? "border-morning-accent bg-morning-accent/15" : "border-black/10 bg-white/55"
-                }`}
-                key={item.value}
-                onClick={() => setPreferences((current) => ({ ...current, denomination: item.value }))}
-                type="button"
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-          <label className="grid gap-2 text-sm font-semibold">
-            Horário da manhã
-            <input className="field" type="time" value={preferences.morningReminderTime} onChange={(event) => setPreferences((current) => ({ ...current, morningReminderTime: event.target.value }))} />
-          </label>
-          <label className="grid gap-2 text-sm font-semibold">
-            Horário da noite
-            <input className="field" type="time" value={preferences.nightReminderTime} onChange={(event) => setPreferences((current) => ({ ...current, nightReminderTime: event.target.value }))} />
-          </label>
-          <div className="space-y-3 rounded-3xl bg-white/55 p-4 dark:bg-white/8">
-            <div>
-              <p className="text-sm font-bold">Como você quer orar agora?</p>
-              <p className="mt-1 text-sm opacity-70">Isso molda uma oração diária em 4 partes: gratidão, entrega, pedido e prática.</p>
-            </div>
-            <div className="grid gap-2">
-              {prayerFocusOptions.map((item) => (
-                <button
-                  className={`rounded-2xl border p-3 text-left text-sm font-semibold transition ${
-                    preferences.prayerProfile.focus === item.value ? "border-morning-accent bg-morning-accent/15" : "border-black/10 bg-white/55"
-                  }`}
-                  key={item.value}
-                  onClick={() => setPreferences((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, focus: item.value } }))}
-                  type="button"
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-            <label className="grid gap-2 text-sm font-semibold">
-              Tom da oração
-              <select className="field" value={preferences.prayerProfile.tone} onChange={(event) => setPreferences((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, tone: event.target.value as UserPreferences["prayerProfile"]["tone"] } }))}>
-                {prayerToneOptions.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
-              </select>
-            </label>
-            <label className="grid gap-2 text-sm font-semibold">
-              Tamanho
-              <select className="field" value={preferences.prayerProfile.length} onChange={(event) => setPreferences((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, length: event.target.value as UserPreferences["prayerProfile"]["length"] } }))}>
-                {prayerLengthOptions.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
-              </select>
-            </label>
-            <label className="flex items-center justify-between rounded-2xl bg-white/60 p-3 text-sm font-semibold dark:bg-white/8">
-              Incluir pedidos pessoais
-              <input type="checkbox" checked={preferences.prayerProfile.includePersonalRequests} onChange={(event) => setPreferences((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, includePersonalRequests: event.target.checked } }))} />
-            </label>
-          </div>
-          <label className="flex items-center justify-between rounded-2xl bg-white/55 p-4 text-sm font-semibold">
-            Narração opcional
-            <input type="checkbox" checked={preferences.audioEnabled} onChange={(event) => setPreferences((current) => ({ ...current, audioEnabled: event.target.checked }))} />
-          </label>
-          <Button className="w-full" onClick={savePreferences} disabled={saving}>{saving ? "Salvando..." : "Começar"}</Button>
+
+          {setupStep === "identity" ? (
+            <>
+              <div className="grid gap-2">
+                <p className="text-sm font-bold">Qual linguagem cristã fica mais natural para você?</p>
+                {denominations.map((item) => (
+                  <button
+                    className={`rounded-2xl border p-4 text-left font-semibold transition ${
+                      preferences.denomination === item.value ? "border-morning-accent bg-morning-accent/15" : "border-black/10 bg-white/55"
+                    }`}
+                    key={item.value}
+                    onClick={() => setPreferences((current) => ({ ...current, denomination: item.value }))}
+                    type="button"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+              <label className="grid gap-2 text-sm font-semibold">
+                Quando você quer abrir o dia com Deus?
+                <input className="field" type="time" value={preferences.morningReminderTime} onChange={(event) => setPreferences((current) => ({ ...current, morningReminderTime: event.target.value }))} />
+              </label>
+              <label className="grid gap-2 text-sm font-semibold">
+                Quando costuma fechar o dia?
+                <input className="field" type="time" value={preferences.nightReminderTime} onChange={(event) => setPreferences((current) => ({ ...current, nightReminderTime: event.target.value }))} />
+              </label>
+              <label className="flex items-center justify-between rounded-2xl bg-white/55 p-4 text-sm font-semibold">
+                Quero opção de narração
+                <input type="checkbox" checked={preferences.audioEnabled} onChange={(event) => setPreferences((current) => ({ ...current, audioEnabled: event.target.checked }))} />
+              </label>
+              <Button className="w-full" onClick={() => setSetupStep("prayer")}>Continuar</Button>
+            </>
+          ) : (
+            <>
+              <div className="space-y-3 rounded-3xl bg-white/55 p-4 dark:bg-white/8">
+                <div>
+                  <p className="text-sm font-bold">Quando você pensa nos próximos dias, qual frase parece mais verdadeira?</p>
+                  <p className="mt-1 text-sm opacity-70">Isso guia o centro da oração, sem te prender a uma etiqueta.</p>
+                </div>
+                <div className="grid gap-2">
+                  {prayerDiscoveryFocusOptions.map((item) => (
+                    <button
+                      className={`rounded-2xl border p-3 text-left transition ${
+                        preferences.prayerProfile.focus === item.value ? "border-morning-accent bg-morning-accent/15" : "border-black/10 bg-white/55"
+                      }`}
+                      key={item.value}
+                      onClick={() => setPreferences((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, focus: item.value } }))}
+                      type="button"
+                    >
+                      <span className="block text-sm font-bold">{item.title}</span>
+                      <span className="mt-1 block text-xs leading-5 opacity-70">{item.description}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-3 rounded-3xl bg-white/55 p-4 dark:bg-white/8">
+                <p className="text-sm font-bold">Que tipo de linguagem te ajuda a orar melhor?</p>
+                <div className="grid gap-2">
+                  {prayerDiscoveryToneOptions.map((item) => (
+                    <button
+                      className={`rounded-2xl border p-3 text-left transition ${
+                        preferences.prayerProfile.tone === item.value ? "border-morning-accent bg-morning-accent/15" : "border-black/10 bg-white/55"
+                      }`}
+                      key={item.value}
+                      onClick={() => setPreferences((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, tone: item.value } }))}
+                      type="button"
+                    >
+                      <span className="block text-sm font-bold">{item.title}</span>
+                      <span className="mt-1 block text-xs leading-5 opacity-70">{item.description}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-3 rounded-3xl bg-white/55 p-4 dark:bg-white/8">
+                <p className="text-sm font-bold">Quanto espaço esse momento costuma ter?</p>
+                <div className="grid gap-2">
+                  {prayerDiscoveryLengthOptions.map((item) => (
+                    <button
+                      className={`rounded-2xl border p-3 text-left transition ${
+                        preferences.prayerProfile.length === item.value ? "border-morning-accent bg-morning-accent/15" : "border-black/10 bg-white/55"
+                      }`}
+                      key={item.value}
+                      onClick={() => setPreferences((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, length: item.value } }))}
+                      type="button"
+                    >
+                      <span className="block text-sm font-bold">{item.title}</span>
+                      <span className="mt-1 block text-xs leading-5 opacity-70">{item.description}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <label className="flex items-center justify-between rounded-2xl bg-white/60 p-3 text-sm font-semibold dark:bg-white/8">
+                Pode incluir pedidos pessoais mais abertos
+                <input type="checkbox" checked={preferences.prayerProfile.includePersonalRequests} onChange={(event) => setPreferences((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, includePersonalRequests: event.target.checked } }))} />
+              </label>
+              <div className="flex flex-wrap gap-2">
+                <Button variant="secondary" onClick={() => setSetupStep("identity")}>Voltar</Button>
+                <Button className="flex-1" onClick={savePreferences} disabled={saving}>{saving ? "Salvando..." : "Começar"}</Button>
+              </div>
+            </>
+          )}
         </Card>
       )}
     </main>

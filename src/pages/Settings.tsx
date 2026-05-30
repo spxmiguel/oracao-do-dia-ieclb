@@ -88,29 +88,29 @@ export function Settings({ email, preferences, onSave, onLogout, onResetCache, o
         <label className="flex items-center justify-between rounded-2xl bg-white/55 p-4 text-sm font-semibold dark:bg-white/8">Narração<input type="checkbox" checked={draft.audioEnabled} onChange={(event) => setDraft((current) => ({ ...current, audioEnabled: event.target.checked }))} /></label>
         <div className="space-y-3 rounded-3xl bg-white/55 p-4 dark:bg-white/8">
           <div>
-            <p className="text-sm font-bold">Perfil de oração</p>
-            <p className="mt-1 text-sm opacity-70">Usado para montar a oração diária em gratidão, entrega, pedido e prática.</p>
+            <p className="text-sm font-bold">Seu jeito de orar</p>
+            <p className="mt-1 text-sm opacity-70">Esses sinais ajustam a oração diária sem transformar sua vida interior em formulário.</p>
           </div>
           <label className="grid gap-2 text-sm font-semibold">
-            Foco
+            O que mais combina com sua fase atual?
             <select className="field" value={draft.prayerProfile.focus} onChange={(event) => setDraft((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, focus: event.target.value as UserPreferences["prayerProfile"]["focus"] } }))}>
               {prayerFocusOptions.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
             </select>
           </label>
           <label className="grid gap-2 text-sm font-semibold">
-            Tom
+            Linguagem
             <select className="field" value={draft.prayerProfile.tone} onChange={(event) => setDraft((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, tone: event.target.value as UserPreferences["prayerProfile"]["tone"] } }))}>
               {prayerToneOptions.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
             </select>
           </label>
           <label className="grid gap-2 text-sm font-semibold">
-            Tamanho
+            Ritmo
             <select className="field" value={draft.prayerProfile.length} onChange={(event) => setDraft((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, length: event.target.value as UserPreferences["prayerProfile"]["length"] } }))}>
               {prayerLengthOptions.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
             </select>
           </label>
           <label className="flex items-center justify-between rounded-2xl bg-white/60 p-3 text-sm font-semibold dark:bg-white/8">
-            Incluir pedidos pessoais
+            Abrir espaço para pedidos pessoais
             <input type="checkbox" checked={draft.prayerProfile.includePersonalRequests} onChange={(event) => setDraft((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, includePersonalRequests: event.target.checked } }))} />
           </label>
         </div>
