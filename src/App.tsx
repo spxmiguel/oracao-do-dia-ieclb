@@ -77,13 +77,11 @@ function App() {
         {page === "home" && (
           <Home
             audioEnabled={appState.preferences.audioEnabled}
-            currentStreak={appState.currentStreak}
             denomination={appState.preferences.denomination}
             prayerProfile={appState.preferences.prayerProfile}
             onBreathingDone={appState.markBreathingDone}
             onMorningDone={appState.markMorningDone}
             onNightDone={appState.markNightDone}
-            onOpenJournal={() => setPage("journal")}
             onSaveJournal={async (content) => {
               await appState.addJournalEntry({ content, mood: "grateful" });
               setPage("journal");
