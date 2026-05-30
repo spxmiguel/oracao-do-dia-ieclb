@@ -40,7 +40,7 @@ export const buildPersonalPrayer = (
     profile.includePersonalRequests
       ? `Também coloco diante de ti os pedidos que ainda não consigo explicar direito. ${devotion.requestSeed}.`
       : `${devotion.requestSeed}.`,
-    `${devotion.practiceSeed} ${denominationClosings[denomination]}`
+    `Guarda meu coração durante este dia e faz tua Palavra permanecer em mim com paz. ${denominationClosings[denomination]}`
   ];
 
   return trimByLength(parts, profile.length).join("\n\n");

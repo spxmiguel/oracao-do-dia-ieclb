@@ -32,8 +32,8 @@ export function DailyStartCard({
   onStop
 }: DailyStartCardProps) {
   const prayer = buildPersonalPrayer(devotion, profile, denomination);
-  const audioText = `${devotion.title}. Leia: ${devotion.readReference}. ${devotion.verse.text}. ${devotion.devotional}. Impulso: ${devotion.impulse}. Oração: ${prayer}`;
-  const journalText = `${formatBookDate()}\n${devotion.title}\n\nLeia: ${devotion.readReference}\n${devotion.verse.text}\n\n${devotion.devotional}\n\nIMPULSO\n${devotion.impulse}\n\nORAÇÃO\n${prayer}`;
+  const audioText = `${devotion.title}. Leia: ${devotion.readReference}. ${devotion.verse.text}. ${devotion.devotional}. Oração: ${prayer}`;
+  const journalText = `${formatBookDate()}\n${devotion.title}\n\nLeia: ${devotion.readReference}\n${devotion.verse.text}\n\n${devotion.devotional}\n\nORAÇÃO\n${prayer}`;
 
   return (
     <Card className="overflow-hidden p-0">
@@ -58,11 +58,9 @@ export function DailyStartCard({
           <cite className="mt-2 block text-sm not-italic opacity-65">{devotion.verse.reference}</cite>
         </blockquote>
 
-        <p className="mt-5 leading-8 opacity-86">{devotion.devotional}</p>
-
-        <div className="mt-6 rounded-2xl border border-morning-accent/20 bg-morning-soft/85 p-4 dark:border-night-accent/30 dark:bg-night-soft">
-          <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-morning-accent dark:text-night-accent">Impulso</p>
-          <p className="mt-2 font-semibold leading-7">{devotion.impulse}</p>
+        <div className="mt-6">
+          <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-morning-accent dark:text-night-accent">Mensagem do dia</p>
+          <p className="mt-3 whitespace-pre-line font-serif text-[1.08rem] leading-9 opacity-90">{devotion.devotional}</p>
         </div>
 
         <div className="mt-6 rounded-2xl bg-white/75 p-4 dark:bg-white/8">
@@ -72,7 +70,7 @@ export function DailyStartCard({
 
         <div className="mt-6 flex flex-wrap gap-2">
           <Button icon={<CheckCircle2 className="h-4 w-4" />} onClick={onComplete}>
-            {completed ? "Manhã entregue" : "Marcar como feito"}
+            {completed ? "Lido hoje" : "Marcar como lido"}
           </Button>
           {audioEnabled &&
             (isSpeaking ? (

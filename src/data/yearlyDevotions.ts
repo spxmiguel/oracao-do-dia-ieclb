@@ -80,28 +80,36 @@ const requestSeeds = [
   "fortalece minha fé nas horas pequenas, onde a constância é formada"
 ];
 
-const practiceSeeds = [
-  "Que eu escolha uma atitude concreta de paz antes de exigir mudança dos outros.",
-  "Que eu faça o próximo passo com fidelidade, sem tentar viver o dia inteiro de uma vez.",
-  "Que eu guarde alguns segundos de silêncio antes das decisões importantes.",
-  "Que eu procure uma forma simples de amar alguém hoje.",
-  "Que eu termine este dia mais inteiro do que comecei."
+const prayerClosings = [
+  "Que este dia não seja governado pela pressa, mas pela confiança de quem sabe que Deus caminha perto.",
+  "Que a Palavra recebida pela manhã volte ao coração quando a rotina tentar roubar a paz.",
+  "Que a presença de Cristo alcance os pensamentos, as conversas e os lugares silenciosos da alma.",
+  "Que a graça de Deus sustente o que ainda parece frágil e renove a esperança no meio do caminho.",
+  "Que este começo simples seja suficiente para lembrar: Deus não está distante do dia comum."
 ];
 
 const devotionalOpenings = [
-  "O dia começa melhor quando Deus não recebe apenas as sobras da nossa atenção. Antes das mensagens, das urgências e das respostas rápidas, existe um espaço pequeno e sagrado onde o coração pode voltar ao essencial.",
-  "Nem todo recomeço precisa ser dramático. Muitas vezes, a mudança mais profunda nasce de uma decisão simples: ouvir a Palavra, respirar com honestidade e escolher uma atitude fiel para as próximas horas.",
-  "A presença de Deus não torna o dia automático, mas dá direção para atravessá-lo com menos ruído. Quando a alma se alinha, até tarefas comuns podem se tornar lugar de obediência, amor e maturidade.",
-  "A fé amadurece no cotidiano. Ela aparece quando você responde com paciência, pede perdão, cumpre uma responsabilidade escondida ou escolhe fazer o bem sem precisar ser visto.",
-  "Deus não pede que você carregue o dia inteiro de uma vez. Ele chama você para o próximo passo, com verdade no coração e graça suficiente para este momento."
+  "Existe uma diferença entre acordar e começar. Acordar é abrir os olhos; começar é permitir que o coração encontre um centro antes que o dia espalhe a atenção em muitas direções. Por isso, os primeiros minutos importam: não porque resolvem tudo, mas porque lembram quem sustenta tudo.",
+  "A manhã costuma chegar com cobranças antes mesmo de encontrarmos palavras para orar. Há mensagens, planos, pendências e pensamentos que parecem pedir prioridade absoluta. Ainda assim, a Palavra de Deus nos convida a uma ordem mais profunda: antes de responder ao mundo, escutar o Senhor.",
+  "A fé não vive apenas nos grandes encontros ou nas decisões marcantes. Ela também se forma nesses começos discretos, quando ninguém está vendo e o coração escolhe se deixar conduzir. Deus trabalha no secreto sem pressa, como quem planta raízes antes de mostrar frutos.",
+  "Nem sempre a alma acorda pronta. Há dias em que a esperança parece baixa, a mente já desperta cansada e a oração sai pequena. Mesmo assim, Deus não despreza começos simples. Uma frase sincera diante dele pode ser mais verdadeira do que muitas palavras ditas sem presença.",
+  "Começar com Deus não significa controlar o restante do dia. Significa reconhecer, logo cedo, que a vida não precisa ser carregada sozinho. A presença de Cristo não elimina toda tensão, mas muda o lugar de onde caminhamos: menos abandono, mais confiança."
 ];
 
-const impulseStarters = [
-  "Antes de começar sua rotina, escolha uma pessoa para tratar com atenção real hoje.",
-  "Anote uma preocupação e entregue-a a Deus em uma frase simples.",
-  "Faça uma pausa de trinta segundos antes da primeira decisão importante do dia.",
-  "Pratique uma bondade concreta sem anunciar.",
-  "Quando a pressa aparecer, repita o versículo do dia em voz baixa."
+const devotionalMiddles = [
+  "Quando a Escritura chama o coração para a paz, ela não está negando os problemas reais. Ela está recolocando cada coisa no seu tamanho diante de Deus. O que pesa continua existindo, mas deixa de ocupar o trono. A ansiedade perde força quando encontra um Pai maior do que as possibilidades que assustam.",
+  "Buscar a Deus em primeiro lugar não é uma competição com a agenda. É uma forma de lembrar que nenhuma tarefa é forte o bastante para substituir a presença dele. O dia pode continuar cheio, mas o coração não precisa entrar nele vazio.",
+  "Permanecer em Cristo é uma imagem bonita porque fala de ligação, não de desempenho. O ramo não produz vida tentando parecer vivo; ele frutifica porque está unido à videira. A espiritualidade dos primeiros minutos é justamente essa volta à fonte.",
+  "A graça de Deus visita também as partes inacabadas. O que ainda não está resolvido, o que ainda dói, o que ainda confunde, tudo pode ser colocado diante dele sem maquiagem. A oração da manhã não exige que a alma esteja arrumada; ela abre espaço para Deus arrumar por dentro.",
+  "Há uma misericórdia própria da manhã: a chance de não ser definido apenas pelo que ontem foi. Deus nos encontra com verdade, mas também com renovação. O dia novo não apaga a história, porém anuncia que a última palavra ainda pertence ao Senhor."
+];
+
+const devotionalEndings = [
+  "Talvez hoje não peça uma grande promessa, mas uma permanência humilde. Receba esta Palavra como quem recebe pão: simples, necessário, suficiente para continuar. Deus está no começo, no meio e no fim do dia.",
+  "O convite é deixar que esta leitura acompanhe você sem peso. Não como uma tarefa a cumprir, mas como uma voz baixa lembrando que Cristo está presente. A fé cresce quando a Palavra deixa de ser apenas lida e passa a habitar.",
+  "Se o coração se distrair, volte sem culpa. Se a pressa aparecer, lembre-se de que Deus não foi embora. O primeiro minuto entregue a ele pode iluminar muitos outros minutos comuns.",
+  "A vida com Deus não precisa parecer impressionante para ser verdadeira. Ela pode começar assim: uma passagem lida com atenção, uma oração honesta, um coração menos fechado para a graça.",
+  "Que esta mensagem não fique como frase bonita perdida na manhã. Que ela desça devagar, encontre lugar e faça companhia quando o dia mostrar sua velocidade."
 ];
 
 export const yearlyDevotions: YearlyDevotion[] = Array.from({ length: 365 }, (_, dayIndex) => ({
@@ -110,10 +118,10 @@ export const yearlyDevotions: YearlyDevotion[] = Array.from({ length: 365 }, (_,
   title: titles[dayIndex % titles.length],
   readReference: verses[dayIndex % verses.length].reference,
   verse: verses[dayIndex % verses.length],
-  devotional: `${devotionalOpenings[dayIndex % devotionalOpenings.length]} ${requestSeeds[Math.floor(dayIndex / 3) % requestSeeds.length]} não como pressão, mas como resposta ao amor de Deus.`,
-  impulse: impulseStarters[Math.floor(dayIndex / 4) % impulseStarters.length],
+  devotional: `${devotionalOpenings[dayIndex % devotionalOpenings.length]}\n\n${devotionalMiddles[Math.floor(dayIndex / 2) % devotionalMiddles.length]}\n\n${devotionalEndings[Math.floor(dayIndex / 3) % devotionalEndings.length]}`,
+  impulse: prayerClosings[Math.floor(dayIndex / 4) % prayerClosings.length],
   gratitudeSeed: gratitudeSeeds[dayIndex % gratitudeSeeds.length],
   surrenderSeed: surrenderSeeds[Math.floor(dayIndex / 2) % surrenderSeeds.length],
   requestSeed: requestSeeds[Math.floor(dayIndex / 3) % requestSeeds.length],
-  practiceSeed: practiceSeeds[Math.floor(dayIndex / 5) % practiceSeeds.length]
+  practiceSeed: prayerClosings[Math.floor(dayIndex / 5) % prayerClosings.length]
 }));
