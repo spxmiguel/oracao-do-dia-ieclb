@@ -71,6 +71,7 @@ function App() {
         {page === "home" && (
           <Home
             audioEnabled={appState.preferences.audioEnabled}
+            completions={appState.completions}
             currentStreak={appState.currentStreak}
             denomination={appState.preferences.denomination}
             onBreathingDone={appState.markBreathingDone}
@@ -82,6 +83,7 @@ function App() {
               setPage("journal");
             }}
             todayCompletion={todayCompletion}
+            totalCompletedDays={appState.totalCompletedDays}
           />
         )}
         {page === "journal" && (

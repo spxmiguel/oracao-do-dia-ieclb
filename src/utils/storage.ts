@@ -3,10 +3,7 @@ export const STORAGE_KEYS = {
   completions: "primeiros-minutos/completions-cache",
   journal: "primeiros-minutos/journal-cache",
   breathing: "primeiros-minutos/breathing-cache",
-  guestProfile: "primeiros-minutos/guest-profile",
-  voiceProvider: "primeiros-minutos/voice-provider",
-  elevenLabsApiKey: "primeiros-minutos/elevenlabs-api-key",
-  elevenLabsVoiceId: "primeiros-minutos/elevenlabs-voice-id"
+  guestProfile: "primeiros-minutos/guest-profile"
 } as const;
 
 export const clearAppCache = (): void => {

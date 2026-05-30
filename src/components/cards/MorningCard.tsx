@@ -8,13 +8,14 @@ type MorningCardProps = {
   content: DailyContent;
   audioEnabled: boolean;
   isSpeaking: boolean;
-  onSpeak: (text: string) => void | Promise<void>;
+  onSpeak: (text: string, audioSrc?: string) => void | Promise<void>;
   onStop: () => void;
   onDone: () => void;
   onSaveJournal: () => void;
+  audioSrc?: string;
 };
 
-export function MorningCard({ content, audioEnabled, isSpeaking, onSpeak, onStop, onDone, onSaveJournal }: MorningCardProps) {
+export function MorningCard({ content, audioEnabled, isSpeaking, onSpeak, onStop, onDone, onSaveJournal, audioSrc }: MorningCardProps) {
   return (
     <Card className="space-y-5">
       <div>
@@ -36,7 +37,7 @@ export function MorningCard({ content, audioEnabled, isSpeaking, onSpeak, onStop
           isSpeaking ? (
             <Button variant="secondary" icon={<Square className="h-4 w-4" />} onClick={onStop}>Parar narração</Button>
           ) : (
-            <Button variant="secondary" icon={<Headphones className="h-4 w-4" />} onClick={() => onSpeak(content.morning.audioText)}>Narrar devocional</Button>
+            <Button variant="secondary" icon={<Headphones className="h-4 w-4" />} onClick={() => onSpeak(content.morning.audioText, audioSrc)}>Narrar devocional</Button>
           )
         )}
         <Button variant="ghost" icon={<Clipboard className="h-4 w-4" />} onClick={() => void copyTextToClipboard(content.morning.prayer)}>Copiar oração</Button>

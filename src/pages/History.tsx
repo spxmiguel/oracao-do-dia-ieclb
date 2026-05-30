@@ -1,4 +1,5 @@
 import { PremiumWaitlistModal } from "../components/premium/PremiumWaitlistModal";
+import { GamificationCard } from "../components/cards/GamificationCard";
 import { StreakCalendar } from "../components/cards/StreakCalendar";
 import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
@@ -26,6 +27,7 @@ export function History({ completions, currentStreak, totalCompletedDays, isPrem
         <Card><p className="text-sm opacity-65">Streak atual</p><p className="mt-2 font-serif text-4xl">{currentStreak}</p></Card>
         <Card><p className="text-sm opacity-65">Dias completos</p><p className="mt-2 font-serif text-4xl">{totalCompletedDays}</p></Card>
       </div>
+      <GamificationCard completions={completions} currentStreak={currentStreak} totalCompletedDays={totalCompletedDays} />
       <Card className="space-y-4">
         <StreakCalendar completions={completions} isPremium={isPremium} />
         <div className="grid gap-2 text-sm opacity-75">

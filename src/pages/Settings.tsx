@@ -4,7 +4,6 @@ import type { UserPreferences } from "../types";
 import { PremiumWaitlistModal } from "../components/premium/PremiumWaitlistModal";
 import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
-import { STORAGE_KEYS } from "../utils/storage";
 
 type SettingsProps = {
   email: string;
@@ -18,15 +17,9 @@ type SettingsProps = {
 export function Settings({ email, preferences, onSave, onLogout, onResetCache, onJoinPremium }: SettingsProps) {
   const [draft, setDraft] = useState(preferences);
   const [showPremium, setShowPremium] = useState(false);
-  const [voiceProvider, setVoiceProvider] = useState(() => localStorage.getItem(STORAGE_KEYS.voiceProvider) || "browser");
-  const [elevenLabsKey, setElevenLabsKey] = useState(() => localStorage.getItem(STORAGE_KEYS.elevenLabsApiKey) || "");
-  const [elevenLabsVoiceId, setElevenLabsVoiceId] = useState(() => localStorage.getItem(STORAGE_KEYS.elevenLabsVoiceId) || "21m00Tcm4TlvDq8ikWAM");
 
   const save = async () => {
     await onSave({ ...draft, isPremium: false });
-    localStorage.setItem(STORAGE_KEYS.voiceProvider, voiceProvider);
-    localStorage.setItem(STORAGE_KEYS.elevenLabsApiKey, elevenLabsKey.trim());
-    localStorage.setItem(STORAGE_KEYS.elevenLabsVoiceId, elevenLabsVoiceId.trim());
   };
 
   const resetCache = () => {
@@ -57,20 +50,10 @@ export function Settings({ email, preferences, onSave, onLogout, onResetCache, o
         <label className="grid gap-2 text-sm font-semibold">Manhã<input className="field" type="time" value={draft.morningReminderTime} onChange={(event) => setDraft((current) => ({ ...current, morningReminderTime: event.target.value }))} /></label>
         <label className="grid gap-2 text-sm font-semibold">Noite<input className="field" type="time" value={draft.nightReminderTime} onChange={(event) => setDraft((current) => ({ ...current, nightReminderTime: event.target.value }))} /></label>
         <label className="flex items-center justify-between rounded-2xl bg-white/55 p-4 text-sm font-semibold night:bg-white/8">Narração<input type="checkbox" checked={draft.audioEnabled} onChange={(event) => setDraft((current) => ({ ...current, audioEnabled: event.target.checked }))} /></label>
-        <label className="grid gap-2 text-sm font-semibold">
-          Voz
-          <select className="field" value={voiceProvider} onChange={(event) => setVoiceProvider(event.target.value)}>
-            <option value="browser">Navegador</option>
-            <option value="elevenlabs">ElevenLabs local</option>
-          </select>
-        </label>
-        {voiceProvider === "elevenlabs" && (
-          <div className="space-y-3 rounded-3xl bg-white/55 p-4 night:bg-white/8">
-            <p className="text-sm font-semibold">ElevenLabs usa sua própria chave neste dispositivo. Ela não é salva no Firestore nem enviada para o GitHub.</p>
-            <input className="field" type="password" value={elevenLabsKey} onChange={(event) => setElevenLabsKey(event.target.value)} placeholder="ElevenLabs API key" />
-            <input className="field" value={elevenLabsVoiceId} onChange={(event) => setElevenLabsVoiceId(event.target.value)} placeholder="Voice ID" />
-          </div>
-        )}
+        <div className="space-y-2 rounded-3xl bg-white/55 p-4 text-sm night:bg-white/8">
+          <p className="font-bold">Voz</p>
+          <p className="opacity-75">O app toca áudios premium gerados com ElevenLabs quando eles estiverem publicados. Se algum áudio ainda não existir, usa a melhor voz em português disponível neste navegador.</p>
+        </div>
         <label className="grid gap-2 text-sm font-semibold">
           Tema
           <select className="field" value={draft.themeMode} onChange={(event) => setDraft((current) => ({ ...current, themeMode: event.target.value as UserPreferences["themeMode"] }))}>

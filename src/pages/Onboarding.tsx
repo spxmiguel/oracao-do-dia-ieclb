@@ -50,7 +50,7 @@ export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, 
       <div className="mb-8 text-center">
         <p className="text-xs font-bold uppercase tracking-[0.24em] text-morning-accent">Primeiros Minutos</p>
         <h1 className="mt-3 font-serif text-4xl leading-tight">Os primeiros minutos do seu dia, entregues a Deus.</h1>
-        <p className="mt-4 leading-7 opacity-75">Um ritual cristão simples para Palavra, oração, reflexão e direção prática.</p>
+        <p className="mt-4 leading-7 opacity-75">Um ritual cristão simples para Palavra, oração e reflexão.</p>
       </div>
 
       {!isAuthenticated && !guestSelected ? (
