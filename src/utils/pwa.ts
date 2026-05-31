@@ -1,5 +1,5 @@
 const CACHE_VERSION_KEY = "primeiros-minutos/cache-version";
-const CACHE_VERSION = "2026-05-31-reread-flow-cache-reset";
+const CACHE_VERSION = "2026-05-31-loading-fallback-cache-reset";
 
 export const refreshOldPwaCache = async (): Promise<void> => {
   if (typeof window === "undefined") return;

@@ -13,11 +13,30 @@ export function useAuth() {
       setLoading(false);
       return;
     }
-    const unsubscribe = onAuthStateChanged(auth, (nextUser) => {
-      setUser(nextUser);
+
+    const timeout = window.setTimeout(() => {
       setLoading(false);
-    });
-    return unsubscribe;
+    }, 4500);
+
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (nextUser) => {
+        window.clearTimeout(timeout);
+        setUser(nextUser);
+        setLoading(false);
+      },
+      (caught) => {
+        window.clearTimeout(timeout);
+        setError(caught.message);
+        setUser(null);
+        setLoading(false);
+      }
+    );
+
+    return () => {
+      window.clearTimeout(timeout);
+      unsubscribe();
+    };
   }, []);
 
   const runAuthAction = useCallback(async <T,>(action: () => Promise<T>): Promise<T | undefined> => {

@@ -45,6 +45,11 @@ const sortJournal = (entries: JournalEntry[]) =>
     return dateB.localeCompare(dateA);
   });
 
+const hasCachedProfile = (): boolean => {
+  if (typeof window === "undefined") return false;
+  return window.localStorage.getItem(STORAGE_KEYS.preferences) !== null;
+};
+
 export function useAppState(user: User | null, hasGuestProfile = false) {
   const [preferences, setPreferencesCache] = useLocalStorage<UserPreferences>(STORAGE_KEYS.preferences, defaultPreferences);
   const [completions, setCompletionsCache] = useLocalStorage<Completion[]>(STORAGE_KEYS.completions, []);
@@ -61,7 +66,13 @@ export function useAppState(user: User | null, hasGuestProfile = false) {
     }
 
     setLoading(true);
+    const timeout = window.setTimeout(() => {
+      setHasProfile(hasCachedProfile());
+      setLoading(false);
+    }, 5000);
+
     const handleError = (caught: Error) => {
+      window.clearTimeout(timeout);
       setError(caught.message);
       setLoading(false);
     };
@@ -69,6 +80,7 @@ export function useAppState(user: User | null, hasGuestProfile = false) {
     const unsubscribeProfile = firestore.listenUserProfile(
       user.uid,
       (profile) => {
+        window.clearTimeout(timeout);
         setHasProfile(Boolean(profile));
         if (profile) {
           setPreferencesCache(normalizePreferences(profile));
@@ -81,6 +93,7 @@ export function useAppState(user: User | null, hasGuestProfile = false) {
     const unsubscribeJournal = firestore.listenJournalEntries(user.uid, (entries) => setJournalCache(sortJournal(entries)), handleError);
 
     return () => {
+      window.clearTimeout(timeout);
       unsubscribeProfile();
       unsubscribeCompletions();
       unsubscribeJournal();
