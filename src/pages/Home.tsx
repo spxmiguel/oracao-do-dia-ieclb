@@ -34,7 +34,7 @@ export function Home({ denomination, prayerProfile, audioEnabled, todayCompletio
   const yearlyDevotion = useYearlyDevotion();
   const speech = useSpeech();
   const allReadToday = todayCompletion.morningDone && todayCompletion.nightDone;
-  const shouldShowMorning = !allReadToday || rereadChoice === "morning";
+  const shouldShowMorning = !todayCompletion.morningDone || rereadChoice === "morning";
   const shouldShowNight = showNight || rereadChoice === "night";
 
   return (
