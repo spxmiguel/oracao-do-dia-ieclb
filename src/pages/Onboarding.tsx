@@ -16,6 +16,7 @@ type OnboardingProps = {
 
 export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, onSavePreferences, onGuestStart }: OnboardingProps) {
   const [guestSelected, setGuestSelected] = useState(false);
+  const [googleStatus, setGoogleStatus] = useState<string | null>(null);
   const [setupStep, setSetupStep] = useState<"identity" | "prayer">("identity");
   const [preferences, setPreferences] = useState<UserPreferences>({
     denomination: "evangelical",
@@ -39,6 +40,14 @@ export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, 
     setSaving(false);
   };
 
+  const startGoogleLogin = () => {
+    setGoogleStatus("Abrindo Google...");
+    void onGoogle();
+    window.setTimeout(() => {
+      setGoogleStatus("Se nada abrir, confira se este domínio está autorizado no Firebase Authentication.");
+    }, 3500);
+  };
+
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-2xl flex-col justify-center px-4 py-10">
       <div className="mb-8 text-center">
@@ -49,7 +58,7 @@ export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, 
 
       {!isAuthenticated && !guestSelected ? (
         <Card className="space-y-5">
-          <Button className="w-full" icon={<Chrome className="h-4 w-4" />} onClick={onGoogle} disabled={authLoading}>
+          <Button className="w-full" icon={<Chrome className="h-4 w-4" />} onClick={startGoogleLogin} disabled={authLoading}>
             Entrar com Google
           </Button>
           <Button
@@ -67,6 +76,7 @@ export function Onboarding({ authLoading, authError, isAuthenticated, onGoogle, 
             Para reduzir riscos do MVP, não usamos senha própria. Entre com Google para backup na nuvem ou continue sem login neste dispositivo.
           </p>
           {authError && <p className="rounded-2xl bg-red-500/10 p-3 text-sm text-red-700">{authError}</p>}
+          {googleStatus && <p className="rounded-2xl bg-white/60 p-3 text-sm font-semibold opacity-75">{googleStatus}</p>}
         </Card>
       ) : (
         <Card className="space-y-5">

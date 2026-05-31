@@ -1,11 +1,4 @@
-import {
-  GoogleAuthProvider,
-  User,
-  UserCredential,
-  onAuthStateChanged,
-  signInWithRedirect,
-  signOut
-} from "firebase/auth";
+import { GoogleAuthProvider, User, UserCredential, onAuthStateChanged, signInWithRedirect, signOut } from "firebase/auth";
 import { useCallback, useEffect, useState } from "react";
 import { auth } from "../config/firebase";
 
@@ -72,14 +65,11 @@ export function useAuth() {
     const provider = new GoogleAuthProvider();
 
     try {
-      setLoading(true);
       await signInWithRedirect(auth, provider);
       return undefined;
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Não foi possível autenticar.");
       return undefined;
-    } finally {
-      setLoading(false);
     }
   }, []);
 
