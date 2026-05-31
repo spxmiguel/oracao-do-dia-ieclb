@@ -27,6 +27,17 @@ function App() {
     document.documentElement.classList.toggle("night", theme === "night");
   }, [theme]);
 
+  useEffect(() => {
+    if (!auth.user?.uid || localStorage.getItem(STORAGE_KEYS.pendingCloudSync) !== "true") return;
+
+    void appState.syncLocalToCloud(auth.user.uid).then(() => {
+      localStorage.removeItem(STORAGE_KEYS.pendingCloudSync);
+      localStorage.removeItem(STORAGE_KEYS.guestProfile);
+      setGuestProfile(false);
+      setGuestStarted(false);
+    });
+  }, [auth.user?.uid]);
+
   if (auth.loading || appState.loading) {
     return (
       <main className="flex min-h-screen items-center justify-center px-6 text-center">
@@ -61,9 +72,11 @@ function App() {
   const todayCompletion = appState.getTodayCompletion();
 
   const handleGoogleCloudSave = async () => {
+    localStorage.setItem(STORAGE_KEYS.pendingCloudSync, "true");
     const credential = await auth.signInWithGoogle();
     if (credential?.user) {
       await appState.syncLocalToCloud(credential.user.uid);
+      localStorage.removeItem(STORAGE_KEYS.pendingCloudSync);
       localStorage.removeItem(STORAGE_KEYS.guestProfile);
       setGuestProfile(false);
       setGuestStarted(false);
