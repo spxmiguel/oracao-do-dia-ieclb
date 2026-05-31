@@ -4,7 +4,8 @@ export const STORAGE_KEYS = {
   journal: "primeiros-minutos/journal-cache",
   breathing: "primeiros-minutos/breathing-cache",
   guestProfile: "primeiros-minutos/guest-profile",
-  pendingCloudSync: "primeiros-minutos/pending-cloud-sync"
+  pendingCloudSync: "primeiros-minutos/pending-cloud-sync",
+  pendingGoogleRedirect: "primeiros-minutos/pending-google-redirect"
 } as const;
 
 export const clearAppCache = (): void => {

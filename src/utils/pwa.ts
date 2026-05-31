@@ -1,5 +1,5 @@
 const CACHE_VERSION_KEY = "primeiros-minutos/cache-version";
-const CACHE_VERSION = "2026-05-31-google-redirect-status-cache-reset";
+const CACHE_VERSION = "2026-05-31-lootflow-auth-pattern-cache-reset";
 
 export const refreshOldPwaCache = async (): Promise<void> => {
   if (typeof window === "undefined") return;

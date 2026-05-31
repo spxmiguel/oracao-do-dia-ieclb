@@ -1,5 +1,5 @@
 import { FirebaseApp, initializeApp } from "firebase/app";
-import { Auth, getAuth } from "firebase/auth";
+import { Auth, browserLocalPersistence, browserPopupRedirectResolver, getAuth, initializeAuth } from "firebase/auth";
 import { Firestore, getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -17,5 +17,21 @@ export const isFirebaseConfigured = Boolean(
 
 const app: FirebaseApp | null = isFirebaseConfigured ? initializeApp(firebaseConfig) : null;
 
-export const auth: Auth | null = app ? getAuth(app) : null;
+const createAuth = (): Auth | null => {
+  if (!app) return null;
+  try {
+    return initializeAuth(app, {
+      persistence: [browserLocalPersistence],
+      popupRedirectResolver: browserPopupRedirectResolver
+    });
+  } catch (caught) {
+    const code = (caught as { code?: string })?.code;
+    if (code === "auth/already-initialized") {
+      return getAuth(app);
+    }
+    throw caught;
+  }
+};
+
+export const auth: Auth | null = createAuth();
 export const db: Firestore | null = app ? getFirestore(app) : null;

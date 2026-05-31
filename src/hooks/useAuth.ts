@@ -1,6 +1,40 @@
-import { GoogleAuthProvider, User, UserCredential, onAuthStateChanged, signInWithRedirect, signOut } from "firebase/auth";
+import { GoogleAuthProvider, User, UserCredential, getRedirectResult, onAuthStateChanged, signInWithRedirect, signOut } from "firebase/auth";
 import { useCallback, useEffect, useState } from "react";
 import { auth } from "../config/firebase";
+import { STORAGE_KEYS } from "../utils/storage";
+
+let redirectHandled = false;
+let redirectResultPending = false;
+
+const googleProvider = () => {
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: "select_account" });
+  return provider;
+};
+
+const setRedirectPending = () => {
+  try {
+    localStorage.setItem(STORAGE_KEYS.pendingGoogleRedirect, "true");
+  } catch {
+    // localStorage can be unavailable in private contexts.
+  }
+};
+
+const clearRedirectPending = () => {
+  try {
+    localStorage.removeItem(STORAGE_KEYS.pendingGoogleRedirect);
+  } catch {
+    // localStorage can be unavailable in private contexts.
+  }
+};
+
+const isRedirectPending = (): boolean => {
+  try {
+    return localStorage.getItem(STORAGE_KEYS.pendingGoogleRedirect) === "true";
+  } catch {
+    return false;
+  }
+};
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
@@ -18,10 +52,39 @@ export function useAuth() {
       setLoading(false);
     }, 4500);
 
+    if (!redirectHandled) {
+      redirectHandled = true;
+      redirectResultPending = true;
+
+      void getRedirectResult(auth)
+        .then((result) => {
+          redirectResultPending = false;
+          if (result?.user) {
+            clearRedirectPending();
+            setUser(result.user);
+          } else {
+            clearRedirectPending();
+          }
+        })
+        .catch((caught) => {
+          redirectResultPending = false;
+          clearRedirectPending();
+          setError(caught instanceof Error ? caught.message : "Não foi possível concluir o login.");
+        })
+        .finally(() => {
+          window.clearTimeout(timeout);
+          setLoading(false);
+        });
+    }
+
     const unsubscribe = onAuthStateChanged(
       auth,
       (nextUser) => {
+        if (!nextUser && (isRedirectPending() || redirectResultPending)) return;
         window.clearTimeout(timeout);
+        if (nextUser) {
+          clearRedirectPending();
+        }
         setUser(nextUser);
         setLoading(false);
       },
@@ -62,12 +125,12 @@ export function useAuth() {
       return undefined;
     }
 
-    const provider = new GoogleAuthProvider();
-
     try {
-      await signInWithRedirect(auth, provider);
+      setRedirectPending();
+      await signInWithRedirect(auth, googleProvider());
       return undefined;
     } catch (caught) {
+      clearRedirectPending();
       setError(caught instanceof Error ? caught.message : "Não foi possível autenticar.");
       return undefined;
     }
