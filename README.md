@@ -17,7 +17,7 @@ React 18, TypeScript estrito, Vite, Tailwind CSS, Framer Motion, Lucide React, F
 - Diário privado com humor, edição, exclusão e sincronização em nuvem quando conectado.
 - Histórico de constância, XP privado, níveis e conquistas.
 - Cache local para fallback visual.
-- Narração via narrador do Google Tradutor, com fallback para voz do navegador.
+- Narração via Web Speech API com voz em português disponível no navegador.
 - Lista de espera Premium em breve, sem cobrança.
 - PWA instalável e compatível com GitHub Pages.
 
@@ -32,7 +32,7 @@ npm run preview
 
 ## Narração
 
-O app usa o narrador do Google Tradutor por áudio direto no navegador e mantém a Web Speech API como fallback. Não há chave de voz no frontend.
+O app usa a Web Speech API do navegador, preferindo uma voz `pt-BR` quando disponível. Não há chave de voz no frontend.
 
 ## Firebase
 

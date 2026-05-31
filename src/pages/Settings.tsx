@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Cloud, CloudOff, Headphones } from "lucide-react";
+import { Cloud, CloudOff } from "lucide-react";
 import { denominations, prayerFocusOptions, prayerLengthOptions, prayerToneOptions } from "../data";
 import type { UserPreferences } from "../types";
 import { PremiumWaitlistModal } from "../components/premium/PremiumWaitlistModal";
 import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
-import { STORAGE_KEYS } from "../utils/storage";
 
 type SettingsProps = {
   email: string;
@@ -23,27 +22,9 @@ type SettingsProps = {
 export function Settings({ email, preferences, onSave, onLogout, onResetCache, onJoinPremium, onGoogleCloudSave, cloudSaveEnabled, authLoading, authError }: SettingsProps) {
   const [draft, setDraft] = useState(preferences);
   const [showPremium, setShowPremium] = useState(false);
-  const [voiceProvider, setVoiceProvider] = useState(() =>
-    localStorage.getItem(STORAGE_KEYS.voiceProvider) === "browser" ? "browser" : "google_translate"
-  );
-  const [voiceStatus, setVoiceStatus] = useState<string | null>(null);
 
   const save = async () => {
     await onSave({ ...draft, isPremium: false });
-    localStorage.setItem(STORAGE_KEYS.voiceProvider, voiceProvider);
-  };
-
-  const testGoogleVoice = async () => {
-    setVoiceStatus("Testando narrador...");
-    localStorage.setItem(STORAGE_KEYS.voiceProvider, "google_translate");
-    try {
-      const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=pt-BR&q=${encodeURIComponent("Primeiros Minutos. Esta é uma prévia da narração.")}`;
-      const audio = new Audio(url);
-      await audio.play();
-      setVoiceStatus("Narrador Google funcionando neste dispositivo.");
-    } catch {
-      setVoiceStatus("O narrador Google falhou agora. O app ainda usa a voz do navegador como reserva.");
-    }
   };
 
   const resetCache = () => {
@@ -114,19 +95,9 @@ export function Settings({ email, preferences, onSave, onLogout, onResetCache, o
             <input type="checkbox" checked={draft.prayerProfile.includePersonalRequests} onChange={(event) => setDraft((current) => ({ ...current, prayerProfile: { ...current.prayerProfile, includePersonalRequests: event.target.checked } }))} />
           </label>
         </div>
-        <div className="space-y-3 rounded-3xl bg-white/55 p-4 text-sm dark:bg-white/8">
-          <p className="font-bold">Voz</p>
-          <p className="opacity-75">Use o narrador do Google Tradutor para uma voz melhor. Se ele falhar, o app usa a voz do navegador como reserva.</p>
-          <label className="grid gap-2 text-sm font-semibold">
-            Provedor
-            <select className="field" value={voiceProvider} onChange={(event) => setVoiceProvider(event.target.value)}>
-              <option value="google_translate">Narrador Google</option>
-              <option value="browser">Voz do navegador</option>
-            </select>
-          </label>
-          <Button variant="secondary" icon={<Headphones className="h-4 w-4" />} onClick={testGoogleVoice} type="button">Testar narrador</Button>
-          {voiceStatus && <p className="rounded-2xl bg-white/60 p-3 text-sm font-semibold dark:bg-white/8">{voiceStatus}</p>}
-        </div>
+        <p className="rounded-3xl bg-white/55 p-4 text-sm leading-6 opacity-75 dark:bg-white/8">
+          A narração usa a voz em português disponível no seu navegador.
+        </p>
         <label className="grid gap-2 text-sm font-semibold">
           Tema
           <select className="field" value={draft.themeMode} onChange={(event) => setDraft((current) => ({ ...current, themeMode: event.target.value as UserPreferences["themeMode"] }))}>
