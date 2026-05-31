@@ -1,30 +1,13 @@
 import {
-  AuthError,
   GoogleAuthProvider,
   User,
   UserCredential,
   onAuthStateChanged,
-  signInWithPopup,
   signInWithRedirect,
   signOut
 } from "firebase/auth";
 import { useCallback, useEffect, useState } from "react";
 import { auth } from "../config/firebase";
-
-const isSafari = (): boolean => {
-  if (typeof navigator === "undefined") return false;
-  return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
-};
-
-const shouldFallbackToRedirect = (caught: unknown): boolean => {
-  const code = (caught as Partial<AuthError>)?.code ?? "";
-  return (
-    code === "auth/popup-blocked" ||
-    code === "auth/popup-closed-by-user" ||
-    code === "auth/cancelled-popup-request" ||
-    code === "auth/operation-not-supported-in-this-environment"
-  );
-};
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
@@ -88,19 +71,11 @@ export function useAuth() {
 
     const provider = new GoogleAuthProvider();
 
-    if (isSafari()) {
-      await signInWithRedirect(auth, provider);
-      return undefined;
-    }
-
     try {
       setLoading(true);
-      return await signInWithPopup(auth, provider);
+      await signInWithRedirect(auth, provider);
+      return undefined;
     } catch (caught) {
-      if (shouldFallbackToRedirect(caught)) {
-        await signInWithRedirect(auth, provider);
-        return undefined;
-      }
       setError(caught instanceof Error ? caught.message : "Não foi possível autenticar.");
       return undefined;
     } finally {
